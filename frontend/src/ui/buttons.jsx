@@ -15,12 +15,11 @@ export function Load_button(){
         </>
     )
 }
-export function Nav_button({children,icon}){
+export function Nav_button({children,variant}){
     
     return(
         <>
-        <Button size={"4"} style={{width:"fit-content",height:"fit-content",display:"flex", flexDirection:"row", gap:3}}>
-            {icon}
+        <Button size={"4"} class="hover:bg-red"variant={variant} color="green"  highContrast style={{width:"fit-content",height:"fit-content",display:"flex",transition:"1s,ease-in"}}>
             {children}
         </Button>
         </>

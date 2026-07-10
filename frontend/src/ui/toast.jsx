@@ -26,8 +26,8 @@ return(
         <Toast.Provider duration={3000}>
         {
             q.map((item)=>(
-                <Toast.Root key={item.id}open={item.state} onOpenChange={(open)=>(!open?rm_q(item.id):"")}>
-                    <Toast.Description style={{padding:"5px",display:'flex',fontFamily:"ui-sans-serif",fontWeight:"normal"}}>
+                <Toast.Root key={item.id}open={item.state} onOpenChange={(open)=>(!open?rm_q(item.id):"")} style={{display:"flex",gap:"10px"}}>
+                    <Toast.Description style={{padding:"5px",display:'flex',fontFamily:"ui-sans-serif",fontWeight:"normal", fontSize:"20px"}}>
                         {item.message}
                     </Toast.Description>
                     <Toast.Close/>
@@ -36,9 +36,9 @@ return(
         }
         <Toast.Viewport
         style={{display:"flex",position:"fixed",zIndex:999,
-            top:0,right:20,
+            top:0,right:20,gap:"10px",
             margin:"20px",backgroundColor:"gray", flexDirection:"column",
-        width:"fit-content",height:"fit-content",flexWrap:"nowrap",overflow:"hidden"}}
+        width:"fit-content",height:"fit-content",flexWrap:"nowrap",overflow:"hidden", borderRadius:"5px"}}
         />
         </Toast.Provider>
     </Toast_context.Provider>

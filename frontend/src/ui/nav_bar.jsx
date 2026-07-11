@@ -1,11 +1,12 @@
 import Execute_Button, { Nav_button } from "./buttons";
 import {Menu} from "lucide-react";
-import { Avatar, Card, Separator } from "@radix-ui/themes/dist/cjs/index.js";
+import { AlertDialog, Avatar, Button, Card, Separator } from "@radix-ui/themes/dist/cjs/index.js";
 import Main_Text, { Head_Text } from "./text";
 import { Bell } from "lucide-react";
 import { Badge } from "@radix-ui/themes/dist/cjs/index.js";
 import { ChevronDown } from "lucide-react";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { LogOut } from "lucide-react";
 
 export default function Nav_bar({children}){
 return(<>
@@ -25,7 +26,9 @@ return(<>
             </div> 
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
-                 <Card size={"1"} variant="solid" style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",backgroundColor:"red",cursor:"pointer",transition:"transform 1s ease-in"
+                <AlertDialog.Root>
+                    <AlertDialog.Trigger>
+                        <Card size={"1"} variant="solid" style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",backgroundColor:"red",cursor:"pointer",transition:"transform 1s ease-in"
                 }}>
                     <div style={{width:"fit-content",height:"fit-content",display:"flex"}}>
                         <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
@@ -41,6 +44,38 @@ return(<>
                         <Badge variant="soft" size={"3"}>User One</Badge>
                     </div>
                 </Card>
+                    </AlertDialog.Trigger>
+                    <AlertDialog.Content 
+    style={{
+        gap:"10px",
+        display:"flex",
+        flexDirection:"column",
+        width:"100%",
+        height:"fit-content",
+        backgroundColor:"white",
+        
+        borderRadius:"12px",
+        boxShadow:"0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+        padding:"20px"
+    }}
+>
+    <div style={{width:"100%",height:"100%",display:"flex",justifyContent:"right"}}>
+    <AlertDialog.Description>
+        <p>Description</p>
+    </AlertDialog.Description>
+    </div>
+     <div style={{width:"100%",height:"100%",display:"flex",justifyContent:"right",alignItems:"center",gap:"25px",flexDirection:"row"}}>
+    <AlertDialog.Cancel>
+        <Button size="3" variant="ghost" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"5px",}}>Cancel</Button>
+    </AlertDialog.Cancel>
+    <AlertDialog.Action>
+        <Button size="3" variant="classic" color="red" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"5px",
+            flexDirection:"row",gap:"5px"}}>Log Out</Button>
+    </AlertDialog.Action>
+    </div>
+</AlertDialog.Content>
+                </AlertDialog.Root>
+                 
             </div>
      </div> 
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 

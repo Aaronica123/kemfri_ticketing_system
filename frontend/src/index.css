@@ -1,0 +1,5 @@
+.rt-BaseDialogOverlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}

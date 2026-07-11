@@ -2,7 +2,7 @@ import { TextField,Text,Heading } from "@radix-ui/themes/dist/cjs/index.js";
 
 export default function Main_Text({children,color}){
     return(<>
-    <Text size="5" weight={"medium"} color={color?color:""} style={{fontFamily:"ui-sans-serif"}}>
+    <Text size="5" weight={"medium"} color={color?color:""} style={{fontFamily:"ui-sans-serif",width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",flexWrap:"nowrap"}}>
         {children}
     </Text>
     </>)
@@ -21,7 +21,7 @@ export function Head_Text({children}){
     return(
         <>
         <Heading size={"5"} weight={"regular"} style={{width:"100%", height:"fit-content",
-            display:"flex",justifyContent:"center",alignItems:"center",fontFamily:"ui-sans-serif"}}>
+            display:"flex",justifyContent:"left",alignItems:"center",fontFamily:"ui-sans-serif"}}>
                 {children}
             </Heading>
         </>

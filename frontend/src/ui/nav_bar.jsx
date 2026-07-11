@@ -1,18 +1,21 @@
 import Execute_Button, { Nav_button } from "./buttons";
 import {Menu} from "lucide-react";
-import { Avatar, Separator } from "@radix-ui/themes/dist/cjs/index.js";
-import { Head_Text } from "./text";
+import { Avatar, Card, Separator } from "@radix-ui/themes/dist/cjs/index.js";
+import Main_Text, { Head_Text } from "./text";
 import { Bell } from "lucide-react";
+import { Badge } from "@radix-ui/themes/dist/cjs/index.js";
+import { ChevronDown } from "lucide-react";
+import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 
 export default function Nav_bar({children}){
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
-        background:"linear-gradient(180deg,white,black)",gap:"10px"}}>
-            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"15px"}}>
+        background:"linear-gradient(180deg,white,black)"}}>
+            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px"}}>
             <Avatar fallback="KM" size={"6"} src="" color="blue" radius="medium"></Avatar>    
             </div> 
-            <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap"}}>
+            <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"15px"}}>
             <Head_Text>ICT Help Desk</Head_Text>    
             </div>
             <div style={{width:"100%",height:"100%", top:"10",display:"flex",
@@ -20,8 +23,24 @@ return(<>
                 border:"solid 3px pink",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
             
             </div> 
-            <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
-                <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button>
+            <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
+                {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
+                 <Card size={"1"} variant="solid" style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",backgroundColor:"red",cursor:"pointer",transition:"transform 1s ease-in"
+                }}>
+                    <div style={{width:"fit-content",height:"fit-content",display:"flex"}}>
+                        <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
+                    </div>
+                    <div style={{alignItems:"center",flex:1,width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
+                        <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap"}}>
+                       
+                         <Main_Text>Hemstone</Main_Text> 
+                         <br></br>
+                         <Main_Text>Otieno</Main_Text> 
+                       {/* <Main_Text> Hemstone</Main_Text> */}
+                        </div>
+                        <Badge variant="soft" size={"3"}>User One</Badge>
+                    </div>
+                </Card>
             </div>
      </div> 
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 

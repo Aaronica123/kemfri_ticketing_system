@@ -28,9 +28,9 @@ return(<>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
-                        <Card size={"1"} variant="solid" style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",backgroundColor:"red",cursor:"pointer",transition:"transform 1s ease-in"
+                        <Card className="trigger-card"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
                 }}>
-                    <div style={{width:"fit-content",height:"fit-content",display:"flex"}}>
+                    <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
                         <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
                     </div>
                     <div style={{alignItems:"center",flex:1,width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>

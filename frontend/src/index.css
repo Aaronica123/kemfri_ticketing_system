@@ -3,3 +3,13 @@
   -webkit-backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
+/* .trigger-card {
+  background-color: transparent !important;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  
+} */
+
+.trigger-card:hover {
+  background-color: red !important;
+}

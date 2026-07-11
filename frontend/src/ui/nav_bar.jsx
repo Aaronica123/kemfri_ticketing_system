@@ -48,7 +48,7 @@ return(<>
             </div>
              </div>
         
-        <div style={{width:"100%", display:"flex",height:"100%"}}>
+        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px"}}>
             {children}
         </div>
         </div>

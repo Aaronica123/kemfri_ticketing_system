@@ -4,6 +4,7 @@ import { BrowserRouter as Router,Route,Routes } from "react-router-dom";
 import Toast_Provider from "./ui/toast";
 import Login_form from "./forms/login_form";
 import Nav_bar from "./ui/nav_bar";
+import Dashboard from "./pages/Dashboard";
 import './App.css'
 
 function App() {
@@ -17,6 +18,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Login_form/>}/>
             <Route path="/nav" element={<Nav_bar/>}/>
+            <Route path="/dashboard" element={
+              <Nav_bar>
+                <Dashboard/>
+              </Nav_bar>
+            }/>
           </Routes>
         </Toast_Provider>
       </Router>

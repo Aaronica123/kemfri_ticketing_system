@@ -28,3 +28,11 @@ export function Head_Text({children}){
     )
 
 }
+export function Head_Mess({children}){
+    return (<>
+    <Heading size={"7"} weight={"regular"} style={{width:"100%", height:"fit-content",
+            display:"flex",justifyContent:"left",alignItems:"center",fontFamily:"ui-sans-serif"}}>
+                {children}
+            </Heading>
+    </>)
+}

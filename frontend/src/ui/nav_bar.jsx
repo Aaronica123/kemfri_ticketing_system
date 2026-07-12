@@ -12,7 +12,7 @@ export default function Nav_bar({children}){
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
-        background:"linear-gradient(180deg,white,black)"}}>
+       }} className="bg1">
             <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px"}}>
             <Avatar fallback="KM" size={"6"} src="" color="blue" radius="medium"></Avatar>    
             </div> 
@@ -21,14 +21,14 @@ return(<>
             </div>
             <div style={{width:"100%",height:"100%", top:"10",display:"flex",
                 flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
-                border:"solid 3px pink",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
+                border:"solid 2px grey",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
             
             </div> 
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
-                        <Card className="trigger-card"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
+                        <Card className="crd"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
                 }}>
                     <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
                         <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
@@ -80,14 +80,14 @@ return(<>
      </div> 
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
                 <div style={{width:"100%",height:"fit-content",display:"flex",
-            flexDirection:"row",background:"linear-gradient(180deg, grey,white,grey)",padding:"10px",
-            alignItems:"start"}}>
+            flexDirection:"row",padding:"10px"
+            }} className="bg2">
             
            
-            <div style={{width:"100%",height:"fit-content",display:"flex" ,margin:"15px",flex:2.5}}>
+            {/* <div style={{width:"100%",height:"fit-content",display:"flex" ,margin:"15px",flex:2.5}}> */}
                 {/* <Nav_button variant={"ghost"}><Menu size={"30"} color="black"></Menu></Nav_button> */}
-            </div>
-            <div style={{width:"100%",height:"fit-content",display:"flex",
+            {/* </div> */}
+            <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
                flexDirection:"row",gap:"30px",margin:"10px",alignItems:"flex-end",flex:1.5}}>
                     <div style={{width:"fit-content",height:"fit-content",display:"flex", 
                         alignItems:"center",gap:"10px"}}>
@@ -102,7 +102,7 @@ return(<>
             </div>
              </div>
         
-        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px"}}>
+        <div className="bg"style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px"}}>
             {children}
         </div>
         </div>

@@ -3,13 +3,42 @@
   -webkit-backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.3) !important;
 }
-/* .trigger-card {
+.trigger-card {
   background-color: transparent !important;
   transition: background-color 0.3s ease;
   cursor: pointer;
   
-} */
+}
 
 .trigger-card:hover {
-  background-color: red !important;
+ transform: translateX(10),translateY(10);
+ transition:" transform 1s ease-in-ease-out";
+}
+/* dashboard.css */
+.stat-card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.105);
+}
+
+.crd{
+  transition: transform 1.5s ease-in,box-shadow 1.2s ease-in-out;
+}
+.crd:hover{
+  transform: translateY(-4px) ;
+  box-shadow: -2px 4px 15px rgba(0, 0, 0, 0.438);
+  cursor: pointer;
+}
+.bg2{
+  background:linear-gradient(rgba(189, 189, 189, 0.751));
+}
+.bg{
+  background:linear-gradient(rgba(128, 128, 128, 0.279));
+}
+.bg1 {
+ background: linear-gradient(rgba(204, 204, 204, 0.247)); 
 }

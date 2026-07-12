@@ -21,8 +21,8 @@ return(<>
             </div>
             <div style={{width:"100%",height:"100%", top:"10",display:"flex",
                 flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
-                border:"solid 2px grey",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
-            
+                border:"single 2px grey",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
+            <div style={{}}></div>
             </div> 
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}

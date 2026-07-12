@@ -6,7 +6,7 @@ import { Avatar, Card } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Dashboard(){
     return(<>
     <div style={{width:"100%",height:"100%",display:"flex",
-        flexDirection:"column",flexWrap:"nowrap",justifyContent:"left",gap:"20px"}}>
+        flexDirection:"column",flexWrap:"nowrap",justifyContent:"left",gap:"20px",marginLeft:"25px"}}>
         <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
                 display:"flex",gap:"5px",alignItems:"start"
             }}>
@@ -14,10 +14,10 @@ export default function Dashboard(){
                 <Main_Text>System Overview and Admin</Main_Text>
             </div>
             <div style={{display:"flex",flexDirection:"row",width:"fit-content",
-            gap:"15px",height:"fit-content",flexWrap:"wrap"
+            gap:"20px",height:"fit-content",flexWrap:"wrap"
             }}>
                 <Card size={"3"} className="stat-card" style={{width:"fit-content",height:"fit-content",display:"flex",
-                    flexDirection:"row",gap:"15px",cursor:"default"
+                    flexDirection:"row",gap:"25px",cursor:"default"
                 }}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
@@ -26,11 +26,13 @@ export default function Dashboard(){
                         <Main_Text>15</Main_Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <Avatar size={"5"} src={Clock} fallback="clock"/>
+                        <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
+                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                        </div>
                     </div>
                 </Card>
                 <Card size={"3"} className="stat-card" style={{width:"fit-content",height:"fit-content",display:"flex",
-                    flexDirection:"row",gap:"15px",cursor:"default"
+                    flexDirection:"row",gap:"25px",cursor:"default"
                 }}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
@@ -39,10 +41,12 @@ export default function Dashboard(){
                         <Main_Text>15</Main_Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <Avatar size={"5"}  fallback="clock"><div style={{borderRadius:"10px"}}><Clock></Clock></div></Avatar>
+                        <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
+                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                        </div>
                     </div>
                 </Card>
-                <Card size={"3"} className="stat-card" style={{width:"fit-content",height:"fit-content",display:"flex",     flexDirection:"row",gap:"15px",cursor:"default"
+                <Card size={"3"} className="stat-card" style={{width:"fit-content",height:"fit-content",display:"flex",     flexDirection:"row",gap:"25px",cursor:"default"
                 }}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
@@ -51,11 +55,13 @@ export default function Dashboard(){
                         <Main_Text>15</Main_Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <Avatar size={"5"} fallback="clock"></Avatar>
+                        <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
+                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                        </div>
                     </div>
                 </Card>
                 <Card size={"3"} className="stat-card" style={{width:"fit-content",height:"fit-content",display:"flex",
-                    flexDirection:"row", gap:"15px",cursor:"default"
+                    flexDirection:"row", gap:"25px",cursor:"default"
                 }}>
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
@@ -64,8 +70,9 @@ export default function Dashboard(){
                         <Main_Text>15</Main_Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <Avatar size={"5"} variant="soft"
-                        src={Clock} fallback="clock"/>
+                   <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
+                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                        </div>
                     </div>
                 </Card>
             </div>

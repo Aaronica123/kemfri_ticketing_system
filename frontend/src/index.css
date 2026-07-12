@@ -31,8 +31,10 @@
 .crd:hover{
   transform: translateY(-4px) ;
   box-shadow: -2px 4px 15px rgba(0, 0, 0, 0.438);
+  /* box-shadow: -2px 4px 15px rgba(9, 41, 147, 0.507); */
   cursor: pointer;
 }
+
 .bg2{
   background:linear-gradient(rgba(189, 189, 189, 0.751));
 }

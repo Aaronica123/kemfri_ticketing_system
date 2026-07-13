@@ -13,8 +13,6 @@ import { TicketPlus } from "lucide-react";
 import { BookOpenCheck } from "lucide-react";
 import { ListTodo } from "lucide-react";
 
-
-
 export default function Nav_bar({children}){
 
 return(<>

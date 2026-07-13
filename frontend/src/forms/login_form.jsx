@@ -11,12 +11,12 @@ export default function Login_form(){
     const {set_q}=Toast_use();
     const x=()=>{
         console.log("Clicked");
-        set_q(true,"Clicked");
+        set_q(true,"Logging In");
     }
     return(
     <>
     <div style={{width:"100vw",height:"100vh",boxSizing:"border-box",display:"flex",
-        flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
+        flexDirection:"row",justifyContent:"center",alignItems:"center",background:"linear-gradient(90deg,rgba(81, 45, 188, 0.35), rgba(25, 34, 212, 0.35), rgba(62, 19, 217, 0.35))"}}>
         <div style={{width:"fit-content",height:"fit-content", justifyContent:"center",
             alignItems:"center"
         }}>

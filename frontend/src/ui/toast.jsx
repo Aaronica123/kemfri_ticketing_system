@@ -26,7 +26,7 @@ return(
         {children}
         <Toast.Provider duration={3000} >
         {mt&&(
-<Toast.Root key={mt.id}open={mt.state} onOpenChange={(open)=>(!open?rm_q(mt.id):"")} style={{backgroundColor:"green",display:"flex",width:"100%"}}>
+<Toast.Root key={mt.id}open={mt.state} onOpenChange={(open)=>(!open?rm_q(mt.id):"")} style={{background:"linear-gradient(100deg,rgba(12, 201, 53, 0.22),rgba(7, 250, 59, 0.42))",display:"flex",width:"100%",borderRadius:"10px"}}>
                     <Toast.Description style={{fontFamily:"ui-sans-serif",fontWeight:"normal", fontSize:"20px",padding:"10px"}}>
                         {mt.message}
                     </Toast.Description>
@@ -36,7 +36,7 @@ return(
         }
         {/* <div style={{backgroundColor:"yellow",width:"fit-content",height:"fit-content",display:"flex",overflow:"hidden",flexWrap:"nowrap",flexDirection:"column"}}> */}
         <Toast.Viewport
-        style={{display:"flex",position:"fixed",zIndex:999, backgroundColor:"yellow",
+        style={{display:"flex",position:"fixed",zIndex:999, 
             top:0,right:20,margin:"20px",gap:"10px",overflow:"hidden",width:"fit-content"}}
         />
         {/* </div> */}

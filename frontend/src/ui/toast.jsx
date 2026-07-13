@@ -20,26 +20,27 @@ export default function Toast_Provider({children}){
            return v.filter((i)=>i.id!=id)
         })
     },[])
+    const mt=q[0];
 return(
     <Toast_context.Provider value={{set_q}}>
         {children}
-        <Toast.Provider duration={3000}>
-        {
-            q.map((item)=>(
-                <Toast.Root key={item.id}open={item.state} onOpenChange={(open)=>(!open?rm_q(item.id):"")} style={{display:"flex",gap:"10px"}}>
-                    <Toast.Description style={{padding:"5px",display:'flex',fontFamily:"ui-sans-serif",fontWeight:"normal", fontSize:"20px"}}>
-                        {item.message}
+        <Toast.Provider duration={3000} >
+        {mt&&(
+<Toast.Root key={mt.id}open={mt.state} onOpenChange={(open)=>(!open?rm_q(mt.id):"")} style={{backgroundColor:"green",display:"flex",width:"100%"}}>
+                    <Toast.Description style={{fontFamily:"ui-sans-serif",fontWeight:"normal", fontSize:"20px",padding:"10px"}}>
+                        {mt.message}
                     </Toast.Description>
                     <Toast.Close/>
                 </Toast.Root>
-            ))
+        )
         }
+        {/* <div style={{backgroundColor:"yellow",width:"fit-content",height:"fit-content",display:"flex",overflow:"hidden",flexWrap:"nowrap",flexDirection:"column"}}> */}
         <Toast.Viewport
-        style={{display:"flex",position:"fixed",zIndex:999,
-            top:0,right:20,gap:"10px",
-            margin:"20px",backgroundColor:"gray", flexDirection:"column",
-        width:"fit-content",height:"fit-content",flexWrap:"nowrap",overflow:"hidden", borderRadius:"5px"}}
+        style={{display:"flex",position:"fixed",zIndex:999, backgroundColor:"yellow",
+            top:0,right:20,margin:"20px",gap:"10px",overflow:"hidden",width:"fit-content"}}
         />
+        {/* </div> */}
+
         </Toast.Provider>
     </Toast_context.Provider>
 )

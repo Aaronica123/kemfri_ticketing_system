@@ -9,6 +9,12 @@
   cursor: pointer;
   
 }
+/* .frm{
+  outline:green;
+} */
+/* .frm:focus{
+  outline:none;
+} */
 
 .trigger-card:hover {
  transform: translateX(10),translateY(10);
@@ -42,5 +48,15 @@
   background:linear-gradient(rgba(128, 128, 128, 0.279));
 }
 .bg1 {
- background: linear-gradient(rgba(204, 204, 204, 0.247)); 
+ background: linear-gradient(rgba(144, 144, 144, 0.717)); 
+  /* background: linear-gradient(rgba(15, 15, 15, 0.733));  */
+}
+
+.btn12:hover{
+background-color: rgba(55, 255, 0, 0.753);
+transform: translateX(2px) translateY(-2px);
+box-shadow: 0px 4px 15px rgba(19, 18, 18, 0.441);  
+cursor: pointer;
+transition: all 0.15s ease-in-out;
+
 }

@@ -19,10 +19,18 @@ export function Nav_button({children,variant}){
     
     return(
         <>
-        <Button size={"4"} class="hover:bg-red"variant={variant} color="green"  highContrast style={{width:"fit-content",height:"fit-content",display:"flex",transition:"1s,ease-in"}}>
+        <Button size={"4"} className="hover:bg-red"variant={variant} color="green"  highContrast style={{width:"fit-content",height:"fit-content",display:"flex",transition:"1s,ease-in"}}>
             {children}
         </Button>
         </>
     )
 
+}
+
+export function Dash_btn({image,text}){
+    return(<>
+    <Button style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"2px",padding:"3px",flexDirection:"row"
+    }} className="btn">{image}{text}</Button>
+    </>)
 }

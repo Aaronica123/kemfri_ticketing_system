@@ -10,8 +10,9 @@ export default function Main_Text({children,color}){
 export function Input_Field({placeholder,type,max}){
     return(
         <>
-        <TextField.Root type={type} maxLength={max} placeholder={placeholder}
+        <TextField.Root type={type} maxLength={max} placeholder={placeholder} 
         style={{width:"100%",height:"fit-content",display:"flex", padding:"5px"}}
+        className="frm"
         required>
         </TextField.Root>
         </>

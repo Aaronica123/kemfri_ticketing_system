@@ -2,7 +2,7 @@ import { Button } from "@radix-ui/themes/dist/cjs/index.js";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Execute_Button({children,onClick,color,variant,type}){
     return(<>
-    <Button style={{width:"100%",height:"fit-content",display:"flex"}} type={type}
+    <Button style={{width:"100%",height:"fit-content",display:"flex", cursor:"pointer",padding:"5px"}} type={type}
     variant={variant} color={color} onClick={onClick} size={"4"}
     >{children}</Button>
     </>)

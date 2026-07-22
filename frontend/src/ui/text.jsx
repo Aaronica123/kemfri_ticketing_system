@@ -12,7 +12,7 @@ export function Input_Field({placeholder,type,max}){
         <>
         <TextField.Root type={type} maxLength={max} placeholder={placeholder} 
         style={{width:"100%",height:"fit-content",display:"flex", padding:"5px"}}
-        className="frm"
+        className="frm"color="grey"
         required>
         </TextField.Root>
         </>

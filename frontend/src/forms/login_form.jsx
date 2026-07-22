@@ -48,10 +48,10 @@ export default function Login_form(){
                         justifyContent:"left",gap:"5px"
                     }}>
                         <Main_Text>PASSWORD</Main_Text>
-                        <Input_Field placeholder={"ENTER USER ID"} type={"password"} max={10}></Input_Field>
+                        <Input_Field placeholder={"ENTER PASSWORD"} type={"password"} max={10}></Input_Field>
                     </div>
                 </div>
-                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
+                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
                     <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={x}>Login</Execute_Button>
                 </div>
             </Card>

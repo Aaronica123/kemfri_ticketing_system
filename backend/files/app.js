@@ -3,6 +3,7 @@ import session from "express-session";
 import pgSession from "connect-pg-simple"
 import { Client } from "pg";
 import { configDotenv } from "dotenv";
+import Rate from "./connection/redis.js";
 configDotenv();
 const app=express();
 export const conn=new Client({
@@ -32,5 +33,7 @@ const config={
     })
 }
 app.use(session(config))
+app.use(express.json());
+app.post('/rate',Rate);
 
 export default app;

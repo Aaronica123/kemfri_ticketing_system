@@ -2,7 +2,7 @@ import {Pool} from "pg"
 import { configDotenv } from "dotenv"
 configDotenv();
 //pool declaration configuration that provides maximum connections of users simultaneously
-const conf=new Pool({
+export const conf=new Pool({
     database:"kemfri_database",
     user:"app_service",
     password:process.env.passwordapp,

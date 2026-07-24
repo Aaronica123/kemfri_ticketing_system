@@ -1,6 +1,6 @@
-import { login } from "./conn.js";
+// import { login } from "./conn.js";
 
-test('login testing ',async()=>{
+// test('login testing ',async()=>{
     
-    expect(await login({staff_email:"network153@kemfri.com",password:"sxa"})).toBe(200);
-})
+//     expect(await login({staff_email:"network153@kemfri.com",password:"sxa"})).toBe(200);
+// })

@@ -1,6 +1,6 @@
 import {createClient} from "redis";
 //configuration for redis server
-const conf=createClient({
+export const conf=createClient({
     host:"localhost",
     port:6379,
 })

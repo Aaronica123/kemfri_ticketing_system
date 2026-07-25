@@ -8,6 +8,8 @@ import CreateSession from "./sessions/create.js";
 import StatusSession from "./sessions/status.js";
 import UpdateSession from "./sessions/update.js";
 import DeletSession from "./sessions/delete.js";
+import Login from "./actions/login.js";
+import Getcache from "./cache/get.js";
 configDotenv();
 const app=express();
 export const conn=new Client({
@@ -33,12 +35,12 @@ const config={
        tableName:"sessions",
        pool:conn,
        createTableIfMissing:true,
-       prunesessionInterval:30600        
+       prunesessionInterval:6000      
     }),
       cookie: {
         httpOnly: true,
         secure: false, // Set to true in production with HTTPS
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        maxAge: 300000 // 24 hours
     }
 }
 app.use(session(config))
@@ -48,4 +50,6 @@ app.post('/create',CreateSession);
 app.get('/status',StatusSession);
 app.post('/update',UpdateSession);
 app.delete('/delete',DeletSession);
+app.post('/login',Login);
+app.get('/getcache',Getcache)
 export default app;

@@ -1,18 +1,34 @@
 import { conf } from "../connection/pool.js";
 import CreateSession from "../sessions/create.js";
-
+import StatusSession from "../sessions/status.js";
 export default async function Login(req,res){
+    var state=false;
+    await StatusSession(req,res).then((data)=>{
+        console.log("data is "+data);
+        if(data==200){
+            
+            state=true;
+        }else if(data==409){
+            req.session.user=null;
+        }else if(data==500){
+            req.session.user=null;
+        }
+    })
+    if(state){
+        return res.status(200).json({message:"User already logged in"})
+    }
+    else{
       const con=await conf.connect()
     try{
         const{email,password}=req.body;
         if(!email||!password){
             console.log("missing data")
-            return 500;
+            return res.status(402).json({message:"Fields are missing"});
         }
         
         if(!/^[a-zA-Z0-9]+@kemfri\.com$/.test(String(email))){
             console.log("wrong syntaax")
-            return 409;
+            return res.status(405).json({message:"Check input syntax"});
         }
         var m=null
         const email_=String(email).toLocaleLowerCase();
@@ -45,18 +61,21 @@ export default async function Login(req,res){
             
             console.log("verifiying")
             await CreateSession(req,res);
-            // return res.status(200).json({"message":"User is verified"})
+            
         }
         else{
             console.log("not verified");
+            return res.status(403).json({message:"sessions not created"})
         }
     }
     else{
-        console.log("waiting")
+        console.log("waiting");
+        return res.status(409).json({message:"Connection denied"})
     }
         // return m;
     }finally{
         con.release();
         console.log("released");
     }
+}
 }

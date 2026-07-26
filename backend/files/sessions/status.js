@@ -1,23 +1,30 @@
 import Getcache from "../cache/get.js";
 export default async function StatusSession(req,res){
     try{
-        
+        var m=null;
         await Getcache(req,res).then((data)=>{
             console.log(data);
             if(data.status==200){
+                console.log(req.session.user.email)
+                
                 if(data.data.data.email==req.session.user.email){
-                    return res.status(200).json({message:"session is valid and user"})
+                    console.log("cached data fetched")
+                    m=200;
                 }
                 else{
-                    return res.status(409).json({message:"cridentials dont match"})
+                    console.log("cached data doesnt exist")
+                    m=409;
                 }
             }
             else{
-                return res.status(409).json({message:"User doesnt have valid session"})
+                console.log("cached data not found")
+                m= 404;
             }
         });
+        return m;
     }catch(error){
         console.log(error);
-        return res.status(500).json({message:"server error"});
+        m=500;
+        return m;
     }
 }

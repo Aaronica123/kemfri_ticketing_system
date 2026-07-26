@@ -12,9 +12,20 @@ import { Dash_btn } from "./buttons";
 import { TicketPlus } from "lucide-react";
 import { BookOpenCheck } from "lucide-react";
 import { ListTodo } from "lucide-react";
-
+import con from "../axios/axios";
+import { useNavigate } from "react-router-dom";
 export default function Nav_bar({children}){
-
+const nav=useNavigate();
+async function logout(){
+    await con().post('/logout',{}).then((data)=>{
+        console.log(data.status);
+        alert("Logout done");
+       nav('/', { replace: true });
+    }).catch((error)=>{
+        console.log(error);
+        alert("An error was encountered");
+    });
+}
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
@@ -110,7 +121,7 @@ return(<>
     </AlertDialog.Cancel>
     <AlertDialog.Action>
         <Button size="3" variant="classic" color="red" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"10px",
-            flexDirection:"row",gap:"5px",cursor:"pointer"}} >Log Out</Button>
+            flexDirection:"row",gap:"5px",cursor:"pointer"}} onClick={logout}>Log Out</Button>
     </AlertDialog.Action>
     </div>
 </AlertDialog.Content>

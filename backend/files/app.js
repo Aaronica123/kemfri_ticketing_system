@@ -8,10 +8,17 @@ import CreateSession from "./sessions/create.js";
 import StatusSession from "./sessions/status.js";
 import UpdateSession from "./sessions/update.js";
 import DeletSession from "./sessions/delete.js";
+import Logout from "./actions/logout.js";
 import Login from "./actions/login.js";
 import Getcache from "./cache/get.js";
+import cors from "cors";
+
 configDotenv();
 const app=express();
+
+app.use(cors({methods:["GET","POST","DELETE"],origin:"http://localhost:5173"
+    ,allowedHeaders:["Content-Type"]
+    ,credentials:true}))
 export const conn=new Client({
     database:"kemfri_database",
     user:"postgres",
@@ -51,5 +58,6 @@ app.get('/status',StatusSession);
 app.post('/update',UpdateSession);
 app.delete('/delete',DeletSession);
 app.post('/login',Login);
-app.get('/getcache',Getcache)
+app.get('/getcache',Getcache);
+app.post('/logout',Logout);
 export default app;

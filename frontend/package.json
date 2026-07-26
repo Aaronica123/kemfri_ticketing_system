@@ -13,6 +13,7 @@
     "@radix-ui/react-toast": "^1.2.19",
     "@radix-ui/themes": "^3.3.0",
     "@tailwindcss/postcss": "^4.3.2",
+    "axios": "^1.18.1",
     "lucide-react": "^1.24.0",
     "postcss": "^8.5.16",
     "react": "^19.2.0",

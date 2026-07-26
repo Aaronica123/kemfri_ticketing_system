@@ -7,12 +7,36 @@ import Execute_Button from "../ui/buttons";
 import { Avatar } from "@radix-ui/themes/dist/cjs/index.js";
 import { Toast_use } from "../ui/toast";
 import { Separator } from "@radix-ui/themes/dist/cjs/index.js";
+import con from "../axios/axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Login_form(){
-    const {set_q}=Toast_use();
-    const x=()=>{
-        console.log("Clicked");
-        set_q(true,"Logging In");
+    // const {set_q}=Toast_use();
+    // const x=()=>{
+    //     console.log("Clicked");
+    //     set_q(true,"Logging In");
+    // }
+    const nav=useNavigate();
+    const [form_,setform]=useState({email:"",password:""})
+    const check=(e)=>{
+       const{name,value}=e.target
+       setform((data)=>({
+        ...data,
+        [name]:value
+       }))
     }
+    async function connect(e){
+        e.preventDefault();
+        await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
+            console.log(data.status);
+            alert("successfully received");
+            nav('/dashboard')
+        }).catch((error)=>{
+            console.log(error);
+            alert("Error encountered");
+        })
+    }
+    
     return(
     <>
     <div style={{width:"100vw",height:"100vh",boxSizing:"border-box",display:"flex",
@@ -41,18 +65,18 @@ export default function Login_form(){
                     <div style={{width:"fit-content",height:"fit-content",flexDirection:"column",display:'flex',
                         justifyContent:"left",gap:"5px"
                     }}>
-                        <Main_Text>STAFF ID</Main_Text>
-                        <Input_Field placeholder={"ENTER USER ID"} type={"number"} max={5}></Input_Field>
+                        <Main_Text>STAFF EMAIL</Main_Text>
+                        <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field>
                     </div>
                      <div style={{width:"fit-content",height:"fit-content",flexDirection:"column",display:'flex',
                         justifyContent:"left",gap:"5px"
                     }}>
                         <Main_Text>PASSWORD</Main_Text>
-                        <Input_Field placeholder={"ENTER PASSWORD"} type={"password"} max={10}></Input_Field>
+                        <Input_Field placeholder={"ENTER PASSWORD"} type={"password"} max={10} value={form_.password} name={"password"} change={check}></Input_Field>
                     </div>
                 </div>
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
-                    <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={x}>Login</Execute_Button>
+                    <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button>
                 </div>
             </Card>
         </div>

@@ -35,12 +35,12 @@ const config={
        tableName:"sessions",
        pool:conn,
        createTableIfMissing:true,
-       prunesessionInterval:6000      
+       prunesessionInterval:900000      
     }),
       cookie: {
         httpOnly: true,
         secure: false, // Set to true in production with HTTPS
-        maxAge: 300000 // 24 hours
+        maxAge: 900000 // 24 hours
     }
 }
 app.use(session(config))

@@ -7,7 +7,8 @@ export default async function Createcache(req,res){
         }
         const sessionID=req.sessionID;
         const data=req.session.user;
-        console.log(data)
+    
+        // console.log(data)
         if(!sessionID||!data)
         {
             console.log("failed to cache missing details");

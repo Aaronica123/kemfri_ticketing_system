@@ -30,6 +30,9 @@ export default function Login_form(){
         await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
             console.log(data.status);
             alert("successfully received");
+            localStorage.setItem('firstname',data.data.data.name)
+             localStorage.setItem('lastname',data.data.data.lastname)
+            console.log(data.data.data.email);
             nav('/dashboard')
         }).catch((error)=>{
             console.log(error);

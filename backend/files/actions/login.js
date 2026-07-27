@@ -33,6 +33,9 @@ export default async function Login(req,res){
         var m=null
         const email_=String(email).toLocaleLowerCase();
         const p=String(email_).slice(0,(String(email_).length-11))
+        const data_array=[]
+        var name=null
+        var last=null
         console.log("email is " +p)
         await con.query(`set session authorization ${(email_.slice(0,(email_.length-11)))}`).then(()=>{
             console.log("verified")
@@ -48,6 +51,12 @@ export default async function Login(req,res){
             if(data.rowCount>0){
                
                 console.log('user found');
+                console.log(data.rows[0].first_name);
+                data_array.push({
+                    first_name:data.rows[0].first_name
+                })
+                name=data.rows[0].first_name
+                last=data.rows[0].last_name
                 m=200;
             }
             else{
@@ -60,7 +69,7 @@ export default async function Login(req,res){
         if(m==200){
             
             console.log("verifiying")
-            await CreateSession(req,res);
+            await CreateSession(req,res,name,last);
             
         }
         else{

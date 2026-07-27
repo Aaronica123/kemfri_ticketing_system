@@ -21,6 +21,8 @@ async function logout(){
         console.log(data.status);
         alert("Logout done");
        nav('/', { replace: true });
+       localStorage.removeItem('lastname');
+       localStorage.removeItem('firstname')
     }).catch((error)=>{
         console.log(error);
         alert("An error was encountered");
@@ -81,12 +83,14 @@ return(<>
                         <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
                     </div>
                     <div style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
-                        <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap"}}>
+                        <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap",
+                            gap:"2px"
+                        }}>
                        
-                         <Main_Text>Hemstone</Main_Text> 
+                         <Main_Text>{localStorage.getItem('firstname')}</Main_Text> 
                          <br></br>
-                         <Main_Text>Otieno</Main_Text> 
-                       {/* <Main_Text> Hemstone</Main_Text> */}
+                         {/* <Main_Text>Otieno</Main_Text>  */}
+                      <Main_Text>{localStorage.getItem('lastname')}</Main_Text> 
                         </div>
                         <Badge variant="soft" size={"3"} style={{width:"fit-content",display:"flex"}}>User One</Badge>
                     </div>

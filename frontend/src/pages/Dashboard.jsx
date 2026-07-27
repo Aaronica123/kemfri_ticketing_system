@@ -10,7 +10,7 @@ export default function Dashboard(){
         <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
                 display:"flex",gap:"5px",alignItems:"start"
             }}>
-                <Head_Mess>Welcome Back , User</Head_Mess>
+                <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
                 <Main_Text>System Overview and Admin</Main_Text>
             </div>
             <div style={{display:"flex",flexDirection:"row",width:"fit-content",

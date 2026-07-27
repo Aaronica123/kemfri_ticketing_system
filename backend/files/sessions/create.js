@@ -1,14 +1,17 @@
 import Createcache from "../cache/create.js";
-export default async function CreateSession(req,res){
+export default async function CreateSession(req,res,first_name,last_name){
     try{
         const {email}=req.body;
-        if(!email){
+        if(!email||!first_name||!last_name){
             return 500;
         }
         var session=false;
         var cache=false;
         const date=new Date().toUTCString();
+        const name=first_name
+        const lastname=last_name
         console.log(date);
+
         
         console.log(req.sessionID);
         await new Promise ((resolve,reject)=>{
@@ -25,7 +28,9 @@ export default async function CreateSession(req,res){
         })
         req.session.user={
             email,
-            date:date
+            date:date,
+            name:name,
+            lastname:lastname
         }
         console.log(req.sessionID);
         await new Promise((resolve,reject)=>{
@@ -48,7 +53,8 @@ export default async function CreateSession(req,res){
             }
         });
         if(cache&&session){
-            return res.status(200).json({"message":"Created session and cached"});
+            return res.status(200).json({"message":"Created session and cached",
+                data:req.session.user});
         }
         console.log(req.session.user);
 

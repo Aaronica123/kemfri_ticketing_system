@@ -25,7 +25,7 @@ async function logout(){
        localStorage.removeItem('firstname')
     }).catch((error)=>{
         console.log(error);
-        alert("An error was encountered");
+        alert("An error has encountered");
     });
 }
 return(<>

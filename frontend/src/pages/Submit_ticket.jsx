@@ -12,23 +12,27 @@ export default function SubmitForm(){
     const [defcat,setdefcat]=useState("default");
     const [arr,setarr]=useState([]);
     const [priority_arr,set_priority_array]=useState([]);
+    const [val_priority,set_valuepriority]=useState("")
+    const[val_category,set_valuecategory]=useState("")
     
-    const change=(e)=>{
+    const category_drop=(value,category_id)=>{
        
-        setdefault(e)
+        setdefault(value)
         setf((data)=>({
             ...data,
-            [set.data_m]:e
+            [set.data_m]:value
         }))
+        set_valuecategory(category_id)
     }
     
-    const change_cat=(e)=>{
+    const priority_drop=(value,id)=>{
        
-        setdefcat(e)
+        setdefcat(value)
         setcat((data)=>({
             ...data,
-            [cat.data_m]:e
+            [cat.data_m]:value
         }))
+        set_valuepriority(id)
     }
     async function FetchPriority(){
         await con().get("/fetch_priority").then((data)=>{
@@ -36,11 +40,13 @@ export default function SubmitForm(){
         })
     }
     async function Submit(e){
+        console.log(val_category);
+        console.log(val_priority)
         e.preventDefault();
-        await con().post('/submit',{category_id:1,priority_id:1,user_id:102,staff_id:121}).then(()=>{
+        await con().post('/submit',{category_id:val_category,priority_id:val_priority,user_id:102,staff_id:121}).then(()=>{
             alert("data saved successfully");
-            change_cat("Default Options")
-            change("Default Priority")
+            priority_drop("Default Priority")
+            category_drop("Default Category")
         }).catch((error)=>{
             console.log(error);
             alert("An error occured");
@@ -104,10 +110,10 @@ export default function SubmitForm(){
                                 <DropdownMenu.Trigger>
                                 <Button size={"3"} style={{cursor:"pointer"}} type="button" variant="soft" color="gray"><Main_Text>{defcat}</Main_Text></Button>
                                 </DropdownMenu.Trigger>
-                                <DropdownMenu.Content>
-                                    {priority_arr.map((item)=>(
-                                        <DropdownMenu.Item onClick={()=>change_cat(item.priority)} 
-                                        key={item.id_}>
+                                <DropdownMenu.Content >
+                                    {priority_arr.map((item,index)=>(
+                                        <DropdownMenu.Item onClick={()=>priority_drop(item.priority,item.id_)} 
+                                        key={index}>
                                             {item.priority}
                                         </DropdownMenu.Item>
                                     ))}
@@ -126,7 +132,7 @@ export default function SubmitForm(){
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
                                     {arr.map((item)=>(
-                                    <DropdownMenu.Item onClick={()=>change(item.category_name)} 
+                                    <DropdownMenu.Item onClick={()=>category_drop(item.category_name,item.category_id)} 
                                     key={item.category_id}>{item.category_name}</DropdownMenu.Item>
 
                                     ))}

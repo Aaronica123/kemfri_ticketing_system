@@ -2,12 +2,17 @@ import { Nav_button } from "../ui/buttons"
 import { ArrowLeftIcon } from "lucide-react"
 import Main_Text, { Head_Mess, Head_Text, Input_Field } from "../ui/text"
 import { Button, Card, DropdownMenu, TextArea } from "@radix-ui/themes/dist/cjs/index.js"
-import { useState } from "react"
+import { useState } from "react";
+import con from "../axios/axios";
+import { useEffect } from "react";
 export default function SubmitForm(){
     const [set,setf]=useState({data_m:"options"})
     const [cat,setcat]=useState({data_m:"options"})
     const [def,setdefault]=useState("Select Options")
     const [defcat,setdefcat]=useState("default");
+    const [arr,setarr]=useState([]);
+    const [priority_arr,set_priority_array]=useState([]);
+    
     const change=(e)=>{
        
         setdefault(e)
@@ -25,6 +30,36 @@ export default function SubmitForm(){
             [cat.data_m]:e
         }))
     }
+    async function FetchPriority(){
+        await con().get("/fetch_priority").then((data)=>{
+            set_priority_array(data.data.data);
+        })
+    }
+    async function Submit(e){
+        e.preventDefault();
+        await con().post('/submit',{category_id:1,priority_id:1,user_id:102,staff_id:121}).then(()=>{
+            alert("data saved successfully");
+            change_cat("Default Options")
+            change("Default Priority")
+        }).catch((error)=>{
+            console.log(error);
+            alert("An error occured");
+        })
+    }
+    async function fetch(){
+        
+            await con().get('/fetch_category').then((data)=>{
+               var c=data.data.data;
+               setarr(c);               
+            }).catch((error)=>{console.log(error)})
+        
+    }
+    useEffect(()=>{
+        fetch();
+        FetchPriority();
+    },[])
+
+
     return(
         <>
         <div style={{width:"80%", height:"100%",
@@ -70,8 +105,14 @@ export default function SubmitForm(){
                                 <Button size={"3"} style={{cursor:"pointer"}} type="button" variant="soft" color="gray"><Main_Text>{defcat}</Main_Text></Button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
-                                    <DropdownMenu.Item onClick={()=>change_cat("Network")}>Network</DropdownMenu.Item>
-                                     <DropdownMenu.Item onClick={()=>change_cat("Software")}>Software</DropdownMenu.Item>
+                                    {priority_arr.map((item)=>(
+                                        <DropdownMenu.Item onClick={()=>change_cat(item.priority)} 
+                                        key={item.id_}>
+                                            {item.priority}
+                                        </DropdownMenu.Item>
+                                    ))}
+                                    {/* <DropdownMenu.Item onClick={()=>change_cat("Network")}>Network</DropdownMenu.Item>
+                                     <DropdownMenu.Item onClick={()=>change_cat("Software")}>Software</DropdownMenu.Item> */}
                                 </DropdownMenu.Content>
                             </DropdownMenu.Root>
                         </div>
@@ -84,8 +125,14 @@ export default function SubmitForm(){
                                 <Button size={"3"} type="button" style={{cursor:"pointer"}} variant="soft" color="gray"><Main_Text>{def}</Main_Text></Button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
-                                    <DropdownMenu.Item onClick={()=>change("low")} >Low</DropdownMenu.Item>
-                                    <DropdownMenu.Item onClick={()=>change("medium")} >Medium</DropdownMenu.Item>
+                                    {arr.map((item)=>(
+                                    <DropdownMenu.Item onClick={()=>change(item.category_name)} 
+                                    key={item.category_id}>{item.category_name}</DropdownMenu.Item>
+
+                                    ))}
+                                    
+                                    {/* <DropdownMenu.Item onClick={()=>change("low")} >Low</DropdownMenu.Item>
+                                    <DropdownMenu.Item onClick={()=>change("medium")} >Medium</DropdownMenu.Item> */}
                                 </DropdownMenu.Content>
                             </DropdownMenu.Root>
                         </div>
@@ -94,7 +141,7 @@ export default function SubmitForm(){
                         <Head_Text>Description *</Head_Text>
                        <TextArea ></TextArea>
                     </div>
-                    <Button size={"3"} variant="classic" style={{width:"fit-content",cursor:"pointer"}}>Submit</Button>
+                    <Button size={"3"} variant="classic" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
                 </Card>
 
             </div>

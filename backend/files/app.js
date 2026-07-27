@@ -11,6 +11,9 @@ import DeletSession from "./sessions/delete.js";
 import Logout from "./actions/logout.js";
 import Login from "./actions/login.js";
 import Getcache from "./cache/get.js";
+import SubmitTicket from "./tickets/submit.js";
+import FetchCategory from "./tickets/get_data.js";
+import { FetchPriority } from "./tickets/get_data.js";
 import cors from "cors";
 
 configDotenv();
@@ -60,4 +63,7 @@ app.delete('/delete',DeletSession);
 app.post('/login',Login);
 app.get('/getcache',Getcache);
 app.post('/logout',Logout);
+app.post('/submit',SubmitTicket);
+app.get('/fetch_category',FetchCategory);
+app.get('/fetch_priority',FetchPriority);
 export default app;

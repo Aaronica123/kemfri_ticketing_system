@@ -5,6 +5,7 @@ import Toast_Provider from "./ui/toast";
 import Login_form from "./forms/login_form";
 import Nav_bar from "./ui/nav_bar";
 import Dashboard from "./pages/Dashboard";
+import SubmitForm from "./pages/Submit_ticket";
 import './App.css'
 
 function App() {
@@ -21,6 +22,11 @@ function App() {
             <Route path="/dashboard" element={
               <Nav_bar>
                 <Dashboard/>
+              </Nav_bar>
+            }/>
+            <Route path='/submit' element={
+               <Nav_bar>
+                <SubmitForm/>
               </Nav_bar>
             }/>
           </Routes>

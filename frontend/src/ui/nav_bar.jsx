@@ -28,6 +28,15 @@ async function logout(){
         alert("An error has encountered");
     });
 }
+const tickets=()=>{nav('/my_tickets')}
+const dir=(value)=>{
+    if(value==1){
+        nav('/dashboard')
+    }
+    else{
+        nav('/submit')
+    }
+}
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
@@ -55,20 +64,21 @@ return(<>
                      <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
         color:"rgba(15, 15, 15, 0.733)"
-    }} ><LayoutDashboard></LayoutDashboard>
+    }} onClick={()=>dir(1)}><LayoutDashboard></LayoutDashboard>
     <Main_Text> Dashboard</Main_Text></Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} ><TicketPlus/>
+        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>dir(2)}><TicketPlus/>
     <Main_Text> Submit Ticket</Main_Text></Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} ><ListTodo/>
+    }} onClick={tickets} ><ListTodo/>
     <Main_Text> My Tickets</Main_Text></Button>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} ><BookOpenCheck/>
-    <Main_Text>Knowledge Base</Main_Text></Button>
+    }} ><BookOpenCheck />
+    <Main_Text>Know Ledge</Main_Text>
+    </Button>
                 </div>
 
             </div>

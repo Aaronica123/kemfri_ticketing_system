@@ -2,7 +2,7 @@ import { TextField,Text,Heading } from "@radix-ui/themes/dist/cjs/index.js";
 
 export default function Main_Text({children,color}){
     return(<>
-    <Text size="5" weight={"medium"} color={color?color:""} style={{fontFamily:"ui-sans-serif",width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",flexWrap:"nowrap"}}>
+    <Text size="5" weight={"medium"} color={color?color:""} style={{fontFamily:"ui-sans-serif",width:"100%",height:"fit-content",display:"flex",flexDirection:"row",flexWrap:"nowrap"}}>
         {children}
     </Text>
     </>)
@@ -14,6 +14,7 @@ export function Input_Field({placeholder,type,max,value,name,change}){
         style={{width:"100%",height:"fit-content",display:"flex", padding:"5px"}}
         className="frm"color="grey"
         required value={value} name={name} onChange={change}>
+            
         </TextField.Root>
         </>
     )

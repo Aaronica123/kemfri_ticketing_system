@@ -14,6 +14,7 @@ import Getcache from "./cache/get.js";
 import SubmitTicket from "./tickets/submit.js";
 import FetchCategory from "./tickets/get_data.js";
 import { FetchPriority } from "./tickets/get_data.js";
+import GetTicket from "./tickets/get_tickets.js";
 import cors from "cors";
 
 configDotenv();
@@ -66,4 +67,5 @@ app.post('/logout',Logout);
 app.post('/submit',SubmitTicket);
 app.get('/fetch_category',FetchCategory);
 app.get('/fetch_priority',FetchPriority);
+app.get('/get_tickets',GetTicket);
 export default app;

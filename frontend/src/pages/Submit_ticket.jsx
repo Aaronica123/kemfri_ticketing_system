@@ -13,7 +13,14 @@ export default function SubmitForm(){
     const [arr,setarr]=useState([]);
     const [priority_arr,set_priority_array]=useState([]);
     const [val_priority,set_valuepriority]=useState("")
-    const[val_category,set_valuecategory]=useState("")
+    const[val_category,set_valuecategory]=useState("");
+    const [frm,setfrm]=useState({ticket_issue:""})
+    const change=(e)=>{
+        const{name,value}=e.target;
+        setfrm(()=>({
+            [name]:value
+        }))
+    }
     
     const category_drop=(value,category_id)=>{
        
@@ -42,11 +49,13 @@ export default function SubmitForm(){
     async function Submit(e){
         console.log(val_category);
         console.log(val_priority)
+        console.log(frm.ticket_issue)
         e.preventDefault();
-        await con().post('/submit',{category_id:val_category,priority_id:val_priority,user_id:102}).then(()=>{
+        await con().post('/submit',{category_id:val_category,priority_id:val_priority,user_id:102,ticket_issue:frm.ticket_issue}).then(()=>{
             alert("data saved successfully");
             priority_drop("Default Priority")
             category_drop("Default Category")
+            setfrm({ticket_issue:""});
         }).catch((error)=>{
             console.log(error);
             alert("An error occured");
@@ -70,7 +79,7 @@ export default function SubmitForm(){
         <>
         <div style={{width:"80%", height:"100%",
             display:"flex", flexDirection:"column", justifyContent:"center",alignItems:"center",
-            gap:"5px",marginLeft:"55px"
+            gap:"5px",marginLeft:"25px"
         }}>
             <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
             }}>
@@ -145,7 +154,7 @@ export default function SubmitForm(){
                     </div>
                     <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex"}}>
                         <Head_Text>Description *</Head_Text>
-                       <TextArea ></TextArea>
+                       <TextArea value={frm.ticket_issue} onChange={change} name="ticket_issue" ></TextArea>
                     </div>
                     <Button size={"3"} variant="classic" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
                 </Card>

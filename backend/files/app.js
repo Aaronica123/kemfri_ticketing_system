@@ -15,6 +15,9 @@ import SubmitTicket from "./tickets/submit.js";
 import FetchCategory from "./tickets/get_data.js";
 import { FetchPriority } from "./tickets/get_data.js";
 import GetTicket from "./tickets/get_tickets.js";
+import { TotalTickets } from "./tickets/get_data.js";
+import { PendingTickets } from "./tickets/get_data.js";
+import { ResolvedTickets } from "./tickets/get_data.js";
 import cors from "cors";
 
 configDotenv();
@@ -68,4 +71,7 @@ app.post('/submit',SubmitTicket);
 app.get('/fetch_category',FetchCategory);
 app.get('/fetch_priority',FetchPriority);
 app.get('/get_tickets',GetTicket);
+app.get('/total_tickets',TotalTickets);
+app.get('/pending_tickets',PendingTickets);
+app.get('/resolved_tickets',ResolvedTickets);
 export default app;

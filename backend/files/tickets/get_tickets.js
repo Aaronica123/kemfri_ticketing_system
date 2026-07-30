@@ -21,7 +21,13 @@ export default async function GetTicket(req,res){
             count=Math.ceil((data.rows[0].count)/batch);
             console.log("count is " +count )
             if(index>=count){
-                offset=(count-1)*batch
+                if(count==0){
+                    offset=count*batch
+                }
+                else{
+                    offset=(count-1)*batch
+                }
+                
             }
             else if(index<=0){
                 offset=0*batch;

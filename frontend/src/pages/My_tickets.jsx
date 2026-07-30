@@ -4,17 +4,35 @@ import { useState } from "react";
 import con from "../axios/axios";
 import { useEffect } from "react";
 export default function MyTickets(){
-    const [arr,setarr]=useState([]);
+    
     const [final,setfinal]=useState([]);
+    const [index,setindex]=useState(1);
+    const [total,settotal]=useState("");
+    
+    const next=async()=>{
+        if(index<total){
+            setindex(index+1)
+        }
+        // await fetch();
+        // set_final_index(index);
+    }
+    const back=async()=>{
+        if(index>1 &&index<=total){
+            setindex(index-1)
+        }
+        // await fetch();
+        // set_final_index(index);
+    }
     const fetch=async()=>{
-        await con().get('/get_tickets').then((data)=>{
+        await con().get(`/get_tickets?ind=${index}`).then((data)=>{
             // alert('Data fetched');
         
             
            const transformedData = data.data.data.map(item => Object.values(item));
            setfinal(transformedData);
-            
-            console.log(arr);
+          console.log(data.data.total)
+          settotal(data.data.total)
+        
             
         }).catch((error)=>{
             console.log(error);
@@ -23,7 +41,7 @@ export default function MyTickets(){
     }
     useEffect(()=>{
         fetch();
-    },[]);
+    },[index]);
     // const ft=()=>{
     //     console.log(Object.values(arr[0]));
     //     arr.forEach((item)=>{
@@ -37,6 +55,7 @@ export default function MyTickets(){
         <div style={{width:"100%",height:"100%",display:"flex",
             flexDirection:"column",justifyContent:"left",gap:"10px",marginLeft:"25px"
         }}>
+            {/* <div><Main_Text>{total}</Main_Text></div> */}
             <div style={{display:"flex",flexDirection:"column",gap:"2px",
                 justifyContent:"left",width:"100%",height:"fit-content"
             }}>
@@ -90,39 +109,27 @@ export default function MyTickets(){
                             <Table.Cell>Priority</Table.Cell>
                             <Table.Cell>Pending</Table.Cell>
                             <Table.Cell>Resolved</Table.Cell>
-                            <Table.Cell>SLA</Table.Cell>
+                            <Table.Cell>Date</Table.Cell>
+                            <Table.Cell>Time</Table.Cell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
+                    <Table.Body >
                         
                         {final.map((item,index)=>(
-                            <Table.Row key={index}>
+                            <Table.Row key={index}  >
                             {item.map((value,ind)=>(
                                 <Table.Cell key={ind}>{ind==4||ind==5?value==true?"TRUE":"FALSE":value}</Table.Cell>
                             ))}
                              </Table.Row>
                         ))}
                        
-                        {/* <Table.Row>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1dssaaasssssssssssssssssss</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                        </Table.Row>
-                        <Table.Row style={{cursor:"pointer"}}>
-                            <Table.Cell>
-                                <Main_Text color={"teal"}>Jajaj</Main_Text></Table.Cell>
-                            <Table.Cell>Ticket</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                            <Table.Cell>Ticket 1</Table.Cell>
-                        </Table.Row> */}
+                       
                     </Table.Body>
+                    <div style={{position:"fixed",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",height:"fit-content",gap:"5px"}}>
+                        <Main_Text color={"teal"}>Current page {index}</Main_Text>
+                        <Button color={"teal"} onClick={back}style={{cursor:"pointer"}}>Back</Button>
+                        <Button color={"teal"} onClick={next} style={{cursor:"pointer"}}>Next</Button>
+                       </div>
                 </Table.Root>
             </div>
         </div>

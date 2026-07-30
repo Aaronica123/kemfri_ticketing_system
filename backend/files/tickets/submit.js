@@ -28,8 +28,10 @@ group by(t.staff_id,r.staff_id,c.category_name) order by count(t.staff_id) asc;`
     staff_id=null;
 })
 if(staff_id){
-        await con.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue) values($1,$2,$3,$4,$5,$6)',
-            [p,category_id,priority_id,staff_id,100,ticket_issue]).then(()=>{
+    const d=new Date().toISOString();
+    console.log(d);
+        await con.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue,date_entered) values($1,$2,$3,$4,$5,$6,$7)',
+            [p,category_id,priority_id,staff_id,100,ticket_issue,d]).then(()=>{
                 m=200;
                 console.log("ticket created");
                 return res.status(200).json({message:"Ticket has been created",ticket:p})

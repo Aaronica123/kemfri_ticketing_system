@@ -2,10 +2,10 @@ import {Pool} from "pg"
 import { configDotenv } from "dotenv"
 configDotenv();
 //pool declaration configuration that provides maximum connections of users simultaneously
-export const conf=new Pool({
+export const ICT=new Pool({
     database:"kemfri_database",
-    user:"app_service",
-    password:process.env.passwordapp,
+    user:"staff",
+    password:process.env.passwordstaff,
     host:"localhost",
     max:5,
     maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
@@ -14,7 +14,18 @@ export const conf=new Pool({
     idleTimeoutMillis:10000,//duration for idle connection when connected to pool between disconnection
     connectionTimeoutMillis:1000//connection time for a use rto be given a connection
 })
-
+export const USERS=new Pool({
+    database:"kemfri_database",
+    user:"users",
+    password:process.env.passwordusers,
+    host:"localhost",
+    max:5,
+    maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
+    port:5432,
+    allowExitOnIdle:false,//pool to reman active always and not terminate 
+    idleTimeoutMillis:10000,//duration for idle connection when connected to pool between disconnection
+    connectionTimeoutMillis:1000//connection time for a use rto be given a connection
+})
 //function responsible for assigning connections to users via a pool and reuse them 
 export default async function Pl(req,res){
 try{

@@ -100,7 +100,7 @@ return(<>
                          <Main_Text>{localStorage.getItem('firstname')}</Main_Text> 
                          <br></br>
                          {/* <Main_Text>Otieno</Main_Text>  */}
-                      <Main_Text>{localStorage.getItem('lastname')}</Main_Text> 
+                      {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
                         </div>
                         <Badge variant="soft" size={"3"} style={{width:"fit-content",display:"flex"}}>User One</Badge>
                     </div>

@@ -1,4 +1,4 @@
-import { conf } from "../connection/pool.js";
+import { conn } from "../app.js";
 import CreateSession from "../sessions/create.js";
 import StatusSession from "../sessions/status.js";
 export default async function Login(req,res){
@@ -18,7 +18,7 @@ export default async function Login(req,res){
         return res.status(200).json({message:"User already logged in"})
     }
     else{
-      const con=await conf.connect()
+      
     try{
         const{email,password}=req.body;
         if(!email||!password){
@@ -30,37 +30,27 @@ export default async function Login(req,res){
             console.log("wrong syntaax")
             return res.status(405).json({message:"Check input syntax"});
         }
-        var m=null
+        var m=200
         const email_=String(email).toLocaleLowerCase();
         const p=String(email_).slice(0,(String(email_).length-11))
-        const data_array=[]
         var name=null
-        var last=null
+        var role=null
+        var id=null
         console.log("email is " +p)
-        await con.query(`set session authorization ${(email_.slice(0,(email_.length-11)))}`).then(()=>{
-            console.log("verified")
-            m=200
-            return m;
-        }).catch((error)=>{
-            console.log(error)
-            m=500
-            return m;
-        })
         if(m==200){
-        await con.query("select * from kemfri_schema.register;").then((data)=>{
+        await conn.query("select * from kemfri_schema.staff_registry where email like $1 and staff_password=$2;",[email,password]).then((data)=>{
             if(data.rowCount>0){
                
                 console.log('user found');
-                console.log(data.rows[0].first_name);
-                data_array.push({
-                    first_name:data.rows[0].first_name
-                })
-                name=data.rows[0].first_name
-                last=data.rows[0].last_name
+                name=data.rows[0].first_name;
+                role=data.rows[0].staff_role;
+                id=data.rows[0].staff_id
+                console.log("name is "+name +" role is "+role);
                 m=200;
             }
             else{
                 console.log('user not found');
+                console.log(data.rows);
                 m=404;
             }
         }).catch((error)=>{
@@ -69,7 +59,7 @@ export default async function Login(req,res){
         if(m==200){
             
             console.log("verifiying")
-            await CreateSession(req,res,name,last);
+            await CreateSession(req,res,name,role,id);
             
         }
         else{
@@ -83,7 +73,7 @@ export default async function Login(req,res){
     }
         // return m;
     }finally{
-        con.release();
+        // con.release();
         console.log("released");
     }
 }

@@ -1,7 +1,7 @@
-import { conf } from "../connection/pool.js";
 
+import { USERS } from "../connection/pool.js";
 export default async function GetTicket(req,res){
-    const connect=await conf.connect();
+    const connect=await USERS.connect();
     try{
         const ind=Object.values(req.query);
         if(!ind||!Number(ind)){
@@ -43,17 +43,18 @@ export default async function GetTicket(req,res){
         });
         if(m=200){
             await connect.query(`SET TIME ZONE 'Africa/Nairobi';`)
+            console.log(req.session.user.user_id);
         await connect.query(`
             select t.ticket_id,t.ticket_issue,c.category_name,p.priority,t.pending,
             t.resolved,TO_CHAR(t.date_entered, 'YYYY-MM-DD') AS date_entered,
             TO_CHAR(t.time_entered, 'HH-MI-SS') AS time_entered
-            from kemfri_schema.tickets t join kemfri_schema.category c
+            from kemfri_schema.tickets as t join kemfri_schema.category c
 on t.category_id=c.category_id join kemfri_schema.priority p
 on p.id_=t.priority_id
-where t.date_entered<=$3 and
+where t.date_entered<=$3 and t.user_id = $4 and
 t.time_entered<=current_time order by t.date_entered,t.time_entered desc 
             limit $1
-            offset $2`,[batch,offset,new Date().toISOString()]).then((data)=>{
+            offset $2`,[batch,offset,new Date().toISOString(),req.session.user.user_id]).then((data)=>{
                 console.log(data.rows);
                 m=200
                 return res.status(200).json({message:"Data fetched",

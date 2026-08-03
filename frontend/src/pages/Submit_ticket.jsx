@@ -51,7 +51,7 @@ export default function SubmitForm(){
         console.log(val_priority)
         console.log(frm.ticket_issue)
         e.preventDefault();
-        await con().post('/submit',{category_id:val_category,priority_id:val_priority,user_id:102,ticket_issue:frm.ticket_issue}).then(()=>{
+        await con().post('/submit',{category_id:val_category,priority_id:val_priority,ticket_issue:frm.ticket_issue}).then(()=>{
             alert("data saved successfully");
             priority_drop("Default Priority")
             category_drop("Default Category")

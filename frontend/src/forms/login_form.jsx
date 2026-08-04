@@ -31,12 +31,10 @@ export default function Login_form(){
             console.log(data.status);
             alert("successfully received");
             localStorage.setItem('firstname',data.data.data.name)
-            
-            console.log(data.data.data.email);
             nav('/dashboard')
         }).catch((error)=>{
             console.log(error);
-            alert("Error encountered");
+            
         })
     }
     

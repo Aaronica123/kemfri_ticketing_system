@@ -9,7 +9,7 @@ import SubmitForm from "./pages/Submit_ticket";
 import MyTickets from "./pages/My_tickets";
 import StaffDashboard from "./pages/Staff_Dashboard";
 import './App.css'
-
+import AuthContext from "./auth/auth_context";
 function App() {
 
 
@@ -22,24 +22,32 @@ function App() {
             <Route path="/" element={<Login_form/>}/>
             <Route path="/nav" element={<Nav_bar/>}/>
             <Route path="/dashboard" element={
+              <AuthContext>
               <Nav_bar>
                 <Dashboard/>
               </Nav_bar>
+              </AuthContext>
             }/>
             <Route path='/submit' element={
+             <AuthContext> 
                <Nav_bar>
                 <SubmitForm/>
               </Nav_bar>
+              </AuthContext>
             }/>
             <Route path="/my_tickets" element={
+              <AuthContext>
               <Nav_bar>
               <MyTickets/>
-              </Nav_bar>}/>
+              </Nav_bar>
+              </AuthContext>}/>
               <Route path="/staff_dashboard"
               element={
+                <AuthContext>
               <Nav_bar>
               <StaffDashboard/>
-              </Nav_bar>}/>
+              </Nav_bar>
+              </AuthContext>}/>
               
              
           </Routes>

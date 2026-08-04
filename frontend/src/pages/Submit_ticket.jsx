@@ -58,7 +58,7 @@ export default function SubmitForm(){
             setfrm({ticket_issue:""});
         }).catch((error)=>{
             console.log(error);
-            alert("An error occured");
+            // alert("An error occured");
         })
     }
     async function fetch(){

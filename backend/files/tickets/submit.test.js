@@ -5,6 +5,7 @@ import GetTicket from "./get_tickets.js";
 import { TotalTickets } from "./get_data.js";
 import { ResolvedTickets } from "./get_data.js";
 import { PendingTickets } from "./get_data.js";
+import GetStaffTickets from "./staff/staff_get_tickets.js";
 test('submit ticket testing',async()=>{
     expect(await SubmitTicket({category_id:3})).toBe(200);
 })
@@ -20,9 +21,12 @@ test('get tickets ',async ()=>{
 test('fetch tickets count ',async()=>{
     expect(await TotalTickets()).toBe(200)
 })
-test.only('fetch pending tickets',async()=>{
+test('fetch pending tickets',async()=>{
     expect(await PendingTickets()).toBe(200);
 })
-test.only('fetch resolved tickets',async()=>{
+test('fetch resolved tickets',async()=>{
     expect(await ResolvedTickets()).toBe(200);
+})
+test.only('get tickets for staff',async()=>{
+    expect(await GetStaffTickets({user_id:'staff100'})).toBe(200)
 })

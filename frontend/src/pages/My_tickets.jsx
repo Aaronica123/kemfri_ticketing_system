@@ -36,7 +36,7 @@ export default function MyTickets(){
             
         }).catch((error)=>{
             console.log(error);
-            alert('failed to fetch')
+            // alert('failed to fetch')
         })
     }
     useEffect(()=>{

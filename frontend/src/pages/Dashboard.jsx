@@ -14,7 +14,7 @@ export default function Dashboard(){
                 total:data.data.count}))
         }).catch((error)=>{
             console.log(error);
-            alert("an error occured");
+            // alert("an error occured");
         })
     }
     const pending_fetch=async()=>{
@@ -23,7 +23,7 @@ export default function Dashboard(){
                 pending:data.data.count}))
         }).catch((error)=>{
             console.log(error);
-            alert("an error occured");
+            // alert("an error occured");
         })
     }
     const resolved_fetch=async()=>{
@@ -32,7 +32,7 @@ export default function Dashboard(){
                 solved:data.data.count}))
         }).catch((error)=>{
             console.log(error);
-            alert("an error occured");
+            // alert("an error occured");
         })
     }
     useEffect(()=>{

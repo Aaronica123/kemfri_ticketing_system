@@ -37,6 +37,7 @@ const dir=(value)=>{
         nav('/submit')
     }
 }
+
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
@@ -76,7 +77,8 @@ return(<>
     <Main_Text> My Tickets</Main_Text></Button>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} ><BookOpenCheck />
+    }}
+    onClick={()=>{nav('/staff_dashboard')}} ><BookOpenCheck />
     <Main_Text>Know Ledge</Main_Text>
     </Button>
                 </div>

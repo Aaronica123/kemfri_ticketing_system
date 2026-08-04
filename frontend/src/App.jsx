@@ -7,6 +7,7 @@ import Nav_bar from "./ui/nav_bar";
 import Dashboard from "./pages/Dashboard";
 import SubmitForm from "./pages/Submit_ticket";
 import MyTickets from "./pages/My_tickets";
+import StaffDashboard from "./pages/Staff_Dashboard";
 import './App.css'
 
 function App() {
@@ -34,7 +35,15 @@ function App() {
               <Nav_bar>
               <MyTickets/>
               </Nav_bar>}/>
+              <Route path="/staff_dashboard"
+              element={
+              <Nav_bar>
+              <StaffDashboard/>
+              </Nav_bar>}/>
+              
+             
           </Routes>
+
         </Toast_Provider>
       </Router>
       

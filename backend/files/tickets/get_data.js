@@ -87,7 +87,7 @@ export async function ResolvedTickets(req,res){
     try{
         const{user_id}=req.session.user;
         if(!user_id){
-            return res.status(500).json({message:"Ticket cound found",count:0})
+            return res.status(500).json({message:"Ticket could not be found",count:0})
         }
         await connect.query(`select*from kemfri_schema.tickets where user_id=$1 and resolved=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);

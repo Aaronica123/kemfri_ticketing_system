@@ -91,7 +91,7 @@ return(<>
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
     onClick={()=>{nav('/staff_dashboard')}} ><BookOpenCheck />
-    <Main_Text>Know Ledge</Main_Text>
+    <Main_Text>Assigned Tickets</Main_Text>
     </Button>
     :""}
                 </div>

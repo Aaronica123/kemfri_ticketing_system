@@ -20,6 +20,7 @@ import { PendingTickets } from "./tickets/get_data.js";
 import { ResolvedTickets } from "./tickets/get_data.js";
 import GetStaffTickets from "./tickets/staff/staff_get_tickets.js";
 import CheckStatusLogin from "./actions/status.js";
+import UpdateTicket from "./tickets/staff/staff_update_tickets.js";
 import cors from "cors";
 
 configDotenv();
@@ -78,4 +79,5 @@ app.get('/pending_tickets',PendingTickets);
 app.get('/resolved_tickets',ResolvedTickets);
 app.get('/staff_tickets',GetStaffTickets);
 app.get('/get_login_status',CheckStatusLogin);
+app.post('/update_ticket',UpdateTicket);
 export default app;

@@ -7,6 +7,7 @@ import { CheckContxt } from "../auth/auth_context";
 export default function StaffDashboard(){
     const{group,loading}=CheckContxt();
     const [data_,setdata]=useState([]);
+    const [tick,settick]=useState(null);
     
     const f=async()=>{
         try{
@@ -28,6 +29,26 @@ export default function StaffDashboard(){
     useEffect(()=>{
         f();
     },[]);
+    const update=async()=>{
+        try{
+            if(!tick)
+            {
+                alert("Must enter a ticket id")
+            }else{
+                
+            await con().post('/update_ticket',{ticket_id:tick}).then((data)=>{
+                console.log(data);
+                alert("Updated")
+            }).catch((error)=>{
+                alert("error");
+                console.log(error)
+            })
+            }
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
     if(loading){
         return (
             <div>Loading Please wait</div>
@@ -63,17 +84,19 @@ export default function StaffDashboard(){
                             <Table.Cell style={{width:"fit-content",height:"100%",display:"flex",padding:"5px"}}>
                             <AlertDialog.Root>
                                 <AlertDialog.Trigger>
-                                     <Button>Resolve</Button>
+                                     <Button onClick={()=>{
+                                     settick(value[0]);   
+                                     }} style={{cursor:"pointer"}}>Resolve</Button>
                                 </AlertDialog.Trigger>
                                 <AlertDialog.Content>
                                     {value.map((data,index)=>(
-                                    <AlertDialog.Description style={{display:"flex",flexDirection:"row",width:"100%",padding:"10px"}}>
+                                    <AlertDialog.Description key={index}style={{display:"flex",flexDirection:"row",width:"100%",padding:"10px"}}>
                                         {index==0?<Main_Text >TicketID</Main_Text>:
                                         index==1?<Main_Text>Ticketissue</Main_Text>:
                                         index==2?<Main_Text>User ID</Main_Text>:
                                         index==3?<Main_Text>Pending</Main_Text>:
                                         index==4?<Main_Text>Status</Main_Text>:''}
-                                       
+                                     
                                       
                                        {index==3?
                                        <div style={{width:"100%",display:"flex"}}>
@@ -88,21 +111,24 @@ export default function StaffDashboard(){
                                        </div>
                                        :<Main_Text>{data}</Main_Text>}
                                        
-                                       {/* <Badge variant="outline" color="blue">{data}</Badge> */}
+                                       
                                     </AlertDialog.Description>
                                     ))}
                                     <AlertDialog.Description>
                                         
                                     </AlertDialog.Description>
-                                    
+                                    <div style={{width:"100%",display:"flex",flexDirection:"row",gap:"10px"}}>
                                     <AlertDialog.Cancel >
-                                    <Button style={{width:"fit-content",display:'flex'}} size="3">Cancel</Button>
+                                    <Button style={{width:"fit-content",display:'flex',cursor:"pointer"}} size="3" variant="outline">Cancel</Button>
                                 </AlertDialog.Cancel>
-                               
+                                <AlertDialog.Action>
+                                    <Button onClick={update} size={"3"} color="green" style={{cursor:"pointer"}}>Resolve</Button>
+                                </AlertDialog.Action>
+                               </div>
                                 </AlertDialog.Content>
                                 
                             </AlertDialog.Root>
-                            {/* <Button>Resolve</Button> */}
+                            
                             </Table.Cell>
                            </Table.Row> 
                         ))}

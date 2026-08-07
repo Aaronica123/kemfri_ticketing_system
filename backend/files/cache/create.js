@@ -28,6 +28,8 @@ export default async function Createcache(req,res){
         
     }catch(error){
         console.log(error);
+await conf.close();
+
         return error;
     }
 }

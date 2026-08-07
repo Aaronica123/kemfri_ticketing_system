@@ -30,6 +30,8 @@ export default async function Getcache(req,res){
     }
     catch(error){
         console.log(error);
+await conf.close();
+
         return 500;
     }
 }

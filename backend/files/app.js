@@ -26,14 +26,14 @@ import cors from "cors";
 configDotenv();
 const app=express();
 
-app.use(cors({methods:["GET","POST","DELETE"],origin:"http://localhost:5173"
+app.use(cors({methods:["GET","POST","DELETE"],origin:"http://frontend_container:80"
     ,allowedHeaders:["Content-Type"]
     ,credentials:true}))
 export const conn=new Client({
     database:"kemfri_database",
     user:"postgres",
     password:process.env.passworddb,
-    host:"localhost",
+    host:"db_container",
     port:5432
 
 })
@@ -62,22 +62,22 @@ const config={
 }
 app.use(session(config))
 app.use(express.json());
-app.post('/rate',Rate);
-app.post('/create',CreateSession);
-app.get('/status',StatusSession);
-app.post('/update',UpdateSession);
-app.delete('/delete',DeletSession);
-app.post('/login',Login);
-app.get('/getcache',Getcache);
-app.post('/logout',Logout);
-app.post('/submit',SubmitTicket);
-app.get('/fetch_category',FetchCategory);
-app.get('/fetch_priority',FetchPriority);
-app.get('/get_tickets',GetTicket);
-app.get('/total_tickets',TotalTickets);
-app.get('/pending_tickets',PendingTickets);
-app.get('/resolved_tickets',ResolvedTickets);
-app.get('/staff_tickets',GetStaffTickets);
-app.get('/get_login_status',CheckStatusLogin);
-app.post('/update_ticket',UpdateTicket);
+app.post('/api/rate',Rate);
+app.post('/api/create',CreateSession);
+app.get('/api/status',StatusSession);
+app.post('/api/update',UpdateSession);
+app.delete('/api/delete',DeletSession);
+app.post('/api/login',Login);
+app.get('/api/getcache',Getcache);
+app.post('/api/logout',Logout);
+app.post('/api/submit',SubmitTicket);
+app.get('/api/fetch_category',FetchCategory);
+app.get('/api/fetch_priority',FetchPriority);
+app.get('/api/get_tickets',GetTicket);
+app.get('/api/total_tickets',TotalTickets);
+app.get('/api/pending_tickets',PendingTickets);
+app.get('/api/resolved_tickets',ResolvedTickets);
+app.get('/api/staff_tickets',GetStaffTickets);
+app.get('/api/get_login_status',CheckStatusLogin);
+app.post('/api/update_ticket',UpdateTicket);
 export default app;

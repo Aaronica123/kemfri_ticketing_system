@@ -10,7 +10,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
+
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -22,11 +22,10 @@ SET row_security = off;
 --
 -- Name: kemfri_schema; Type: SCHEMA; Schema: -; Owner: postgres
 --
-CREATE DATABASE kemfri_database;
-CREATE USER staff password kemfri;
-CREATE USER users password kemfri;
-CREATE SCHEMA kemfri_schema;
 
+CREATE SCHEMA kemfri_schema;
+CREATE USER users PASSWORD 'kemfri';
+CREATE USER staff PASSWORD 'kemfri';
 
 ALTER SCHEMA kemfri_schema OWNER TO postgres;
 

@@ -1,17 +1,10 @@
 name: CD begin
 
 on:
-  workflow_dispatch:
-    inputs:
-      # environment:
-      #   description: 'first cd actions'
-      #   default: 'staging'
-      #   type: choice
-      #   options:
-      #     - staging
-      tag:
-        description: 'tag version'
-        default: '1'
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
 jobs:
  deploy:
     runs-on: ubuntu latest

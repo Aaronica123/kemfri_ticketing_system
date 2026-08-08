@@ -1,0 +1,32 @@
+name: Basic CI building
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs: 
+  builder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code cloning
+        uses: actions/checkout@v3
+      - name: create .env file
+        run: |
+          cat > .env << EOF
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          passwordsess=${{ secrets.PASSWORDSESS }}
+          passwordstaff=${{secrets.PASSWORDSTAFF}}
+          passwordusers=${{secrets.PASSWORDUSERS}}
+          passworddb=${{secrets.PASSWORDDB}}
+          EOF
+      - name: build with docker
+        run: docker-compose build
+      - name: start docker containers
+        run: docker-compose up -d
+      - name: stop containers
+        run: docker-compose down -v  
+
+
+

@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: code cloning
         uses: actions/checkout@v3
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install docker-compose -y
+          docker-compose --version  # Verify installation
       - name: create .env file
         run: |
           cat > .env << EOF

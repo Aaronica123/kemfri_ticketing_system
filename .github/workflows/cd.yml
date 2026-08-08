@@ -1,42 +1,43 @@
 name: CD begin
 
 on:
-  push:
+ push:
     branches: ['main']
-  pull_request:
+ pull_request:
     branches: ['main']
+
 jobs:
- deploy:
-    runs-on: ubuntu latest
+  deploy:
+    runs-on: ubuntu-latest
     
     steps:
-      - name: git clone
-        uses: actions/checkout@v3
-      - name: env creation
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: aaronica123
+          password: ${{ secrets.DOCKER_SECRET }}
+      
+     
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Create env file
         run: |
           cat > .env << EOF
-          POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}}
-          passwordsess=${{secrets.passwordsess}}
-          passwordstaff=${{secrets.passwordstaff}}
-          passwordusers=${{secrets.passwordusers}}
-          passworddb=${{secrets.passworddb}}
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          passwordsess=${{ secrets.passwordsess }}
+          passwordstaff=${{ secrets.passwordstaff }}
+          passwordusers=${{ secrets.passwordusers }}
+          passworddb=${{ secrets.passworddb }}
           EOF
-      - name: docker login
-        run: |
-          docker login --username aaronica123 --password-stdin <<< `${{secrets.DOCKER_SECRET}}`
-      - name: docker pull
-        run: |
-          docker pull aaronica123/redis_stable:1.0
-          docker pull aaronica123/backend_stable:1.0
-          docker pull aaronica123/frontend_stable:1.0
-          docker pull aaronica123/db_stable:1.0
-      - name: docker execute
-        run: |
-          docker compose -f docker-compose.prod.yml -d
-        
-
       
-  
-
-        
+      - name: Pull and deploy
+        run: |
+          docker compose -f docker-compose.prod.yml pull
+          docker compose -f docker-compose.prod.yml up -d
       
+      # - name: Health check
+      #   run: |
+      #     sleep 10
+      #     docker compose -f docker-compose.prod.yml ps

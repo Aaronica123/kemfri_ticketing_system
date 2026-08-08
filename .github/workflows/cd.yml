@@ -1,0 +1,71 @@
+name: CD begin
+
+on:
+  workflow_dispatch:
+    inputs:
+      # environment:
+      #   description: 'first cd actions'
+      #   default: 'staging'
+      #   type: choice
+      #   options:
+      #     - staging
+      tag:
+        description: 'tag version'
+        default: 1
+
+ jobs:
+    runs-on: ubuntu latest
+    
+    steps:
+      - name: git clone
+        uses: actions/checkout@v3
+      - name: env creation
+        run: |
+          cat > .env << EOF
+          POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}}
+          passwordsess=${{secrets.passwordsess}}
+          passwordstaff=${{secrets.passwordstaff}}
+          passwordusers=${{secrets.passwordusers}}
+          passworddb=${{secrets.passworddb}}
+          EOF
+      - name: docker install
+        run: |
+        
+          sudo apt update
+          sudo apt install ca-certificates curl
+          sudo install -m 0755 -d /etc/apt/keyrings
+          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+          # Add the repository to Apt sources:
+          sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+          Types: deb
+          URIs: https://download.docker.com/linux/ubuntu
+          Suites: bookworm
+          Components: stable
+          Architectures: $(dpkg --print-architecture)
+          Signed-By: /etc/apt/keyrings/docker.asc
+          EOF
+
+          sudo apt update
+          sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+      - name: docker login
+        run: |
+          docker login --username aaronica123 --password-stdin <<< `${{secrets.DOCKER_SECRET}}`
+      - name: docker pull
+        run: |
+          docker pull aaronica123/redis_stable:1.0
+          docker pull aaronica123/backend_stable:1.0
+          docker pull aaronica123/frontend_stable:1.0
+          docker pull aaronica123/db_stable:1.0
+      - name: docker execute
+        run: |
+          docker compose -f docker-compose.prod.yml -d
+        
+
+      
+  
+
+        
+      

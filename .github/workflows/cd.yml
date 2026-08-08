@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: docker login
         run: |
-          docker login --username aaronica123 -p << `${{secrets.DOCKER_SECRET}}`
+          echo "${{secrets.DOCKER_SECRET}}" | docker login --username aaronica123 --password-stdin
       - name: docker pull
         run: |
           docker pull aaronica123/redis_stable:1.0

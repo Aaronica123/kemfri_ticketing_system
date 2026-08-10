@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "start": "node ./files/index.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage --detectOpenHandles"
+    "test": "jest --coverage --detectOpenHandles",
+    "test int": "jest ./files/intergration_test/status.test.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@babel/preset-env": "^7.29.7",
+    "babel-jest": "^30.4.1",
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
     "cors": "^2.8.6",
@@ -20,6 +23,7 @@
     "express-session": "^1.19.0",
     "jest": "^30.4.2",
     "pg": "^8.22.0",
-    "redis": "^6.1.0"
+    "redis": "^6.1.0",
+    "supertest": "^7.2.2"
   }
 }

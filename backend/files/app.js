@@ -33,15 +33,17 @@ export const conn=new Client({
     database:"kemfri_database",
     user:"postgres",
     password:process.env.passworddb,
-    host:"db_container",
+    host:"localhost",
     port:5432
 
 })
 
-
+async()=>{
 await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
     console.log(error);
 });
+
+}
 const pl=pgSession(session);
 const config={
     saveUninitialized:false,

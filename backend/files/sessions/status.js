@@ -2,29 +2,33 @@ import Getcache from "../cache/get.js";
 export default async function StatusSession(req,res){
     try{
         var m=null;
+        var data1=null;
         await Getcache(req,res).then((data)=>{
-            console.log(data);
-            if(data.status==200){
-                console.log(req.session.user.email)
+            // console.log(data);
+             data1=data
+            if(data.statusCode==200){
+                console.log("verfied user")                
                 
-                if(data.data.data.email==req.session.user.email){
-                    console.log("cached data fetched")
-                    m=200;
-                }
-                else{
-                    console.log("cached data doesnt exist")
-                    m=409;
-                }
             }
-            else{
+            else if(data.statusCode==409){
+                console.log("Compromised");
+            }
+            else if(data.statusCode==404){
                 console.log("cached data not found")
-                m= 404;
+                // m= 404;
+            }else if(data.statusCode==500){
+                console.log("Cached fetch action failed")
+                // m=500;
+                
             }
+            
         });
-        return m;
+        // console.log(res)
+        return data1;
     }catch(error){
         console.log(error);
         m=500;
-        return m;
+        // res.status(500).json({error:error})
+        return {statusCode:500,error:error}
     }
 }

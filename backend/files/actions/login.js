@@ -2,22 +2,20 @@ import { conn } from "../app.js";
 import CreateSession from "../sessions/create.js";
 import StatusSession from "../sessions/status.js";
 export default async function Login(req,res){
-    var state=false;
-    await StatusSession(req,res).then((data)=>{
-        console.log("data is "+data);
-        if(data==200){
-            
-            state=true;
-        }else if(data==409){
-            req.session.user=null;
-        }else if(data==500){
-            req.session.user=null;
-        }
-    })
-    if(state){
-        return res.status(200).json({message:"User already logged in"})
-    }
-    else{
+    // var state=false;
+    // await StatusSession(req,res).then((data)=>{
+    //     console.log("data is "+data);
+    //     if(data.statusCode==200){
+    //         state=true;
+    //     }else{
+    //         req.session.user=null;
+    //     }
+    // })
+    // if(state){
+    //     console.log("Logged in")
+    //     // return res.status(200).json({message:"User already logged in"})
+    // }
+    // else{
       
     try{
         const{email,password}=req.body;
@@ -76,5 +74,4 @@ export default async function Login(req,res){
         // con.release();
         console.log("released");
     }
-}
 }

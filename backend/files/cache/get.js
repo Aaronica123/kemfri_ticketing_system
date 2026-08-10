@@ -12,26 +12,38 @@ export default async function Getcache(req,res){
             }
             else{
                 track=data;
-                console.log(data.data);
+                // console.log(data.data);
+                if(data.data.data.email==req.session.user.email){
+                    track=200
+                }
+                else{
+                    track=409;
+                }
             }
+            console.log(1)
+        }).catch((error)=>{
+            console.log(error)
         })
-        await conf.close();
-        if(track){
-            const d={
-                status:200,
-                data:track
-            }
-            return d;
+         await conf.close();
+        if(track==200){
+            return res.status(200).json({message:"Authenticated",user:req.session.user})
+        }
+        else if(track==409){
+            // req.session.user=null;
+            return res.status(409).json({message:"Unauthorized"});
         }
         else{
-            return {"status":400,data:track};
+            
+            // req.session.user=null;
+            return res.status(404).json({message:"User not found"});
         }
         
     }
     catch(error){
-        console.log(error);
-await conf.close();
+        req.session.user=null;
+        console.log("error" +error);
+        await conf.close();
 
-        return 500;
+        return res.status(500).json({error:error});
     }
 }

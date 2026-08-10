@@ -83,12 +83,17 @@ export async function PendingTickets(req,res){
 }
 
 export async function ResolvedTickets(req,res){
-    const connect=await USERS.connect();
+    
     try{
+       
+        const connect=await USERS.connect();
+        
         const{user_id}=req.session.user;
         if(!user_id){
+            console.log("user id not found")
             return res.status(500).json({message:"Ticket could not be found",count:0})
         }
+        else{
         await connect.query(`select*from kemfri_schema.tickets where user_id=$1 and resolved=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);
            return res.status(200).json({message:"fetched resolved tickets",count:data.rowCount})
@@ -96,6 +101,8 @@ export async function ResolvedTickets(req,res){
             console.log(error)
             return res.status(500).json({message:"Could not fetch pending tickets"})
         })
+        
+    }
        
     }
     finally{

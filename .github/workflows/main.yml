@@ -41,8 +41,8 @@ jobs:
       # docker-compose build
       - name: build with docker
         run: |
-          docker-compose down -v
           
+          docker-compose build 
           docker-compose up -d
          
       - name: test images

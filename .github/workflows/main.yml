@@ -42,7 +42,7 @@ jobs:
           docker-compose up -d
       - name: test images
         if: success()
-        run: docker-compose exec npm run test
+        run: docker-compose exec backend_container npm run test
       - name: start docker containers
         if: success()
         run: |

@@ -2,9 +2,9 @@ name: Basic CI building
 
 on:
   push:
-    branches: ['main']
+    branches: ['main','tracker']
   pull_request:
-    branches: ['main']
+    branches: ['main','tracker']
 
 jobs: 
   builder:
@@ -25,13 +25,20 @@ jobs:
           passwordstaff=${{secrets.PASSWORDSTAFF}}
           passwordusers=${{secrets.PASSWORDUSERS}}
           passworddb=${{secrets.PASSWORDDB}}
+          testuser=${{secrets.TESTUSER}}
+          testpassword=${{secrets.TESTPASSWORD}}
           EOF
       - name: build with docker
         run: docker-compose build
+      - name: test images
+        run: docker run --rm npm run test
       - name: start docker containers
-        run: docker-compose up -d
-      - name: stop containers
-        run: docker-compose down -v  
+        if: success()
+        run: |
+          docker-compose up -d
+          docker-compose down -v 
+      # - name: stop containers
+      #   run:  
 
 
 

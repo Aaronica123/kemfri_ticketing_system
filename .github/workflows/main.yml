@@ -42,11 +42,11 @@ jobs:
       - name: build with docker
         run: |
           docker-compose up -d
-          docker-compose down -v
+          
          
-      # - name: test images
-      #   if: success()
-      #   run: docker exec backend_container npm run test
+      - name: test images
+        if: success()
+        run: docker exec backend_container npm run test
       # - name: start docker containers
       #   if: success()
       #   run: |

@@ -12,7 +12,7 @@ export default async function Createcache(req,res){
         if(!sessionID||!data)
         {
             console.log("failed to cache missing details");
-            return {status:500};
+            return {status:400};
         }
         else{
         
@@ -30,6 +30,6 @@ export default async function Createcache(req,res){
         console.log(error);
 await conf.close();
 const message={status:500,error:error}
-        return error;
+        return message;
     }
 }

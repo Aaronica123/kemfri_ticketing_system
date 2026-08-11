@@ -47,6 +47,10 @@ export default async function Login(req,res){
             await CreateSession(req,res,name,role,id);
             
         }
+        else if (m==404){
+            console.log("user not found")
+            return res.status(404).json({message:"User not found"})
+        }
         else{
             console.log("not verified");
             return res.status(403).json({message:"sessions not created"})

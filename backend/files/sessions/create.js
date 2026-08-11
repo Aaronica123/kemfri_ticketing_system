@@ -6,7 +6,7 @@ export default async function CreateSession(req,res,first_name,role,id){
             return 500;
         }
         var session=false;
-        var cache=false;
+        var cache=null;
         const date=new Date().toUTCString();
         const name=first_name
         const final_role=role
@@ -56,13 +56,23 @@ export default async function CreateSession(req,res,first_name,role,id){
             })
         })
         await Createcache(req,res).then((data)=>{
-            if(data=200){
-                cache=true;
+            if(data.status==200){
+                cache=200;
+            }
+            else if(data.status==404){
+                cache=404
+            }
+            else if(data.status==500){
+                cache=500;
             }
         });
-        if(cache&&session){
-            return res.status(200).json({"message":"Created session and cached",
+        
+        if(session&&cache==200){
+            return res.status(200).json({message:"Created session and cached",
                 data:req.session.user});
+        }
+        else if(cache==404||cache==500||!session){
+            return res.status(500).json({message:"Failed to create session"})
         }
         console.log(req.session.user);
 

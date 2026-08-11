@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: code cloning
         uses: actions/checkout@v3
-      - name: Install Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install docker-compose -y
-          docker-compose --version  # Verify installation
+      # - name: Install Docker Compose
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install docker-compose -y
+      #     docker-compose --version  # Verify installation
       - name: create .env file
         run: |
           cat > .env << EOF
@@ -41,9 +41,12 @@ jobs:
       # docker-compose build
       - name: build with docker
         run: |
-          docker-compose up -d
-          
-         
+          docker-compose up -d --wait
+      - name: show container status if failed
+        if: failure()
+        run: |
+          docker compose ps
+          docker compose logs
       - name: test images
         if: success()
         run: docker exec backend_container npm run test

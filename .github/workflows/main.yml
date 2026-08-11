@@ -31,7 +31,7 @@ jobs:
       - name: build with docker
         run: docker-compose build
       - name: test images
-        run: docker run --rm npm run test
+        run: docker run --rm backend_image:latest npm run test
       - name: start docker containers
         if: success()
         run: |

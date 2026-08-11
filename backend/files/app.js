@@ -39,6 +39,7 @@ export const conn=new Client({
 })
 
 await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+    console.log("error occured")
     console.log(error);
 });
 

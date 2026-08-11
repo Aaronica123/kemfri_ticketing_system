@@ -33,7 +33,7 @@ jobs:
           docker-compose build
           docker-compose up -d
       - name: test images
-        run: docker run --network kemfri_ticketing_system_kemfri_network --rm backend_image:latest npm run test
+        run: docker run --network kemfri_ticketing_system_kemfri_network --env-file .env --rm backend_image:latest npm run test
       - name: start docker containers
         if: success()
         run: |

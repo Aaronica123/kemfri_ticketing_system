@@ -42,7 +42,7 @@ jobs:
       - name: build with docker
         run: |
           
-          docker-compose build 
+          
           docker-compose up -d
          
       - name: test images

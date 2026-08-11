@@ -10,7 +10,7 @@ describe('Login test',()=>{
         email:null,
         password:null
     }
-    const result=await supertest(app).post('/api/login').send({body:body})
+    const result=await supertest(app).post('/api/login').send(body)
     expect(result.status).toBe(402)  
     })
     test('wrong syntax login',async()=>{
@@ -23,9 +23,9 @@ describe('Login test',()=>{
     })
     test('missing user login ',async()=>{
         
-    await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
-        console.log(error);
-    });
+    // await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+    //     console.log(error);
+    // });
         const body={
             email:process.env.testuser,
             password:'wrong_password'
@@ -40,7 +40,7 @@ describe('Login test',()=>{
             password:process.env.testpassword
         }
         const result=await supertest(app).post('/api/login').send(body)
-        await conn.end();
+        // await conn.end();
         expect(result.status).toBe(200||201);
         
     })

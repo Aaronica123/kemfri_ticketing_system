@@ -39,7 +39,7 @@ describe('Login test',()=>{
             email:process.env.testuser,
             password:process.env.testpassword
         }
-        const result=await supertest(app).post('/api/login').send(body)
+        const result=await supertest(app).post('/api/login').send({body:body})
         // await conn.end();
         expect(result.status).toBe(200||201);
         

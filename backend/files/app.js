@@ -33,7 +33,7 @@ export const conn=new Client({
     database:"kemfri_database",
     user:"postgres",
     password:process.env.passworddb,
-    host:"localhost",
+    host:"db_container",
     port:5432
 
 })

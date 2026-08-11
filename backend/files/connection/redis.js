@@ -2,7 +2,7 @@ import {createClient,createClientPool} from "redis";
 
 //configuration for redis server
 export const conf=createClient({
-    url: "redis://localhost:6379"
+    url: "redis://redis_container:6379"
 })
 //lua script for rate limiting
 const scr=`

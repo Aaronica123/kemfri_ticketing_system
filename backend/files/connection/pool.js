@@ -5,7 +5,7 @@ configDotenv();
 export const ICT=new Pool({
     database:"kemfri_database",
     user:"staff",
-    host:"localhost",
+    host:"db_container",
 password:process.env.passwordstaff,
     max:5,
     maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
@@ -18,7 +18,7 @@ export const USERS=new Pool({
     database:"kemfri_database",
     user:"users",
 password:process.env.passwordusers,
-    host:"localhost",
+    host:"db_container",
     max:5,
     maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
     port:5432,

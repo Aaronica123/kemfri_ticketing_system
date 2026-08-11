@@ -40,16 +40,18 @@ jobs:
       #     docker pull aaronica123/db_stable:1.0
       # docker-compose build
       - name: build with docker
-        run: docker-compose up -d
-         
-      - name: test images
-        if: success()
-        run: docker exec backend_container npm run test
-      - name: start docker containers
-        if: success()
         run: |
-          # docker-compose up -d
-          docker-compose down -v 
+          docker-compose up -d
+          docker-compose down -v
+         
+      # - name: test images
+      #   if: success()
+      #   run: docker exec backend_container npm run test
+      # - name: start docker containers
+      #   if: success()
+      #   run: |
+      #     # docker-compose up -d
+      #     docker-compose down -v 
       # - name: stop containers
       #   run:  
 

@@ -1,88 +1,88 @@
-version: '3.6'
+# version: '3.6'
 
-services: 
-    db_container:
-        image: aaronica123/db_stable:1.0
+# services: 
+#     db_container:
+#         image: aaronica123/db_stable:1.0
         
-        container_name: db_container
-        healthcheck:
-          test: ["CMD-SHELL", "pg_isready -U postgres"]
-          timeout: 10s
-          start_period: 10s
-          interval: 10s
-          retries: 5          
-        ports: 
-          - "5432:5432"
-        env_file:
-          - .env
-        volumes:
-          - db_driver:/var/lib/postgresql/data
-          - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
-        networks:
-          - kemfri_network
-        restart: always
-    backend_container:
-        image: aaronica123/backend_stable:1.0
-        container_name: backend_container
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:3001"]
-            timeout: 10s
-            start_period: 30s
-            retries: 5
-            interval: 10s
-        ports:
-        - "3001:3001"
-        env_file:
-          - .env
-        networks:
-          - kemfri_network
-        restart: always
-        depends_on:
-          redis_container:
-           condition: service_healthy
-          db_container:
-            condition: service_healthy
+#         container_name: db_container
+#         healthcheck:
+#           test: ["CMD-SHELL", "pg_isready -U postgres"]
+#           timeout: 10s
+#           start_period: 10s
+#           interval: 10s
+#           retries: 5          
+#         ports: 
+#           - "5432:5432"
+#         env_file:
+#           - .env
+#         volumes:
+#           - db_driver:/var/lib/postgresql/data
+#           - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+#         networks:
+#           - kemfri_network
+#         restart: always
+#     backend_container:
+#         image: aaronica123/backend_stable:1.0
+#         container_name: backend_container
+#         healthcheck:
+#             test: ["CMD", "curl", "-f", "http://localhost:3001"]
+#             timeout: 10s
+#             start_period: 30s
+#             retries: 5
+#             interval: 10s
+#         ports:
+#         - "3001:3001"
+#         env_file:
+#           - .env
+#         networks:
+#           - kemfri_network
+#         restart: always
+#         depends_on:
+#           redis_container:
+#            condition: service_healthy
+#           db_container:
+#             condition: service_healthy
         
 
-    redis_container:
-      image: aaronica123/redis_stable:1.0
-      container_name: redis_container
-      healthcheck:
-        test: ["CMD", "redis-cli", "ping"]
-        interval: 30s
-        retries: 3
-        start_period: 10s
-      networks:
-        - kemfri_network
-      restart: always
-      ports:
-        - "6379:6379"
+#     redis_container:
+#       image: aaronica123/redis_stable:1.0
+#       container_name: redis_container
+#       healthcheck:
+#         test: ["CMD", "redis-cli", "ping"]
+#         interval: 30s
+#         retries: 3
+#         start_period: 10s
+#       networks:
+#         - kemfri_network
+#       restart: always
+#       ports:
+#         - "6379:6379"
       
-    frontend_container:
-      image: aaronica123/frontend_stable:1.0
-      container_name: frontend_container
-      healthcheck:
-        test: ["CMD", "curl", "-f", "http://frontend_container:80"]
-        timeout: 10s
-        interval: 10s
-        retries: 5
-        start_period: 160s
-      networks: 
-        - kemfri_network 
-      ports:
-        - "80:80"
-      depends_on:
-         backend_container:
-           condition: service_started
+#     frontend_container:
+#       image: aaronica123/frontend_stable:1.0
+#       container_name: frontend_container
+#       healthcheck:
+#         test: ["CMD", "curl", "-f", "http://frontend_container:80"]
+#         timeout: 10s
+#         interval: 10s
+#         retries: 5
+#         start_period: 160s
+#       networks: 
+#         - kemfri_network 
+#       ports:
+#         - "80:80"
+#       depends_on:
+#          backend_container:
+#            condition: service_started
 
           
       
 
     
 
-volumes:
-  db_driver:
+# volumes:
+#   db_driver:
 
-networks:
-  kemfri_network:
+# networks:
+#   kemfri_network:
 

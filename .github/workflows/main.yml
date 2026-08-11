@@ -41,7 +41,7 @@ jobs:
       # docker-compose build
       - name: build with docker
         run: |
-          docker-compose up -d --wait
+          docker compose up -d --wait
       - name: show container status if failed
         if: failure()
         run: |

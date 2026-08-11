@@ -22,8 +22,8 @@ SET row_security = off;
 --
 -- Name: kemfri_schema; Type: SCHEMA; Schema: -; Owner: postgres
 --
-CREATE DATABASE kemfri_database;
-\c kemfri_database;
+-- CREATE DATABASE kemfri_database;
+-- \c kemfri_database;
 CREATE SCHEMA kemfri_schema;
 CREATE USER users PASSWORD 'kemfri';
 CREATE USER staff PASSWORD 'kemfri';

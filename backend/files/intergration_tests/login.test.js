@@ -23,9 +23,9 @@ describe('Login test',()=>{
     })
     test('missing user login ',async()=>{
         
-    // await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
-    //     console.log(error);
-    // });
+    await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+        console.log("error is 1" + error);
+    });
         const body={
             email:process.env.testuser,
             password:'wrong_password'

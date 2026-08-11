@@ -23,6 +23,7 @@ export default async function Login(req,res){
         var id=null
         console.log("email is " +p)
         if(m==200){
+      console.log("beginning")
         await conn.query("select * from kemfri_schema.staff_registry where email like $1 and staff_password=$2;",[email,password]).then((data)=>{
             if(data.rowCount>0){
                
@@ -38,8 +39,9 @@ export default async function Login(req,res){
                 console.log(data.rows);
                 m=404;
             }
+            console.log("FInished")
         }).catch((error)=>{
-            console.log(error);
+            console.log("error in lg "+ error);
         })
         if(m==200){
             

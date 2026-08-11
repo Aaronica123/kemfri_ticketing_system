@@ -1,4 +1,5 @@
 FROM postgres:14-bookworm
-COPY file /back/
+ENV POSTGRES_DB=kemfri_database
+COPY ./init.sql /docker-entrypoint-initdb.d/
 EXPOSE 5432
 

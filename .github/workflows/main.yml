@@ -2,9 +2,9 @@ name: Basic CI building
 
 on:
   push:
-    branches: ['main','tracker']
+    branches: ['main']
   pull_request:
-    branches: ['main','tracker']
+    branches: ['main']
 
 jobs: 
   builder:
@@ -33,9 +33,9 @@ jobs:
         with:
           username: aaronica123
           password: ${{secrets.DOCKER_TOKEN}}
-      - name: docker pull
-        run: |
-          docker pull aaronica123/db_stable:1.0
+      # - name: docker pull
+      #   run: |
+      #     docker pull aaronica123/db_stable:1.0
       - name: build with docker
         run: |
           docker-compose build

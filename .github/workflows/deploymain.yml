@@ -1,0 +1,54 @@
+name: CD deployment
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version_backend:
+        description: backend version
+        type: string
+        required: true
+        default: '1.0'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: code clone
+        uses: actions/checkout@v3
+      - name: env creation
+        run: |
+          cat > .env << EOF
+          POSTGRES_USER=${{secrets.POSTGRES_USER}}
+          POSTGRES_DB=${{secrets.POSTGRES_DB}}
+          POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}}
+          passworddb=${{secrets.PASSWORDDB}}
+          passwordusers=${{secrets.PASSWORDUSER}}
+          passwordsess=${{secrets.PASSWORDSESS}}
+          passwordstaff=${{secrets.PASSWORDSTAFF}}
+          EOF
+      - name: docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+      - name: docker pull action
+        run: |
+          docker pull ${{secrets.USERNAME}}/backend_stable:{inputs.version_backend}
+          docker pull ${{secrets.USERNAME}}/db_stable:2026-08-12_07-40-26
+          docker pull ${{secrets.USERNAME}}/frontend_stable:2026-08-12_07-40-26
+          docker pull ${{secrets.USERNAME}}/redis_stable:2026-08-12_07-40-26
+      
+      - name: docker tag
+        run: |
+          docker tag ${{secrets.USERNAME}}/backend_stable:{inputs.version_backend} backend_image:latest
+          docker tag ${{secrets.USERNAME}}/db_stable:2026-08-12_07-40-26 db_image:latest
+          docker tag ${{secrets.USERNAME}}/frontend_stable:2026-08-12_07-40-26 frontend_image:latest
+          docker tag ${{secrets.USERNAME}}/redis_stable:2026-08-12_07-40-26 redis_image:latest
+      - name: docker build
+        if: success()
+        run: |
+          docker compose -f docker-compose.prod.yml -d
+
+
+
+    

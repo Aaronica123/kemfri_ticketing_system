@@ -24,7 +24,7 @@ export default async function Login(req,res){
         console.log("email is " +p)
           
         if(m==200){
-      console.log("beginning")  
+        console.log("beginning")  
         await conn.query("select * from kemfri_schema.staff_registry where email like $1 and staff_password=$2;",[email,password]).then((data)=>{
             if(data.rowCount>0){
                

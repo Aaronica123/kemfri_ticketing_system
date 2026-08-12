@@ -31,8 +31,6 @@ describe('Login test',()=>{
             password:'wrong_password'
         }
         const result=await supertest(app).post('/api/login').send(body); 
-        console.log(result.status);
-        console.log(result);
         expect(result.status).toBe(404);
         
     })
@@ -43,8 +41,6 @@ describe('Login test',()=>{
         }
         const result=await supertest(app).post('/api/login').send(body)
         await conn.end();
-        console.log(result.status);
-        console.log(result);
         expect(result.status).toBe(200||201);
         
     })

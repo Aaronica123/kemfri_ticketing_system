@@ -41,5 +41,11 @@ jobs:
         with:
           username: ${{secrets.USERNAME}}
           password: ${{secrets.DOCKER_TOKEN}}
+      - name: pass date
+        run: date "+%Y-%m-%d %H:%M:%S" > ${{vars.DATE}}
+      # - name: docker hub upload
+      #   run: |
+      #     docker build -f ./backend/Dockerfile -t ${{secrets.USERNAME}}/backend_image:stable:${{vars.DATE}}
+      #     docker push ${{secrets.USERNAME}}/backend_image:stable:${{vars.DATE}}
         
         

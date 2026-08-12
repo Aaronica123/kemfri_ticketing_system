@@ -36,17 +36,11 @@ export const conn=new Client({
     host:"db_container",
     port:5432
 
-})
-var x=null
-if(!x){
-async()=>{   
-x=await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+})   
+await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
     console.log("error occured")
     console.log(error);
 });
-}
-}
-
 
 const pl=pgSession(session);
 const config={

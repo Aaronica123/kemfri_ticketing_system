@@ -1,5 +1,5 @@
 import app from "./app.js";
-import {Client} from "pg";
+// import {Client} from "pg";
 import {configDotenv} from "dotenv";
 // import { conn } from "./app.js";
 configDotenv();

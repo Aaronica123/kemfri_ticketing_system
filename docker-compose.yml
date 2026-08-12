@@ -4,7 +4,7 @@ services:
         build:
           context: ./db
           dockerfile: Dockerfile
-        image: db_image:latest
+        # image: db_image:latest
         
         container_name: db_container
         healthcheck:
@@ -27,7 +27,7 @@ services:
         build:
           context: ./backend
           dockerfile: Dockerfile
-        image: backend_image:latest
+        # image: backend_image:latest
         container_name: backend_container
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:3001"]
@@ -53,7 +53,7 @@ services:
       build:
         context: ./redis
         dockerfile: Dockerfile
-      image: redis_image:latest
+      # image: redis_image:latest
       container_name: redis_container
       healthcheck:
         test: ["CMD", "redis-cli", "ping"]
@@ -70,7 +70,7 @@ services:
       build:
         context: ./frontend
         dockerfile: Dockerfile
-      image: frontend_image:latest
+      # image: frontend_image:latest
       container_name: frontend_container
       healthcheck:
         test: ["CMD", "curl", "-f", "http://frontend_container:80"]

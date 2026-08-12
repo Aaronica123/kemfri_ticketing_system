@@ -36,3 +36,10 @@ jobs:
       - name: test images
         if: success()
         run: docker exec backend_container npm test
+      - name: login docker
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.DOCKER_TOKEN}}
+        
+        

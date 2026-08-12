@@ -38,11 +38,12 @@ export const conn=new Client({
 
 })
 
-
+async()=>{
 await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
     console.log("error occured")
     console.log(error);
 });
+}
 
 
 const pl=pgSession(session);

@@ -4,13 +4,13 @@ import supertest from "supertest";
 import { conn } from "../app.js";
 import { configDotenv } from "dotenv";
 configDotenv();
-beforeAll(()=>async(){
-    await conn.connect();
-    console.log("connected");
-})
-afterAll((),async()=>{
-    await conn.end();
-})
+// beforeAll(()=>async(){
+//     await conn.connect();
+//     console.log("connected");
+// })
+// afterAll((),async()=>{
+//     await conn.end();
+// })
 
 describe('Login test',()=>{
     test('missing fields login',async()=>{

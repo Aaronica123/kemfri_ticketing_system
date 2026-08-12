@@ -33,14 +33,14 @@ jobs:
           password: ${{secrets.DOCKER_TOKEN}}
       - name: docker pull action
         run: |
-          docker pull ${{secrets.USERNAME}}/backend_stable:{inputs.version_backend}
+          docker pull ${{secrets.USERNAME}}/backend_stable:${{inputs.version_backend}}
           docker pull ${{secrets.USERNAME}}/db_stable:2026-08-12_07-40-26
           docker pull ${{secrets.USERNAME}}/frontend_stable:2026-08-12_07-40-26
           docker pull ${{secrets.USERNAME}}/redis_stable:2026-08-12_07-40-26
       
       - name: docker tag
         run: |
-          docker tag ${{secrets.USERNAME}}/backend_stable:{inputs.version_backend} backend_image:latest
+          docker tag ${{secrets.USERNAME}}/backend_stable:${{inputs.version_backend}} backend_image:latest
           docker tag ${{secrets.USERNAME}}/db_stable:2026-08-12_07-40-26 db_image:latest
           docker tag ${{secrets.USERNAME}}/frontend_stable:2026-08-12_07-40-26 frontend_image:latest
           docker tag ${{secrets.USERNAME}}/redis_stable:2026-08-12_07-40-26 redis_image:latest

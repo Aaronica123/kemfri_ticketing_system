@@ -136,7 +136,7 @@ paths
 ### Node Patch ###
 # Serverless Webpack directories
 .webpack/
-
+*.txt
 # Optional stylelint cache
 
 # SvelteKit build / generate output

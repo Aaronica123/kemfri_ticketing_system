@@ -37,12 +37,14 @@ export const conn=new Client({
     port:5432
 
 })
-
-async()=>{
-await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+var x=null
+if(!x){
+async()=>{   
+x=await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
     console.log("error occured")
     console.log(error);
 });
+}
 }
 
 

@@ -48,10 +48,10 @@ jobs:
           docker build -t ${{secrets.USERNAME}}/redis_stable:${VERSION} ./redis
           docker build -t ${{secrets.USERNAME}}/frontend_stable:${VERSION} ./frontend
           docker build -t ${{secrets.USERNAME}}/db_stable:${VERSION} ./db
-          docker push -t ${{secrets.USERNAME}}/db_stable:${VERSION}
-          docker push -t ${{secrets.USERNAME}}/redis_stable:${VERSION}
-          docker push -t ${{secrets.USERNAME}}/backend_stable:${VERSION}
-          docker push -t ${{secrets.USERNAME}}/frontend_stable:${VERSION}
+          docker push ${{secrets.USERNAME}}/db_stable:${VERSION}
+          docker push ${{secrets.USERNAME}}/redis_stable:${VERSION}
+          docker push ${{secrets.USERNAME}}/backend_stable:${VERSION}
+          docker push ${{secrets.USERNAME}}/frontend_stable:${VERSION}
           
         
         

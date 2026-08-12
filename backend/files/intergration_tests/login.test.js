@@ -1,17 +1,9 @@
 import app from "../app.js";
-import Login from "../actions/login.js";
+// import Login from "../actions/login.js";
 import supertest from "supertest";
-import { conn } from "../app.js";
+// import { conn } from "../app.js";
 import { configDotenv } from "dotenv";
 configDotenv();
-// beforeAll(()=>async(){
-//     await conn.connect();
-//     console.log("connected");
-// })
-// afterAll((),async()=>{
-//     await conn.end();
-// })
-
 describe('Login test',()=>{
     test('missing fields login',async()=>{
     const body={
@@ -31,9 +23,9 @@ describe('Login test',()=>{
     })
     test('missing user login ',async()=>{
         
-    await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
-        console.log("error is 1" + error);
-    });
+    // await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+    //     console.log("error is 1" + error);
+    // });
         const body={
             email:process.env.testuser,
             password:'wrong_password'

@@ -30,10 +30,10 @@ app.use(cors({methods:["GET","POST","DELETE"],origin:"http://frontend_container:
     ,allowedHeaders:["Content-Type"]
     ,credentials:true}))
 export const conn=new Client({
-    database:"kemfri_database",
-    user:"postgres",
+    database:"kemfri_database_c2ac",
+    user:"kemfri_database_c2ac_user",
     password:process.env.passworddb,
-    host:"db_container",
+    host:"dpg-d9uanpdbedkc7394u5i0-a",
     port:5432
 
 })   

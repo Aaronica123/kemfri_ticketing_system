@@ -4,7 +4,7 @@ services:
     runtime: image
     image:
       url: docker.io/aaronica/db_stable:CURRENT_TAG
-    # plan: starter        # must be paid tier to attach a disk
+    plan: starter        # must be paid tier to attach a disk
     # disk:
     #   name: db-data
     #   mountPath: /var/lib/postgresql/data

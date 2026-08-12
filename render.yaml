@@ -1,0 +1,69 @@
+services:
+  - type: pserv
+    name: db_container
+    runtime: image
+    image:
+      url: docker.io/aaronica/db_stable:CURRENT_TAG
+    # plan: starter        # must be paid tier to attach a disk
+    # disk:
+    #   name: db-data
+    #   mountPath: /var/lib/postgresql/data
+    #   sizeGB: 10
+    envVars:
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+
+  # --- Redis (custom image) ---
+  - type: pserv
+    name: redis_container
+    runtime: image
+    image:
+      url: docker.io/YOUR_DOCKERHUB_USER/redis_stable:CURRENT_TAG
+    plan: starter
+
+  # --- Backend API ---
+  - type: web
+    name: backend_container
+    runtime: image
+    image:
+      url: docker.io/YOUR_DOCKERHUB_USER/backend_stable:CURRENT_TAG
+    plan: starter
+    healthCheckPath: /        # Render pings this over HTTP on the exposed port
+    envVars:
+      - key: POSTGRES_USER
+        sync: false
+      - key: POSTGRES_DB
+        sync: false
+      - key: POSTGRES_PASSWORD
+        sync: false
+      - key: passworddb
+        sync: false
+      - key: passwordusers
+        sync: false
+      - key: passwordsess
+        sync: false
+      - key: passwordstaff
+        sync: false
+      - key: DB_HOST
+        fromService:
+          name: db_container
+          type: pserv
+          property: host
+      - key: REDIS_HOST
+        fromService:
+          name: redis_container
+          type: pserv
+          property: host
+
+  # --- Frontend ---
+  - type: web
+    name: frontend_container
+    runtime: image
+    image:
+      url: docker.io/YOUR_DOCKERHUB_USER/frontend_stable:CURRENT_TAG
+    plan: starter
+    healthCheckPath: /

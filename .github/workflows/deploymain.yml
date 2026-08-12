@@ -47,7 +47,7 @@ jobs:
       - name: docker build
         if: success()
         run: |
-          docker compose -f docker-compose.prod.yml -d
+          docker compose -f docker-compose.prod.yml up -d
 
 
 

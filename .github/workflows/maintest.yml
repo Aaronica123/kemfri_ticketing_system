@@ -24,6 +24,11 @@ jobs:
           passworddb=${{secrets.PASSWORDDB}}
           testuser=${{secrets.TESTUSER}}
           testpassword=${{secrets.TESTPASSWORD}}
+          envdatabase=postgres
+          envuser=${{secrets.ENVUSER}}
+          envpassword=${{secrets.ENVPASSWORD}}
+          envhost=${{secrets.ENVHOST}}
+          envport=${{secrets.ENVPORT}}
           EOF
       - name: build with docker
         run: |

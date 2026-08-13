@@ -1,7 +1,5 @@
 import app from "../app.js";
-// import Login from "../actions/login.js";
 import supertest from "supertest";
-import { conn } from "../app.js";
 import { configDotenv } from "dotenv";
 configDotenv();
 describe('Login test',()=>{
@@ -23,14 +21,15 @@ describe('Login test',()=>{
     })
     test('missing user login ',async()=>{
         
-    await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
-        console.log("error is 1" + error);
-    });
+    // await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
+    //     console.log("error is 1" + error);
+    // });
         const body={
             email:process.env.testuser,
             password:'wrong_password'
         }
         const result=await supertest(app).post('/api/login').send(body); 
+        console.log(result)
         expect(result.status).toBe(404);
         
     })
@@ -40,7 +39,7 @@ describe('Login test',()=>{
             password:process.env.testpassword
         }
         const result=await supertest(app).post('/api/login').send(body)
-        await conn.end();
+        // await conn.end();
         expect(result.status).toBe(200||201);
         
     })

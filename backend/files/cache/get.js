@@ -12,8 +12,8 @@ export default async function Getcache(req,res){
             }
             else{
                 track=data;
-                // console.log(data.data);
-                if(data.data.data.email==req.session.user.email){
+                console.log(track);
+                if(data.data.email==req.session.user.email){
                     track=200
                 }
                 else{

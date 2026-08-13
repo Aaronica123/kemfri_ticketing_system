@@ -1,7 +1,7 @@
 import express from "express";
 import session from "express-session";
 import pgSession from "connect-pg-simple"
-import { Client } from "pg";
+import { Client,Pool } from "pg";
 import { configDotenv } from "dotenv";
 import Rate from "./connection/redis.js";
 import CreateSession from "./sessions/create.js";
@@ -29,19 +29,17 @@ const app=express();
 app.use(cors({methods:["GET","POST","DELETE"],origin:"http://frontend_container:80"
     ,allowedHeaders:["Content-Type"]
     ,credentials:true}))
-export const conn=new Client({
-    database:"kemfri_database",
-    user:"postgres",
-    password:process.env.passworddb,
-    host:"db_container",
-    port:5432
 
-})   
+export const conn=new Pool({
+    database:process.env.envdatabase,
+    user:process.env.envuser,
+    password:process.env.envpassword,
+    host:process.env.envhost,
+    port:process.env.envport
+})
+
 async()=>{
-await conn.connect().then(()=>{console.log("connected to database")}).catch((error)=>{
-    console.log("error occured")
-    console.log(error);
-});
+    await conn.connect();
 }
 
 const pl=pgSession(session);

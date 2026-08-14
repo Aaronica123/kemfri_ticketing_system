@@ -29,7 +29,7 @@ describe('Login test',()=>{
             password:'wrong_password'
         }
         const result=await supertest(app).post('/api/login').send(body); 
-        console.log(result)
+        // console.log(result)
         expect(result.status).toBe(404);
         
     })

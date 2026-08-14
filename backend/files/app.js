@@ -31,10 +31,11 @@ app.use(cors({methods:["GET","POST","DELETE"],origin:"http://frontend_container:
     ,credentials:true}))
 
 export const conn=new Pool({
-    database:"kemfri_database",
-    user:"postgres",
-    host:"db_container",
-    password:process.env.passworddb
+    database:process.env.envdatabase,
+    user:process.env.envuser,
+    host:process.env.envhost,
+    password:process.env.envpassword,
+    port:process.env.envport
 })
 
 async()=>{

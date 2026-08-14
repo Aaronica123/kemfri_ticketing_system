@@ -2,7 +2,7 @@ import { USERS } from "../connection/pool.js";
 import { conn } from "../app.js";
 import {randomUUID} from "crypto";
 export default async function SubmitTicket(req,res){
-     const con=await USERS.connect();
+     
     try{
         const p=randomUUID().replace(/-/g,'').slice(0,6).toUpperCase();
         console.log(p);
@@ -11,12 +11,13 @@ export default async function SubmitTicket(req,res){
         console.log(category_id)
         console.log(priority_id)
         
-        if(!category_id||!priority_id||!ticket_issue){
+        if(!category_id||!priority_id||!ticket_issue||!req.session.user.user_id){
             console.log("all fields enter")
             return res.status(409).json({message:"Enter all fields"});
         }
         var staff_id=null
-        await conn.query(`select count(t.staff_id),t.staff_id as tickets_staff,r.staff_id as register_staff,c.category_name from kemfri_schema.register r
+        await USERS.connect();
+        await USERS.query(`select count(t.staff_id),t.staff_id as tickets_staff,r.staff_id as register_staff,c.category_name from kemfri_schema.register r
 left join kemfri_schema.tickets t on r.staff_id=t.staff_id left join kemfri_schema.category c
 on c.category_id=r.category_id
  where r.category_id=($1)
@@ -30,7 +31,7 @@ group by(t.staff_id,r.staff_id,c.category_name) order by count(t.staff_id) asc;`
 if(staff_id){
     const d=new Date().toISOString();
     console.log(d);
-        await con.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue,date_entered) values($1,$2,$3,$4,$5,$6,$7)',
+        await USERS.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue,date_entered) values($1,$2,$3,$4,$5,$6,$7)',
             [p,category_id,priority_id,staff_id,req.session.user.user_id,ticket_issue,d]).then(()=>{
                 m=200;
                 console.log("ticket created");
@@ -43,11 +44,11 @@ if(staff_id){
 
         }
             else{
-                return res.status(409).json({message:"Could not fetch approrpaite staff"})
+                return res.status(409).json({message:"Could not fetch appropriate staff"})
             }    
 
     }
    finally{
-    con.release();
+    console.log("released")
    }
 }

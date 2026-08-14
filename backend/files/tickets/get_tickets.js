@@ -1,7 +1,7 @@
 
 import { USERS } from "../connection/pool.js";
 export default async function GetTicket(req,res){
-    const connect=await USERS.connect();
+    
     try{
         const ind=Object.values(req.query);
         if(!ind||!Number(ind)){
@@ -14,8 +14,8 @@ export default async function GetTicket(req,res){
         var count=null;
         const index=ind;
         var offset=0;
-
-        await connect.query('select count(*) from kemfri_schema.tickets')
+        await USERS.connect();
+        await USERS.query('select count(*) from kemfri_schema.tickets')
         .then((data)=>{
             console.log(data.rows[0].count)
             count=Math.ceil((data.rows[0].count)/batch);
@@ -42,9 +42,9 @@ export default async function GetTicket(req,res){
             m=500
         });
         if(m=200){
-            await connect.query(`SET TIME ZONE 'Africa/Nairobi';`)
+            await USERS.query(`SET TIME ZONE 'Africa/Nairobi';`)
             console.log(req.session.user.user_id);
-        await connect.query(`
+        await USERS.query(`
             select t.ticket_id,t.ticket_issue,c.category_name,p.priority,t.pending,
             t.resolved,TO_CHAR(t.date_entered, 'YYYY-MM-DD') AS date_entered,
             TO_CHAR(t.time_entered, 'HH-MI-SS') AS time_entered
@@ -74,6 +74,6 @@ t.time_entered<=current_time order by t.date_entered,t.time_entered desc
         
     }
     finally{
-        connect.release();
+        console.log("released")
     }
 }

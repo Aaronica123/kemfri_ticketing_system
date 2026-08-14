@@ -3,25 +3,25 @@ import { configDotenv } from "dotenv"
 configDotenv();
 //pool declaration configuration that provides maximum connections of users simultaneously
 export const ICT=new Pool({
-    database:"kemfri_database",
-    user:"staff",
-    host:"db_container",
-password:process.env.passwordstaff,
+    database:process.env.envdatabase,
+    user:process.env.envuser,
+    host:process.env.envhost,
+    password:process.env.envpassword,
+    port:process.env.envport,
     max:5,
     maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
-    port:5432,
     allowExitOnIdle:false,//pool to reman active always and not terminate 
     idleTimeoutMillis:10000,//duration for idle connection when connected to pool between disconnection
     connectionTimeoutMillis:1000//connection time for a use rto be given a connection
 })
 export const USERS=new Pool({
-    database:"kemfri_database",
-    user:"users",
-password:process.env.passwordusers,
-    host:"db_container",
+    database:process.env.envdatabase,
+    user:process.env.envuser,
+    host:process.env.envhost,
+    password:process.env.envpassword,
+    port:process.env.envport,
     max:5,
     maxLifetimeSeconds:1000,//duration length for a connection from creation to termination after expiry user is terminated
-    port:5432,
     allowExitOnIdle:false,//pool to reman active always and not terminate 
     idleTimeoutMillis:10000,//duration for idle connection when connected to pool between disconnection
     connectionTimeoutMillis:1000//connection time for a use rto be given a connection

@@ -1,6 +1,10 @@
 import {Pool} from "pg"
 import { configDotenv } from "dotenv"
+import { createClientPool } from "redis";
 configDotenv();
+export  const DBcache=createClientPool({
+url:"redis://localhost:6379"
+})
 //pool declaration configuration that provides maximum connections of users simultaneously
 export const ICT=new Pool({
     database:process.env.envdatabase,

@@ -22,7 +22,7 @@ import GetStaffTickets from "./tickets/staff/staff_get_tickets.js";
 import CheckStatusLogin from "./actions/status.js";
 import UpdateTicket from "./tickets/staff/staff_update_tickets.js";
 import cors from "cors";
-
+import { DBcache } from "./connection/pool.js";
 configDotenv();
 const app=express();
 
@@ -40,6 +40,7 @@ export const conn=new Pool({
 
 async()=>{
     await conn.connect();
+//   await DBcache.connect();
 }
 
 const pl=pgSession(session);

@@ -1,16 +1,17 @@
-import { DBcache } from "../connection/pool.js";
+import { conf } from "../connection/redis.js";
 
 export default async function PriorityGetCache(req,res){
 try{
 var data_priroity=null
-await DBcache.connect().then(()=>{console.log("done")};
-await DBcache.json.get('priority').then((data)=>{
+await conf.connect().then(()=>{console.log("done")});
+await conf.json.get('priority').then((data)=>{
 if(data){
     data_priroity=data
 }
 })
 if(data_priroity){
-    return {status:200,data:data_priroity};
+	const data=data_priority
+    return {status:200,data};
 }else{
 return {status:400,data:null} 
 }
@@ -22,8 +23,9 @@ catch(error){
 }
 export async function PrioritySetCache(data) {
     try{
-        await DBcache.connect();
-        await DBcache.json.set("priority","$",`${data}`);
+  await conf.connect().then(()=>{console.log("done")});
+
+        await conf.json.set("priority","$",`${data}`);
         return {status:200}
     }
     catch(error){
@@ -35,9 +37,10 @@ export async function PrioritySetCache(data) {
 
 export async function CategoryGetCache(){
 try{
-    await DBcache.connect();
+await conf.connect().then(()=>{console.log("done")});
+    //await DBcache.connect();
     var result=null
-    await DBcache.json.get('category').then((data)=>{
+    await conf.json.get('category').then((data)=>{
         if(data){
         result=data;
         }
@@ -47,7 +50,8 @@ try{
     })
     console.log("result is" + result)
     if(result!=null){
-        return {status:200,data:result}
+	const data=result
+        return {status:200,data}
     }
     else{
         return {status:404,data:null}
@@ -61,8 +65,9 @@ catch(error){
 
 export  async function CategroySetCache(data){
     try{
-        await DBcache.connect();
-        await DBcache.json.set("category","$",`${data}`)
+await conf.connect().then(()=>{console.log("done")});
+      //  await DBcache.connect();
+        await conf.json.set("category","$",`${data}`)
         return {status:200}
     }
     catch(error){

@@ -25,7 +25,7 @@ export async function PrioritySetCache(data) {
     try{
   await conf.connect().then(()=>{console.log("done")});
 
-        await conf.json.set("priority","$",`${data}`);
+        await conf.json.set("priority","$",data);
         return {status:200}
     }
     catch(error){
@@ -67,7 +67,7 @@ export  async function CategroySetCache(data){
     try{
 await conf.connect().then(()=>{console.log("done")});
       //  await DBcache.connect();
-        await conf.json.set("category","$",`${data}`)
+        await conf.json.set("category","$",data)
         return {status:200}
     }
     catch(error){

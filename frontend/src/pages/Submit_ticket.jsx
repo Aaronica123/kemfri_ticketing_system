@@ -43,7 +43,8 @@ export default function SubmitForm(){
     }
     async function FetchPriority(){
         await con().get("/fetch_priority").then((data)=>{
-            set_priority_array(data.data.data);
+console.log(data.data);            
+set_priority_array(data.data.data);
         })
     }
     async function Submit(e){

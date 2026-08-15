@@ -45,8 +45,8 @@ services:
         depends_on:
           redis_container:
            condition: service_healthy
-          db_container:
-            condition: service_healthy
+         # db_container:
+          #  condition: service_healthy
           dbcache:
             condition: service_healthy
         
@@ -88,18 +88,18 @@ services:
          backend_container:
            condition: service_started
     dbcache:
-      build:args:
-        - context: ./data_cache
-        - contextFile: Dockerfile
+      build:
+         context: ./data_cache
+         dockerfile: Dockerfile
       ports:
          - "5555:6379"
       networks:
         - kemfri_network
       container_name: dbcache
       healthcheck:
-        test: ["cmd","redis-cli","ping"]
+        test: ["CMD","redis-cli","ping"]
         interval: 3s
-        delay: 5s
+        start_period: 1s
         retries: 3
         timeout: 10s
 volumes:

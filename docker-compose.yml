@@ -89,12 +89,13 @@ services:
            condition: service_started
     dbcache:
       build:
-         context: ./data_cache
+         context: ./redis
          dockerfile: Dockerfile
       ports:
          - "5555:6379"
       networks:
         - kemfri_network
+      restart: always 
       container_name: dbcache
       healthcheck:
         test: ["CMD","redis-cli","ping"]

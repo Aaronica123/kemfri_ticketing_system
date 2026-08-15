@@ -1,10 +1,9 @@
 import { conf } from "../connection/redis.js";
-var c=null
+
 export default async function Createcache(req,res){
     try{
-        if(!c){
-            c=await conf.connect().then(()=>{console.log("connected")});
-        }
+        
+            await conf.connect();
         const sessionID=req.sessionID;
         const data=req.session.user;
     
@@ -22,13 +21,13 @@ export default async function Createcache(req,res){
             await conf.expire(`user:${sessionID}`,900000).then(()=>{
                 console.log("expire set")
             });
-            await conf.close();
+//            await conf.close();
             return {status:200}
         }
         
     }catch(error){
         console.log(error);
-await conf.close();
+//await conf.close();
 const message={status:500,error:error}
         return message;
     }

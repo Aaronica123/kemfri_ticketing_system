@@ -14,7 +14,7 @@ export default async function FetchCategory(req,res){
     
     try{
         var m=null
-        await conn.connect();
+//        await conn.connect();
         await conn.query("select*from kemfri_schema.category;").then((data)=>{
             console.log(data.rows);
             m=data.rows;
@@ -50,7 +50,7 @@ export async function FetchPriority(req,res) {
         return res.status(200).json({message:"Priroity fetched",data:response.data})
     }
     else{
-    await conn.connect();
+  //  await conn.connect();
     try{
       var hold=null;
         await conn.query("select*from kemfri_schema.priority").then((data)=>{
@@ -83,7 +83,7 @@ export async function FetchPriority(req,res) {
     
 }
 export async function TotalTickets(req,res){
-    const connect=await USERS.connect();
+    
     try{
         var m=null;
         const{user_id}=req.session.user;
@@ -92,7 +92,7 @@ export async function TotalTickets(req,res){
             return res.status(500).json({message:"Ticket cound found",count:0})
         }
         
-        await connect.query(`select*from kemfri_schema.tickets where user_id=$1`,[user_id]).then((data)=>{
+        await conn.query(`select*from kemfri_schema.tickets where user_id=$1`,[user_id]).then((data)=>{
             console.log(data.rowCount);
             return res.status(200).json({message:"Ticket cound found",count:data.rowCount})
         }).catch((error)=>{
@@ -102,19 +102,19 @@ export async function TotalTickets(req,res){
         return m;
     }
     finally{
-        connect.release();
+        //connect.release();
     }
 }
 
 export async function PendingTickets(req,res){
-    const connect=await USERS.connect();
+   // const connect=await USERS.connect();
     try{
         var m=null;
         const{user_id}=req.session.user;
         if(!user_id){
             return res.status(500).json({message:"Ticket cound found",count:0})
         }
-        await connect.query(`select*from kemfri_schema.tickets where user_id=$1 and pending=true`,[user_id]).then((data)=>{
+        await conn.query(`select*from kemfri_schema.tickets where user_id=$1 and pending=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);
            return res.status(200).json({message:"fetched pending tickets",count:data.rowCount})
         }).catch((error)=>{
@@ -124,7 +124,7 @@ export async function PendingTickets(req,res){
        
     }
     finally{
-        connect.release();
+     //   connect.release();
     }
 }
 
@@ -132,7 +132,7 @@ export async function ResolvedTickets(req,res){
     
     try{
        
-        const connect=await USERS.connect();
+       // const connect=await USERS.connect();
         
         const{user_id}=req.session.user;
         if(!user_id){
@@ -140,7 +140,7 @@ export async function ResolvedTickets(req,res){
             return res.status(500).json({message:"Ticket could not be found",count:0})
         }
         else{
-        await connect.query(`select*from kemfri_schema.tickets where user_id=$1 and resolved=true`,[user_id]).then((data)=>{
+        await conn.query(`select*from kemfri_schema.tickets where user_id=$1 and resolved=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);
            return res.status(200).json({message:"fetched resolved tickets",count:data.rowCount})
         }).catch((error)=>{
@@ -152,6 +152,6 @@ export async function ResolvedTickets(req,res){
        
     }
     finally{
-        connect.release();
+       // connect.release();
     }
 }

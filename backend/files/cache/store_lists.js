@@ -3,7 +3,7 @@ import { DBcache } from "../connection/pool.js";
 export default async function PriorityGetCache(req,res){
 try{
 var data_priroity=null
-await DBcache.connect();
+await DBcache.connect().then(()=>{console.log("done")};
 await DBcache.json.get('priority').then((data)=>{
 if(data){
     data_priroity=data

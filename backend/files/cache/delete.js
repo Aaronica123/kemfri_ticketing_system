@@ -10,7 +10,7 @@ export default async function Deletecache(req,res){
             }
             
         })
-        await conf.close();
+//        await conf.close();
         if(state){
             return state;
         }
@@ -20,7 +20,7 @@ export default async function Deletecache(req,res){
     }
     catch(error){
         console.log(error);
-await conf.close();
+//await conf.close();
         // return {status:500,message:"Server error"}
         return state;
     }

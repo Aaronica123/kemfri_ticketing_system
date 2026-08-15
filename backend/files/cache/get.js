@@ -24,7 +24,7 @@ export default async function Getcache(req,res){
         }).catch((error)=>{
             console.log(error)
         })
-         await conf.close();
+//         await conf.close();
         if(track==200){
             return res.status(200).json({message:"Authenticated",user:req.session.user})
         }
@@ -42,7 +42,7 @@ export default async function Getcache(req,res){
     catch(error){
         req.session.user=null;
         console.log("error" +error);
-        await conf.close();
+  //      await conf.close();
 
         return res.status(500).json({error:error});
     }

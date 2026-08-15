@@ -10,7 +10,7 @@ if(data){
 }
 })
 if(data_priroity){
-	const data=data_priority
+	const data=data_priroity
     return {status:200,data};
 }else{
 return {status:400,data:null} 

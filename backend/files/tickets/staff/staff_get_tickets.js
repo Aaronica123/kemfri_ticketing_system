@@ -1,4 +1,6 @@
-import { ICT } from "../../connection/pool.js";
+// import { ICT } from "../../connection/pool.js";
+
+import { conn } from "../../app.js";
 
 export default async function GetStaffTickets(req,res){
     if(!req.session.user||!req.session.user.group){
@@ -6,7 +8,8 @@ export default async function GetStaffTickets(req,res){
         return res.status(500).json({message:"Denied access"})
     }
     else{    
-    const connect=await ICT.connect();
+    // const connect=await ICT.connect();
+    await conn.connect();
     try{
         var m=null
         const{user_id}=req.session.user;
@@ -15,7 +18,7 @@ export default async function GetStaffTickets(req,res){
         }
 
         
-        await connect.query(`select t.ticket_id,t.ticket_issue,t.user_id, c.category_name,p.priority from kemfri_schema.tickets t
+        await conn.query(`select t.ticket_id,t.ticket_issue,t.user_id, c.category_name,p.priority from kemfri_schema.tickets t
             join kemfri_schema.category c on c.category_id=t.category_id 
             join kemfri_schema.priority p on p.id_=t.priority_id
             where t.staff_id=$1`,[user_id]).then((data)=>{
@@ -27,7 +30,7 @@ export default async function GetStaffTickets(req,res){
         }
     
     finally{
-        connect.release();
+        // connect.release();
     
 }}
 }

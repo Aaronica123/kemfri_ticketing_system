@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./files/index.js",
-    "test": "jest --coverage --detectOpenHandles",
+    "test": "jest",
     "test int": "jest ./files/intergration_test/status.test.js"
   },
   "author": "",

@@ -1,9 +1,11 @@
 import {createClient,createClientPool} from "redis";
-
+import { configDotenv } from "dotenv";
+configDotenv();
 //configuration for redis server
 export const conf=createClientPool({
-    url: "redis://redis_container:6379"
+    url: `redis://${process.env.redisurl}`,
 })
+
 //lua script for rate limiting
 const scr=`
 local nowdate=tonumber(KEYS[1])

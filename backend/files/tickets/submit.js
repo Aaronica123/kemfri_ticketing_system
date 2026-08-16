@@ -1,6 +1,10 @@
-import { USERS } from "../connection/pool.js";
+// import { conn } from "../connection/pool.js";
 import { conn } from "../app.js";
+// import { conn } from "../app.js";
 import {randomUUID} from "crypto";
+import { TicketsGetCache } from "../cache/tickets_cache.js";
+import { conf } from "../connection/redis.js";
+import { PendingTicketsCacheGet } from "../cache/tickets_cache.js";
 export default async function SubmitTicket(req,res){
      
     try{
@@ -16,8 +20,8 @@ export default async function SubmitTicket(req,res){
             return res.status(409).json({message:"Enter all fields"});
         }
         var staff_id=null
-        await USERS.connect();
-        await USERS.query(`select count(t.staff_id),t.staff_id as tickets_staff,r.staff_id as register_staff,c.category_name from kemfri_schema.register r
+        await conn.connect();
+        await conn.query(`select count(t.staff_id),t.staff_id as tickets_staff,r.staff_id as register_staff,c.category_name from kemfri_schema.register r
 left join kemfri_schema.tickets t on r.staff_id=t.staff_id left join kemfri_schema.category c
 on c.category_id=r.category_id
  where r.category_id=($1)
@@ -31,7 +35,7 @@ group by(t.staff_id,r.staff_id,c.category_name) order by count(t.staff_id) asc;`
 if(staff_id){
     const d=new Date().toISOString();
     console.log(d);
-        await USERS.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue,date_entered) values($1,$2,$3,$4,$5,$6,$7)',
+        await conn.query('insert into kemfri_schema.tickets(ticket_id,category_id,priority_id,staff_id,user_id,ticket_issue,date_entered) values($1,$2,$3,$4,$5,$6,$7)',
             [p,category_id,priority_id,staff_id,req.session.user.user_id,ticket_issue,d]).then(()=>{
                 m=200;
                 console.log("ticket created");
@@ -41,8 +45,17 @@ if(staff_id){
                
                 return res.status(500).json({message:"Failed to create ticket"})
             })
-
+        const result=await TicketsGetCache(req);
+        const pend=await PendingTicketsCacheGet(req);
+        if(result.status==200&&pend.status==200){
+            await conf.connect();
+            await conf.incr(`${req.session.user.user_id}:TotalTickets`);
+            await conf.incr(`${req.session.user.user_id}:PendingTickets`);
         }
+        else{
+            console.log("No tickets in cache")
+        }
+}
             else{
                 return res.status(409).json({message:"Could not fetch appropriate staff"})
             }    

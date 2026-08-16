@@ -26,7 +26,7 @@ import { DBcache } from "./connection/pool.js";
 configDotenv();
 const app=express();
 
-app.use(cors({methods:["GET","POST","DELETE"],origin:"http://frontend_container:80"
+app.use(cors({methods:["GET","POST","DELETE"],origin:"https://kemfri-ticketing-system.vercel.app/"
     ,allowedHeaders:["Content-Type"]
     ,credentials:true}))
 

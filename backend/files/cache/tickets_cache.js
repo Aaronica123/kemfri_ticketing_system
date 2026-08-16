@@ -3,7 +3,7 @@ import { conf } from "../connection/redis.js";
 export default async function TicketsSetCache(req,data){
     try{
         await conf.connect();
-        await conf.set(req.session.user.user_id,data);
+        await conf.set(`${req.session.user.user_id}:TotalTickets`,data);
         console.log("cache for user "+req.session.user.user_id)
         return {status:200};
     }
@@ -16,7 +16,7 @@ export async function TicketsGetCache(req){
     try{
         await conf.connect();
         var data_=null;
-        await conf.get(req.session.user.user_id).then((data)=>{
+        await conf.get(`${req.session.user.user_id}:TotalTickets`).then((data)=>{
             data_=data
         });
         console.log("user cache fetched "+data_)
@@ -32,4 +32,55 @@ export async function TicketsGetCache(req){
         return {status:500,error:error}
     }
 
+}
+
+export async function PendingTicketsCacheGet(req){
+    try{
+        await conf.connect();
+        var data_=null
+        await conf.get(`${req.session.user.user_id}:PendingTickets`).then((data)=>{
+            data_=data
+        })
+        return {status:200,data_}
+    }
+    catch(error){
+        return {status:500,error:error};
+    }
+}
+export async function  PendingTicketsCacheSet(req,data) {
+    try{
+        await conf.connect();
+        await conf.set(`${req.session.user.user_id}:PendingTickets`,data);
+        return {status:200};
+    }
+    catch(error){
+        return {status:500,error:error}
+    }
+    
+}
+
+export async function ResolvedTicketsCacheGet(req){
+    try{
+        await conf.connect();
+        var data_=null
+        console.log(req.session.user.user_id)
+        await conf.get(`${req.session.user.user_id}:ResolvedTickets`).then((data)=>{
+            data_=data
+        })
+        return {status:200,data_}
+    }
+    catch(error){
+        return {status:500,error:error};
+    }
+}
+export async function  ResolvedTicketsCacheSet(req,data) {
+    try{
+        await conf.connect();
+        await conf.set(`${req.session.user.user_id}:ResolvedTickets`,data);
+        return {status:200};
+    }
+    catch(error){
+        return {status:500,error:error}
+    }
+    
 }

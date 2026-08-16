@@ -5,6 +5,8 @@ import { PrioritySetCache } from "../cache/store_lists.js";
 import { CategoryGetCache } from "../cache/store_lists.js";
 import { CategroySetCache } from "../cache/store_lists.js";
 import TicketsSetCache, { TicketsGetCache } from "../cache/tickets_cache.js";
+import { PendingTicketsCacheGet,PendingTicketsCacheSet } from "../cache/tickets_cache.js";
+import { ResolvedTicketsCacheGet,ResolvedTicketsCacheSet } from "../cache/tickets_cache.js";
 import { conn } from "../app.js";
 export default async function FetchCategory(req,res){
     const response=await CategoryGetCache();
@@ -134,45 +136,92 @@ export async function TotalTickets(req,res){
 
 export async function PendingTickets(req,res){
    // const connect=await USERS.connect();
+   const result=await PendingTicketsCacheGet(req);
+   if(result.status==500){
+    return res.status(500).json({message:"Failed to fetch from cache"})
+   }
+   else{
+    if(result.data_>=1){
+        const count=Number(result.data_);
+        return res.status(200).json({message:"Fetched from cache",count})
+    }
+    else{
     try{
         var m=null;
         const{user_id}=req.session.user;
         if(!user_id){
             return res.status(500).json({message:"Ticket cound found",count:0})
         }
+        var data_=null
         await conn.query(`select*from kemfri_schema.tickets where user_id=$1 and pending=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);
-           return res.status(200).json({message:"fetched pending tickets",count:data.rowCount})
+            data_=data.rowCount
+          
         }).catch((error)=>{
             console.log(error)
-            return res.status(500).json({message:"Could not fetch pending tickets"})
+            
         })
-       
+        if(data_>=0){
+            const result=await PendingTicketsCacheSet(req,data_);
+            if(result.status==200){
+                
+                 return res.status(200).json({message:"fetched pending tickets",count:data_})
+            }
+            else{
+                return res.status(result.status).json({message:"Error occured",error:result.error})
+            }
+        }else{
+            return res.status(500).json({message:"Could not fetch pending tickets"})
+        }  
     }
     finally{
      //   connect.release();
     }
 }
+}
+   }
 
 export async function ResolvedTickets(req,res){
-    
-    try{
-       
-       // const connect=await USERS.connect();
-        
+    const result=await ResolvedTicketsCacheGet(req);
+    if(result.status==500){
+        console.log(result.error)
+        return res.status(500).json({message:"Failed to ftech from cache"})
+    }
+    else{
+        if(result.data_>=1){
+            const count=Number(result.data_)
+            return res.status(200).json({message:"Fetched from cache",count})
+        }
+        else{
+         try{
         const{user_id}=req.session.user;
         if(!user_id){
             console.log("user id not found")
             return res.status(500).json({message:"Ticket could not be found",count:0})
         }
         else{
+            var data_=null
         await conn.query(`select*from kemfri_schema.tickets where user_id=$1 and resolved=true`,[user_id]).then((data)=>{
             console.log(data.rowCount);
-           return res.status(200).json({message:"fetched resolved tickets",count:data.rowCount})
+            data_=data.rowCount
+           
         }).catch((error)=>{
             console.log(error)
-            return res.status(500).json({message:"Could not fetch pending tickets"})
+            
         })
+        if(data_>=0){
+            const result=await ResolvedTicketsCacheSet(req,data_);
+            if(result.status==200){
+                return res.status(200).json({message:"fetched resolved tickets",count:data_})
+            }
+            else{
+                console.log(result.error);
+                return res.status(result.status).json({message:"Failed to cache"})
+            }
+        }
+        else{
+            return res.status(500).json({message:"Could not fetch pending tickets"})
+        }
         
     }
        
@@ -181,3 +230,5 @@ export async function ResolvedTickets(req,res){
        // connect.release();
     }
 }
+ }
+    }

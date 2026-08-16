@@ -6,10 +6,14 @@ var data_priroity=null
 await conf.connect().then(()=>{console.log("done")});
 await conf.json.get('priority').then((data)=>{
 if(data){
-    data_priroity=data
+   
+    data_priroity=data;
+    console.log(data_priroity[0])
+    
 }
 })
 if(data_priroity){
+    console.log("data is "+data_priroity[0])
 	const data=data_priroity
     return {status:200,data};
 }else{
@@ -24,8 +28,9 @@ catch(error){
 export async function PrioritySetCache(data) {
     try{
   await conf.connect().then(()=>{console.log("done")});
-
-        await conf.json.set("priority","$",`${data}`);
+        console.log(data)
+        
+        await conf.json.set("priority","$",data);
         return {status:200}
     }
     catch(error){

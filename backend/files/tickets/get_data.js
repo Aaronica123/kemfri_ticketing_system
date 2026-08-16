@@ -4,10 +4,12 @@ import PriorityGetCache from "../cache/store_lists.js";
 import { PrioritySetCache } from "../cache/store_lists.js";
 import { CategoryGetCache } from "../cache/store_lists.js";
 import { CategroySetCache } from "../cache/store_lists.js";
+import TicketsSetCache, { TicketsGetCache } from "../cache/tickets_cache.js";
 import { conn } from "../app.js";
 export default async function FetchCategory(req,res){
     const response=await CategoryGetCache();
     if(response.status==200){
+        
         return res.status(200).json({message:"Category fetched",data:response.data})
     } 
     else{
@@ -44,9 +46,10 @@ export default async function FetchCategory(req,res){
 }
 export async function FetchPriority(req,res) {
     const response=await PriorityGetCache();
-    console.log(response);
+    console.log(response.data);
     
     if(response.status==200){
+        console.log(response.data);
         return res.status(200).json({message:"Priroity fetched",data:response.data})
     }
     else{
@@ -83,7 +86,17 @@ export async function FetchPriority(req,res) {
     
 }
 export async function TotalTickets(req,res){
+    const result=await TicketsGetCache(req);
+    if(result.status==500){
+        return res.status(500).json({message:"Cache has failed"})
+    }
+    else{
     
+    if(result.data_>=1){
+        const count=Number(result.data_)
+        return res.status(200).json({message:"Cache found",count})
+    }
+    else{
     try{
         var m=null;
         const{user_id}=req.session.user;
@@ -91,19 +104,32 @@ export async function TotalTickets(req,res){
         if(!user_id){
             return res.status(500).json({message:"Ticket cound found",count:0})
         }
-        
+        var data_=null
         await conn.query(`select*from kemfri_schema.tickets where user_id=$1`,[user_id]).then((data)=>{
             console.log(data.rowCount);
-            return res.status(200).json({message:"Ticket cound found",count:data.rowCount})
+            data_=data.rowCount;
+            
         }).catch((error)=>{
             console.log(error);
-            return res.status(500).json({message:"Server error"})
+            data_=null
+            
         })
+        console.log("data is "+ data_)
+        if(!data_){
+            return res.status(500).json({message:"Server error"})
+        }
+        else{
+        await TicketsSetCache(req,data_);
+        return res.status(200).json({message:"Ticket count found",count:data_})
+        }
+        // await TicketsGetCache(req);
         return m;
     }
     finally{
         //connect.release();
     }
+}
+}
 }
 
 export async function PendingTickets(req,res){

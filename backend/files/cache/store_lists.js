@@ -72,7 +72,7 @@ export  async function CategroySetCache(data){
     try{
 await conf.connect().then(()=>{console.log("done")});
       //  await DBcache.connect();
-        await conf.json.set("category","$",`${data}`)
+        await conf.json.set("category","$",data)
         return {status:200}
     }
     catch(error){

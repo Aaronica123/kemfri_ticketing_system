@@ -1,6 +1,6 @@
-import Execute_Button, { Nav_button } from "./buttons";
+import Execute_Button, { Load_button, Nav_button } from "./buttons";
 import {Menu, TicketPlusIcon} from "lucide-react";
-import { AlertDialog, Avatar, Button, Card, Separator } from "@radix-ui/themes/dist/cjs/index.js";
+import { AlertDialog, Avatar, Button, Card, Separator, Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 import Main_Text, { Head_Text } from "./text";
 import { Bell } from "lucide-react";
 import { Badge } from "@radix-ui/themes/dist/cjs/index.js";
@@ -23,18 +23,22 @@ const nav=useNavigate();
 const{group,authenticated,loading}=CheckContxt();
 
 const [track,settrack]=useState(false);
+const [lg,setlg]=useState(false);
 const update=()=>{
     settrack(!track);
 }
 async function logout(){
+    setlg(true);
     await con().post('/logout',{}).then((data)=>{
         console.log(data.status);
         alert("Logout done");
        nav('/', { replace: true });
        localStorage.removeItem('lastname');
-       localStorage.removeItem('firstname')
+       localStorage.removeItem('firstname');
+       setlg(false);
     }).catch((error)=>{
         console.log(error);
+        setlg(false);
         // alert("An error has encountered");
     });
 }
@@ -59,16 +63,11 @@ else
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     {!track?
-    <div style={{width:"fit-content",height:"fit-content",marginTop:"10px",display:"flex",
-        flexDirection:"column",padding:"5px",gap:"10px"
-    }}>
-       <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
-    <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"100%",height:"100%",cursor:"pointer"}}></SidebarOpen>
-    </div>
+   ""
     :
-    
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
-       }} className="bg1">
+        background:"linear-gradient(30deg,rgba(23, 32, 25, 0.614),rgba(227, 233, 229, 0.829),rgba(154, 174, 158, 0.836),rgba(23, 32, 25, 0.614))"
+       }} >
         
             <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px"}}>
             <Avatar fallback="KM" size={"6"} src="" color="blue" radius="medium"></Avatar>    
@@ -119,6 +118,7 @@ return(<>
             </div> 
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
+                {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
                         <Card className="crd"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
@@ -156,6 +156,7 @@ return(<>
     }}
 >
     <div style={{width:"fit-content",height:"100%",display:"flex"}}>
+        
     <AlertDialog.Description style={{display:"flex",flexDirection:"column",gap:"15px",justifyContent:"center",alignItems:"center",width:"fit-content"}}>
         <LogOut size={"50"}/>
         <div style={{width:"100%",display:"flex"}}>
@@ -167,23 +168,34 @@ return(<>
     <AlertDialog.Cancel>
         <Button size="3" variant="outline" highContrast style={{cursor:"pointer",width:"fit-content",height:"fit-content",display:"flex",padding:"10px",}}>Cancel</Button>
     </AlertDialog.Cancel>
+    
     <AlertDialog.Action>
         <Button size="3" variant="classic" color="red" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"10px",
             flexDirection:"row",gap:"5px",cursor:"pointer"}} onClick={logout}>Log Out</Button>
     </AlertDialog.Action>
+    {/* <Load_button text={"logging out"}></Load_button> */}
     </div>
+    
 </AlertDialog.Content>
-                </AlertDialog.Root>
+</AlertDialog.Root>
+
+        }
                  
             </div>
      </div> 
 }
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
                 <div style={{width:"100%",height:"fit-content",display:"flex",
-            flexDirection:"row",padding:"10px"
-            }} className="bg2">
-            
-           
+            flexDirection:"row",padding:"10px",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
+            }}>
+            {track?"":
+            <div style={{width:"fit-content",height:"fit-content",marginTop:"10px",display:"flex",
+        flexDirection:"row",padding:"5px",gap:"10px"
+    }}>
+       <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
+    <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"100%",height:"100%",cursor:"pointer"}}></SidebarOpen>
+    </div>
+}
             {/* <div style={{width:"100%",height:"fit-content",display:"flex" ,margin:"15px",flex:2.5}}> */}
                 {/* <Nav_button variant={"ghost"}><Menu size={"30"} color="black"></Menu></Nav_button> */}
             {/* </div> */}
@@ -203,7 +215,7 @@ return(<>
              </div>
         
         {track?<div style={{display:"flex",width:"100%",flexWrap:"wrap"}}><p>Please choose one from the sidebar</p></div>:
-        <div className="bg"style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px"}}>
+        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"linear-gradient(to right,rgba(154, 174, 158, 0.836)25%)"}}>
             {children}
         </div>
 }

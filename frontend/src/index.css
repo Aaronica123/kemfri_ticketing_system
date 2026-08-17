@@ -56,8 +56,10 @@
   background:linear-gradient(rgba(128, 128, 128, 0.279));
 }
 .bg1 {
- background: linear-gradient(rgba(144, 144, 144, 0.717)); 
-  background: linear-gradient(rgba(12, 201, 53, 0.614)); 
+ /* background: linear-gradient(rgba(144, 144, 144, 0.717));  */
+  background: linear-gradient(rgba(23, 32, 25, 0.614)); 
+  background: linear-gradient(rgba(154, 174, 158, 0.836)); 
+  background: linear-gradient(rgba(227, 233, 229, 0.829)); 
 }
 
 .btn12:hover{

@@ -111,7 +111,7 @@ export default function Login_form(){
                 </div>
                 {loading? 
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
-                    <Load_button></Load_button>
+                    <Load_button text={"Logging In"}></Load_button>
                 </div>
                 :
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>

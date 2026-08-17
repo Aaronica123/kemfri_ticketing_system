@@ -5,6 +5,7 @@ import { Button, Card, DropdownMenu, TextArea } from "@radix-ui/themes/dist/cjs/
 import { useState } from "react";
 import con from "../axios/axios";
 import { useEffect } from "react";
+import { Load_button } from "../ui/buttons";
 export default function SubmitForm(){
     const [set,setf]=useState({data_m:"options"})
     const [cat,setcat]=useState({data_m:"options"})
@@ -21,6 +22,7 @@ export default function SubmitForm(){
             [name]:value
         }))
     }
+    const [track,settrack]=useState(false);
     
     const category_drop=(value,category_id)=>{
        
@@ -52,13 +54,16 @@ set_priority_array(data.data.data);
         console.log(val_priority)
         console.log(frm.ticket_issue)
         e.preventDefault();
+        settrack(true);
         await con().post('/submit',{category_id:val_category,priority_id:val_priority,ticket_issue:frm.ticket_issue}).then(()=>{
             alert("data saved successfully");
             priority_drop("Default Priority")
             category_drop("Default Category")
             setfrm({ticket_issue:""});
+            settrack(false);
         }).catch((error)=>{
             console.log(error);
+            settrack(false);
             // alert("An error occured");
         })
     }
@@ -88,11 +93,11 @@ set_priority_array(data.data.data);
                         }}>
                             <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
                             {/* <Main_Text>System Overview and Admin</Main_Text> */}
-                            <div style={{width:"100%",
-                    flexDirection:"column",display:"flex",height:"fit-content"
+                            <div style={{width:"fit-content",
+                    flexDirection:"row",display:"flex",height:"fit-content"
                 }}>
                     <Head_Text>Submit ICT Support Request</Head_Text>
-                    <Main_Text>Describe Issue and Submit Ticket</Main_Text>
+                    
 
                 </div>
             {/* <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
@@ -113,7 +118,7 @@ set_priority_array(data.data.data);
                         flexDirection:"column",gap:"10px",width:"100%",
                         height:"fit-content"
                     }}>
-                        <Head_Text>Subject *</Head_Text>
+                        <Head_Text>Subject </Head_Text>
                         <Input_Field placeholder={'Subject'}></Input_Field>  
                     </div>
                     <div style={{display:"flex",flexDirection:"row",
@@ -123,7 +128,7 @@ set_priority_array(data.data.data);
                         <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex' ,gap:"10px"
                         }}>
-                            <Head_Text>Category *</Head_Text>
+                            <Head_Text>Category </Head_Text>
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
                                 <Button size={"3"} style={{cursor:"pointer"}} type="button" variant="soft" color="gray"><Main_Text>{defcat}</Main_Text></Button>
@@ -143,7 +148,7 @@ set_priority_array(data.data.data);
                         <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex',gap:"10px"
                         }}>
-                            <Head_Text>Priority *</Head_Text>
+                            <Head_Text>Priority</Head_Text>
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
                                 <Button size={"3"} type="button" style={{cursor:"pointer"}} variant="soft" color="gray"><Main_Text>{def}</Main_Text></Button>
@@ -161,11 +166,13 @@ set_priority_array(data.data.data);
                             </DropdownMenu.Root>
                         </div>
                     </div>
-                    <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex"}}>
-                        <Head_Text>Description *</Head_Text>
+                    <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
+                        <Head_Text>Description </Head_Text>
                        <TextArea value={frm.ticket_issue} onChange={change} name="ticket_issue" ></TextArea>
                     </div>
+                    {track?<Load_button text={"Submitting"}></Load_button>:
                     <Button size={"3"} variant="classic" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
+}
                 </Card>
 
             </div>

@@ -1,4 +1,4 @@
-import { Button, DropdownMenu, Table } from "@radix-ui/themes/dist/cjs/index.js";
+import { Button, DropdownMenu, Spinner, Table } from "@radix-ui/themes/dist/cjs/index.js";
 import Main_Text, { Head_Text, Input_Field } from "../ui/text";
 import { useState } from "react";
 import con from "../axios/axios";
@@ -12,7 +12,7 @@ export default function MyTickets(){
     const [final,setfinal]=useState([]);
     const [index,setindex]=useState(1);
     const [total,settotal]=useState("");
-    
+    const[track,settrack]=useState(false);
     const next=async()=>{
         if(index<total){
             setindex(index+1)
@@ -29,17 +29,17 @@ export default function MyTickets(){
     }
     const fetch=async()=>{
         await con().get(`/get_tickets?ind=${index}`).then((data)=>{
-            // alert('Data fetched');
-        
-            
+            // alert('Data fetched');            
            const transformedData = data.data.data.map(item => Object.values(item));
            setfinal(transformedData);
           console.log(data.data.total)
           settotal(data.data.total)
+          settrack(true);
         
             
         }).catch((error)=>{
             console.log(error);
+            settrack(true);
             // alert('failed to fetch')
         })
     }
@@ -117,6 +117,10 @@ export default function MyTickets(){
                             <Table.Cell>Time</Table.Cell>
                         </Table.Row>
                     </Table.Header>
+                    {!track?
+                    <div style={{display:"flex",position:"fixed",justifyContent:"center",padding:"10px",width:"100%"}}>
+                    <Spinner size={"3"}></Spinner>
+                    </div>:
                     <Table.Body>
                         
                         {final.map((item,index)=>(
@@ -133,6 +137,7 @@ export default function MyTickets(){
                        
                        
                     </Table.Body>
+}
                     <div style={{position:"fixed",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",height:"fit-content",gap:"5px"}}>
                         <Main_Text color={"teal"}>Current page {index}</Main_Text>
                         <Button color={"teal"} onClick={back}style={{cursor:"pointer"}}>Back</Button>

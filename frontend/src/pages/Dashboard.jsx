@@ -5,24 +5,33 @@ import { Ticket } from "lucide-react";
 import { Avatar, Card } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useEffect, useState } from "react";
+import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Dashboard(){
   
     const [count,setcount]=useState({total:0,pending:0,solved:0})
+    const [track,settrack]=useState(false);
+    const[resolve,setresolve]=useState(false);
+    const [pending,setpending]=useState(false);
     const total_fetch=async()=>{
         await con().get('/total_tickets').then((data)=>{
             setcount((data_)=>({...data_,
                 total:data.data.count}))
+            settrack(true);
         }).catch((error)=>{
+            settrack(true)
             console.log(error);
             // alert("an error occured");
         })
     }
+    
     const pending_fetch=async()=>{
         await con().get('/pending_tickets').then((data)=>{
              setcount((data_)=>({...data_,
                 pending:data.data.count}))
+            setpending(true);
         }).catch((error)=>{
             console.log(error);
+            setpending(true)
             // alert("an error occured");
         })
     }
@@ -30,8 +39,10 @@ export default function Dashboard(){
         await con().get('/resolved_tickets').then((data)=>{
             setcount((data_)=>({...data_,
                 solved:data.data.count}))
+            setresolve(true);
         }).catch((error)=>{
             console.log(error);
+            setresolve(true)
             // alert("an error occured");
         })
     }
@@ -63,7 +74,8 @@ export default function Dashboard(){
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
-                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                            {track?<Clock size="30" color="rgb(0, 0, 0)"></Clock>:<Spinner></Spinner>}
+                            
                         </div>
                     </div>
                 </Card>
@@ -78,7 +90,8 @@ export default function Dashboard(){
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
-                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                            {pending?<Clock size="30" color="rgb(0, 0, 0)"></Clock>:<Spinner></Spinner>}
+                            
                         </div>
                     </div>
                 </Card>
@@ -92,7 +105,8 @@ export default function Dashboard(){
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
-                            <Clock size="30" color="rgb(0, 0, 0)"></Clock>
+                           {resolve?<Clock size="30" color="rgb(0, 0, 0)"></Clock>:<Spinner></Spinner>}
+                            
                         </div>
                     </div>
                 </Card>

@@ -7,11 +7,11 @@ export default function Execute_Button({children,onClick,color,variant,type}){
     >{children}</Button>
     </>)
 }
-export function Load_button(){
+export function Load_button({text,variant,color}){
     return(
         <>
-        <Button size="4" style={{width:"fit-content",height:"fit-content",display:"flex"}} variant="outline" highContrast color="bronze">
-            <Spinner loading></Spinner>Loading...</Button>
+        <Button size="4" style={{width:"fit-content",height:"fit-content",display:"flex"}} variant={variant?variant:"outline"} highContrast color={color?color:"bronze"} >
+            <Spinner loading></Spinner>{text}</Button>
         </>
     )
 }

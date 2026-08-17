@@ -5,7 +5,7 @@ export default async function TicketsSetCache(req,data){
 
         const result=await conf.execute(async(config)=>{
         await config.set(`${req.session.user.user_id}:TotalTickets`,data);
-        await config.expire(`${req.session.user.user_id}:TotalTickets`,60)
+        await config.expire(`${req.session.user.user_id}:TotalTickets`,10)
         console.log("cache for user "+req.session.user.user_id)
         return {status:200};
         })
@@ -24,6 +24,7 @@ export async function TicketsGetCache(req){
         await config.get(`${req.session.user.user_id}:TotalTickets`).then((data)=>{
             data_=data
         });
+        await config.expire(`${req.session.user.user_id}:TotalTickets`,10)
         console.log("user cache fetched "+data_)
         if(data_==null){
             data_=0
@@ -53,6 +54,7 @@ export async function PendingTicketsCacheGet(req){
             data_=data
             }
         })
+        await config.expire(`${req.session.user.user_id}:PendingTickets`,10)
         return {status:200,data_}
         })
         return result;
@@ -65,7 +67,7 @@ export async function  PendingTicketsCacheSet(req,data) {
     try{
         const result=await conf.execute(async(config)=>{
         await config.set(`${req.session.user.user_id}:PendingTickets`,data);
-        await config.expire(`${req.session.user.user_id}:PendingTickets`,60)
+        await config.expire(`${req.session.user.user_id}:PendingTickets`,10)
         return {status:200};
         })
         return result;
@@ -90,6 +92,7 @@ export async function ResolvedTicketsCacheGet(req){
             data_=data
             }
         })
+        await config.expire(`${req.session.user.user_id}:ResolvedTickets`,10);
         return {status:200,data_}
         })
         return result;
@@ -102,7 +105,7 @@ export async function  ResolvedTicketsCacheSet(req,data) {
     try{
         const result=await conf.execute(async(config)=>{
         await config.set(`${req.session.user.user_id}:ResolvedTickets`,data);
-        await config.expire(`${req.session.user.user_id}:ResolvedTickets`,60);
+        await config.expire(`${req.session.user.user_id}:ResolvedTickets`,10);
         return {status:200};
         })
         return result;

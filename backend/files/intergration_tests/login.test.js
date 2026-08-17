@@ -1,6 +1,7 @@
 import app from "../app.js";
 import supertest from "supertest";
 import { configDotenv } from "dotenv";
+import { conf } from "../connection/redis.js";
 configDotenv();
 describe('Login test',()=>{
     test('missing fields login',async()=>{
@@ -38,9 +39,11 @@ describe('Login test',()=>{
             email:process.env.testuser,
             password:process.env.testpassword
         }
+        await conf.connect();
         const result=await supertest(app).post('/api/login').send(body)
         // await conn.end();
         expect(result.status).toBe(200||201);
+        conf.close();
         
     })
 

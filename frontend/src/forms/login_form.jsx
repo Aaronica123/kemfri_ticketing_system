@@ -10,12 +10,15 @@ import { Separator } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import { Load_button } from "../ui/buttons";
 export default function Login_form(){
     // const {set_q}=Toast_use();
     // const x=()=>{
     //     console.log("Clicked");
     //     set_q(true,"Logging In");
     // }
+   // const [track,settrack]=useState({fetched:null,failed:null});
+    const [loading,setload]=useState(false);
     const nav=useNavigate();
     const [form_,setform]=useState({email:"",password:""})
     const check=(e)=>{
@@ -26,17 +29,34 @@ export default function Login_form(){
        }))
     }
     async function connect(e){
+        
         e.preventDefault();
+        setload(true);
         await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
             console.log(data.status);
+            setload(false);
             alert("successfully received");
             localStorage.setItem('firstname',data.data.data.name)
-            nav('/submit')
+            nav('/submit');
+            // settrack(()=>({
+            //     failed:false,
+            //     fetched:true
+            // }))
+        
+
         }).catch((error)=>{
+            // settrack(()=>({
+            //     failed:true,
+            //     fetched:false
+            // }))
             console.log(error);
+            setload(false);
+            
             
         })
     }
+    
+    
     
     return(
     <>
@@ -76,9 +96,15 @@ export default function Login_form(){
                         <Input_Field placeholder={"ENTER PASSWORD"} type={"password"} max={10} value={form_.password} name={"password"} change={check}></Input_Field>
                     </div>
                 </div>
+                {loading? 
+                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
+                    <Load_button></Load_button>
+                </div>
+                :
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
                     <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button>
                 </div>
+}
             </Card>
         </div>
     </div>

@@ -33,7 +33,7 @@ else{
         });
         console.log("fetched data is "+data_)    
         const result=await PendingTicketsCacheGet(req);
-        if(result.status==200){
+        if(result.status==200&&Number(result.data_)>=1){
             await conf.connect();
             await conf.incr(`${data_}:ResolvedTickets`);
             await conf.decr(`${data_}:PendingTickets`);

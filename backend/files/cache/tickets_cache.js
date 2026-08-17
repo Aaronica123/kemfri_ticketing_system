@@ -4,6 +4,7 @@ export default async function TicketsSetCache(req,data){
     try{
         await conf.connect();
         await conf.set(`${req.session.user.user_id}:TotalTickets`,data);
+        await conf.expire(`${req.session.user.user_id}:TotalTickets`,60)
         console.log("cache for user "+req.session.user.user_id)
         return {status:200};
     }
@@ -51,6 +52,7 @@ export async function  PendingTicketsCacheSet(req,data) {
     try{
         await conf.connect();
         await conf.set(`${req.session.user.user_id}:PendingTickets`,data);
+        await conf.expire(`${req.session.user.user_id}:PendingTickets`,60)
         return {status:200};
     }
     catch(error){
@@ -77,6 +79,7 @@ export async function  ResolvedTicketsCacheSet(req,data) {
     try{
         await conf.connect();
         await conf.set(`${req.session.user.user_id}:ResolvedTickets`,data);
+        await conf.expire(`${req.session.user.user_id}:ResolvedTickets`,60);
         return {status:200};
     }
     catch(error){

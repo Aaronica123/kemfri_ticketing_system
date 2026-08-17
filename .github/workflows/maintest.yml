@@ -30,6 +30,7 @@ jobs:
           envhost=${{secrets.ENVHOST}}
           envport=${{secrets.ENVPORT}}
           redisurl=${{secrets.REDISURL}}
+          frontendurl=${{secrets.FRONTENDURL}}
           EOF
       - name: build with docker
         run: |

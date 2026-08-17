@@ -2,9 +2,10 @@ import { conf } from "../connection/redis.js";
 
 export default async function Deletecache(req,res){
     try{
-        var state=false;
-        await conf.connect();
-        await conf.json.del(`user:${req.sessionID}`).then((data)=>{
+         var state=false;
+
+        const result=await conf.execute(async(config)=>{
+        await config.json.del(`user:${req.sessionID}`).then((data)=>{
             if(data==1||data==0){
                 state=true
             }
@@ -17,7 +18,10 @@ export default async function Deletecache(req,res){
         else{
             return state;
         }
+        })
+        return result;
     }
+    
     catch(error){
         console.log(error);
 //await conf.close();

@@ -1,6 +1,6 @@
 // import { ICT } from "../../connection/pool.js";
 
-import { conn } from "../../app.js";
+import { connfig } from "../../app.js";
 
 export default async function GetStaffTickets(req,res){
     if(!req.session.user||!req.session.user.group){
@@ -9,7 +9,7 @@ export default async function GetStaffTickets(req,res){
     }
     else{    
     // const connect=await ICT.connect();
-    await conn.connect();
+    const conn=await connfig.connect();
     try{
         var m=null
         const{user_id}=req.session.user;
@@ -30,7 +30,6 @@ export default async function GetStaffTickets(req,res){
         }
     
     finally{
-        // connect.release();
-    
+        conn.release();
 }}
 }

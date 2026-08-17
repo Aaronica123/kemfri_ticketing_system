@@ -7,7 +7,8 @@ import { CategroySetCache } from "../cache/store_lists.js";
 import TicketsSetCache, { TicketsGetCache } from "../cache/tickets_cache.js";
 import { PendingTicketsCacheGet,PendingTicketsCacheSet } from "../cache/tickets_cache.js";
 import { ResolvedTicketsCacheGet,ResolvedTicketsCacheSet } from "../cache/tickets_cache.js";
-import { conn } from "../app.js";
+
+import { connfig } from "../app.js";
 export default async function FetchCategory(req,res){
     const response=await CategoryGetCache();
     if(response.status==200){
@@ -15,10 +16,11 @@ export default async function FetchCategory(req,res){
         return res.status(200).json({message:"Category fetched",data:response.data})
     } 
     else{
-    
+    const conn=await connfig.connect();
     try{
         var m=null
 //        await conn.connect();
+        // const conn=await connfig.connect();
         await conn.query("select*from kemfri_schema.category;").then((data)=>{
             console.log(data.rows);
             m=data.rows;
@@ -42,22 +44,24 @@ export default async function FetchCategory(req,res){
         }
 
     }finally{
-        
+        conn.release()
     }
 }
 }
 export async function FetchPriority(req,res) {
     const response=await PriorityGetCache();
     console.log(response.data);
-    
+   
     if(response.status==200){
         console.log(response.data);
         return res.status(200).json({message:"Priroity fetched",data:response.data})
     }
     else{
   //  await conn.connect();
+  const conn=await connfig.connect();
     try{
       var hold=null;
+       
         await conn.query("select*from kemfri_schema.priority").then((data)=>{
             console.log(data.rows);
            hold=data.rows;
@@ -82,7 +86,7 @@ export async function FetchPriority(req,res) {
     }
     
     finally{
-        // connect.release();
+         conn.release();
     }
 }
     
@@ -99,6 +103,7 @@ export async function TotalTickets(req,res){
         return res.status(200).json({message:"Cache found",count})
     }
     else{
+        const conn=await connfig.connect();
     try{
         var m=null;
         const{user_id}=req.session.user;
@@ -107,6 +112,7 @@ export async function TotalTickets(req,res){
             return res.status(500).json({message:"Ticket cound found",count:0})
         }
         var data_=null
+        // const conn=await connfig.connect();
         await conn.query(`select*from kemfri_schema.tickets where user_id=$1`,[user_id]).then((data)=>{
             console.log(data.rowCount);
             data_=data.rowCount;
@@ -128,7 +134,7 @@ export async function TotalTickets(req,res){
         return m;
     }
     finally{
-        //connect.release();
+        conn.release();
     }
 }
 }
@@ -146,7 +152,9 @@ export async function PendingTickets(req,res){
         return res.status(200).json({message:"Fetched from cache",count})
     }
     else{
+        const conn=await connfig.connect();
     try{
+        
         var m=null;
         const{user_id}=req.session.user;
         if(!user_id){
@@ -175,7 +183,7 @@ export async function PendingTickets(req,res){
         }  
     }
     finally{
-     //   connect.release();
+       conn.release();
     }
 }
 }
@@ -193,6 +201,7 @@ export async function ResolvedTickets(req,res){
             return res.status(200).json({message:"Fetched from cache",count})
         }
         else{
+            const conn=await connfig.connect();
          try{
         const{user_id}=req.session.user;
         if(!user_id){
@@ -227,7 +236,7 @@ export async function ResolvedTickets(req,res){
        
     }
     finally{
-       // connect.release();
+     conn.release();
     }
 }
  }

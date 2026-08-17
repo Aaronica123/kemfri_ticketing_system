@@ -1,15 +1,13 @@
 import { conf } from "../connection/redis.js";
 
-export default async function PriorityGetCache(req,res){
+export default async function PriorityGetCache(){
 try{
 var data_priroity=null
-await conf.connect().then(()=>{console.log("done")});
-await conf.json.get('priority').then((data)=>{
+const result=await conf.execute(async(config)=>{
+await config.json.get('priority').then((data)=>{
 if(data){
-   
     data_priroity=data;
     console.log(data_priroity[0])
-    
 }
 })
 if(data_priroity){
@@ -19,7 +17,8 @@ if(data_priroity){
 }else{
 return {status:400,data:null} 
 }
-
+})
+return result;
 }
 catch(error){
     console.log(error);
@@ -27,11 +26,13 @@ catch(error){
 }
 export async function PrioritySetCache(data) {
     try{
-  await conf.connect().then(()=>{console.log("done")});
+
+  const result=await conf.execute(async(config)=>{
         console.log(data)
-        
-        await conf.json.set("priority","$",data);
+        await config.json.set("priority","$",data);
         return {status:200}
+        })
+        return result;
     }
     catch(error){
         console.log(error);
@@ -42,10 +43,9 @@ export async function PrioritySetCache(data) {
 
 export async function CategoryGetCache(){
 try{
-await conf.connect().then(()=>{console.log("done")});
-    //await DBcache.connect();
     var result=null
-    await conf.json.get('category').then((data)=>{
+    const feedback=await conf.execute(async(config)=>{
+    await config.json.get('category').then((data)=>{
         if(data){
         result=data;
         }
@@ -61,6 +61,8 @@ await conf.connect().then(()=>{console.log("done")});
     else{
         return {status:404,data:null}
     }
+    })
+    return feedback;
 }
 catch(error){
     console.log(error);
@@ -70,11 +72,16 @@ catch(error){
 
 export  async function CategroySetCache(data){
     try{
-await conf.connect().then(()=>{console.log("done")});
+
+const result=await conf.execute(async(config)=>{
+
+
       //  await DBcache.connect();
-        await conf.json.set("category","$",data)
+        await config.json.set("category","$",data)
         return {status:200}
-    }
+    })
+return result;
+}
     catch(error){
         return {status:500,error:error}
         

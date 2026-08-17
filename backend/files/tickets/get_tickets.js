@@ -1,8 +1,8 @@
 
 // import { conn } from "../connection/pool.js";
-import { conn } from "../app.js";
+import { connfig } from "../app.js";
 export default async function GetTicket(req,res){
-    
+    const conn=await connfig.connect();
     try{
         const ind=Object.values(req.query);
         if(!ind||!Number(ind)){
@@ -15,7 +15,7 @@ export default async function GetTicket(req,res){
         var count=null;
         const index=ind;
         var offset=0;
-        await conn.connect();
+        // await conn.connect();
         await conn.query('select count(*) from kemfri_schema.tickets')
         .then((data)=>{
             console.log(data.rows[0].count)
@@ -75,6 +75,7 @@ t.time_entered<=current_time order by t.date_entered,t.time_entered desc
         
     }
     finally{
-        console.log("released")
+        console.log("released");
+        conn.release();
     }
 }

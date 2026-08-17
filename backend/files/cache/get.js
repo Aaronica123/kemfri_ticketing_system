@@ -6,6 +6,7 @@ export default async function Getcache(req,res){
         const sessionID=req.sessionID;
         console.log(sessionID);
         var track=null;
+        const result=await conf.execute(async(config)=>{})
         await conf.json.get(`user:${sessionID}`).then((data)=>{
             if(data==null){
                 track=null

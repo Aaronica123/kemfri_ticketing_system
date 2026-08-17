@@ -2,11 +2,14 @@ import { conf } from "../connection/redis.js";
 
 export default async function TicketsSetCache(req,data){
     try{
-        await conf.connect();
-        await conf.set(`${req.session.user.user_id}:TotalTickets`,data);
-        await conf.expire(`${req.session.user.user_id}:TotalTickets`,60)
+
+        const result=await conf.execute(async(config)=>{
+        await config.set(`${req.session.user.user_id}:TotalTickets`,data);
+        await config.expire(`${req.session.user.user_id}:TotalTickets`,60)
         console.log("cache for user "+req.session.user.user_id)
         return {status:200};
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error};
@@ -15,9 +18,10 @@ export default async function TicketsSetCache(req,data){
 }
 export async function TicketsGetCache(req){
     try{
-        await conf.connect();
+        
         var data_=null;
-        await conf.get(`${req.session.user.user_id}:TotalTickets`).then((data)=>{
+        const result=await conf.execute(async(config)=>{
+        await config.get(`${req.session.user.user_id}:TotalTickets`).then((data)=>{
             data_=data
         });
         console.log("user cache fetched "+data_)
@@ -28,6 +32,8 @@ export async function TicketsGetCache(req){
         else {
             return {status:200,data_};
         }
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error}
@@ -37,9 +43,9 @@ export async function TicketsGetCache(req){
 
 export async function PendingTicketsCacheGet(req){
     try{
-        await conf.connect();
         var data_=null
-        await conf.get(`${req.session.user.user_id}:PendingTickets`).then((data)=>{
+        const result=await conf.execute(async(config)=>{
+        await config.get(`${req.session.user.user_id}:PendingTickets`).then((data)=>{
             if(data==null){
                 data_=0
             }
@@ -48,6 +54,8 @@ export async function PendingTicketsCacheGet(req){
             }
         })
         return {status:200,data_}
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error};
@@ -55,10 +63,12 @@ export async function PendingTicketsCacheGet(req){
 }
 export async function  PendingTicketsCacheSet(req,data) {
     try{
-        await conf.connect();
-        await conf.set(`${req.session.user.user_id}:PendingTickets`,data);
-        await conf.expire(`${req.session.user.user_id}:PendingTickets`,60)
+        const result=await conf.execute(async(config)=>{
+        await config.set(`${req.session.user.user_id}:PendingTickets`,data);
+        await config.expire(`${req.session.user.user_id}:PendingTickets`,60)
         return {status:200};
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error}
@@ -68,10 +78,12 @@ export async function  PendingTicketsCacheSet(req,data) {
 
 export async function ResolvedTicketsCacheGet(req){
     try{
-        await conf.connect();
+        
+        
         var data_=null
+        const result=await conf.execute(async(config)=>{
         console.log(req.session.user.user_id)
-        await conf.get(`${req.session.user.user_id}:ResolvedTickets`).then((data)=>{
+        await config.get(`${req.session.user.user_id}:ResolvedTickets`).then((data)=>{
             if(data==null){
                 data_=0
             }else{
@@ -79,6 +91,8 @@ export async function ResolvedTicketsCacheGet(req){
             }
         })
         return {status:200,data_}
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error};
@@ -86,10 +100,12 @@ export async function ResolvedTicketsCacheGet(req){
 }
 export async function  ResolvedTicketsCacheSet(req,data) {
     try{
-        await conf.connect();
-        await conf.set(`${req.session.user.user_id}:ResolvedTickets`,data);
-        await conf.expire(`${req.session.user.user_id}:ResolvedTickets`,60);
+        const result=await conf.execute(async(config)=>{
+        await config.set(`${req.session.user.user_id}:ResolvedTickets`,data);
+        await config.expire(`${req.session.user.user_id}:ResolvedTickets`,60);
         return {status:200};
+        })
+        return result;
     }
     catch(error){
         return {status:500,error:error}

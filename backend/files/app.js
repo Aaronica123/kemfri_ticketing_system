@@ -23,6 +23,7 @@ import CheckStatusLogin from "./actions/status.js";
 import UpdateTicket from "./tickets/staff/staff_update_tickets.js";
 import cors from "cors";
 import { DBcache } from "./connection/pool.js";
+import { conf } from "./connection/redis.js";
 configDotenv();
 const app=express();
 
@@ -37,9 +38,16 @@ export const conn=new Pool({
     password:process.env.envpassword,
     port:process.env.envport
 })
-
+export const connfig=new Pool({
+    database:process.env.envdatabase,
+    user:process.env.envuser,
+    host:process.env.envhost,
+    password:process.env.envpassword,
+    port:process.env.envport
+})
 async()=>{
     await conn.connect();
+    
 //   await DBcache.connect();
 }
 

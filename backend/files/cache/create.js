@@ -1,12 +1,12 @@
 import { conf } from "../connection/redis.js";
 
 export default async function Createcache(req,res){
-    try{
+    
+    try{ 
         
-            await conf.connect();
+        const result=await conf.execute(async(p)=>{  
         const sessionID=req.sessionID;
         const data=req.session.user;
-    
         // console.log(data)
         if(!sessionID||!data)
         {
@@ -15,20 +15,27 @@ export default async function Createcache(req,res){
         }
         else{
         
-            await conf.json.set(`user:${sessionID}`,"$",{data}).then(()=>{
+            await p.json.set(`user:${sessionID}`,"$",{data}).then(()=>{
                 console.log("stored")
             });
-            await conf.expire(`user:${sessionID}`,900000).then(()=>{
+            await p.expire(`user:${sessionID}`,900000).then(()=>{
                 console.log("expire set")
             });
 //            await conf.close();
+            // p.release();
             return {status:200}
         }
         
-    }catch(error){
+    })
+    return result;
+}
+    
+    catch(error){
         console.log(error);
 //await conf.close();
+
 const message={status:500,error:error}
         return message;
     }
+     
 }

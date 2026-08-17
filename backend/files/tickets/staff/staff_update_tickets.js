@@ -1,5 +1,5 @@
 import { ICT } from "../../connection/pool.js";
-import { conn } from "../../app.js";
+import { connfig } from "../../app.js";
 import { PendingTicketsCacheGet } from "../../cache/tickets_cache.js";
 import { conf } from "../../connection/redis.js";
 export default async function UpdateTicket(req,res){
@@ -8,6 +8,7 @@ if(!req.session.user){
 }
 else{
     // const conn=await ICT.conn();
+    const conn=await connfig.connect();
     try{
         if(req.session.user.group!='ICT'||!req.session.user.group||!req.session.user.user_id){
             return res.status(409).json({message:"User must be authenticated"})
@@ -16,7 +17,7 @@ else{
         if(!ticket_id){
             return res.status(400).json({message:"Enter a ticket"})
         }
-        await conn.connect();
+        // await conn.connect();
         await conn.query(`update kemfri_schema.tickets set pending=false,resolved=true
             where ticket_id like $1 and staff_id like $2`,[ticket_id,req.session.user.user_id])
             .then((data)=>{
@@ -44,7 +45,8 @@ else{
 
     }
     finally{
-        // conn.release();
+        conn.release();
+
     }
 }
 }

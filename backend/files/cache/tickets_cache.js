@@ -40,7 +40,12 @@ export async function PendingTicketsCacheGet(req){
         await conf.connect();
         var data_=null
         await conf.get(`${req.session.user.user_id}:PendingTickets`).then((data)=>{
+            if(data==null){
+                data_=0
+            }
+            else{
             data_=data
+            }
         })
         return {status:200,data_}
     }
@@ -67,7 +72,11 @@ export async function ResolvedTicketsCacheGet(req){
         var data_=null
         console.log(req.session.user.user_id)
         await conf.get(`${req.session.user.user_id}:ResolvedTickets`).then((data)=>{
+            if(data==null){
+                data_=0
+            }else{
             data_=data
+            }
         })
         return {status:200,data_}
     }

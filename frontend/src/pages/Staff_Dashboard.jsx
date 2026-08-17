@@ -64,7 +64,7 @@ export default function StaffDashboard(){
                 </Head_Mess>
             </div>
             <div style={{width:"100%",display:"flex"}}>
-                <Table.Root size={"3"}>
+                <Table.Root size={"3"} style={{width:"fit-content",display:"flex",height:"100%"}}>
                     <Table.Header >
                         <Table.Row>
                             <Table.Cell>Ticket ID</Table.Cell>
@@ -88,7 +88,7 @@ export default function StaffDashboard(){
                                      settick(value[0]);   
                                      }} style={{cursor:"pointer"}}>Resolve</Button>
                                 </AlertDialog.Trigger>
-                                <AlertDialog.Content>
+                                <AlertDialog.Content style={{width:"fit-content",height:"fit-contend",display:"flex",justifyContent:'center',alignItems:"center",flexDirection:"column",gap:"5px"}}>
                                     {value.map((data,index)=>(
                                     <AlertDialog.Description key={index}style={{display:"flex",flexDirection:"row",width:"100%",padding:"10px"}}>
                                         {index==0?<Main_Text >TicketID</Main_Text>:

@@ -15,11 +15,17 @@ import { ListTodo } from "lucide-react";
 import con from "../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { CheckContxt } from "../auth/auth_context";
+import { useState } from "react";
+import { SidebarOpen } from "lucide-react";
+import { SidebarClose } from "lucide-react";
 export default function Nav_bar({children}){
 const nav=useNavigate();
 const{group,authenticated,loading}=CheckContxt();
 
-
+const [track,settrack]=useState(false);
+const update=()=>{
+    settrack(!track);
+}
 async function logout(){
     await con().post('/logout',{}).then((data)=>{
         console.log(data.status);
@@ -41,6 +47,7 @@ const dir=(value)=>{
         nav('/submit')
     }
 }
+
 if(loading){
     return (
     <p>Loading Please Wait</p>)
@@ -51,11 +58,23 @@ else if(!authenticated){
 else
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
+    {!track?
+    <div style={{width:"fit-content",height:"fit-content",marginTop:"10px",display:"flex",
+        flexDirection:"column",padding:"5px",gap:"10px"
+    }}>
+       <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
+    <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"100%",height:"100%",cursor:"pointer"}}></SidebarOpen>
+    </div>
+    :
+    
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
        }} className="bg1">
-            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px"}}>
+        
+            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px"}}>
             <Avatar fallback="KM" size={"6"} src="" color="blue" radius="medium"></Avatar>    
+            <SidebarClose onClick={update} style={{width:"100%",height:"50%",cursor:"pointer"}}></SidebarClose>
             </div> 
+            
             <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
             <Head_Text>ICT Help Desk</Head_Text>    
             </div>
@@ -76,21 +95,21 @@ return(<>
                      <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
         color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>dir(1)}><LayoutDashboard></LayoutDashboard>
+    }} onClick={()=>{dir(1);update()}}><LayoutDashboard></LayoutDashboard>
     <Main_Text> Dashboard</Main_Text></Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>dir(2)}><TicketPlus/>
+    }} onClick={()=>{dir(2);update();}}><TicketPlus/>
     <Main_Text> Submit Ticket</Main_Text></Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={tickets} ><ListTodo/>
+    }} onClick={()=>{tickets();update()}} ><ListTodo/>
     <Main_Text> My Tickets</Main_Text></Button>
     {group=='ICT'?
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
-    onClick={()=>{nav('/staff_dashboard')}} ><BookOpenCheck />
+    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck />
     <Main_Text>Assigned Tickets</Main_Text>
     </Button>
     :""}
@@ -137,7 +156,7 @@ return(<>
     }}
 >
     <div style={{width:"fit-content",height:"100%",display:"flex"}}>
-    <AlertDialog.Description style={{display:"flex",flexDirection:"column",gap:"15px",justifyContent:"center",alignItems:"center",width:"100%"}}>
+    <AlertDialog.Description style={{display:"flex",flexDirection:"column",gap:"15px",justifyContent:"center",alignItems:"center",width:"fit-content"}}>
         <LogOut size={"50"}/>
         <div style={{width:"100%",display:"flex"}}>
         <Main_Text>Are You Sure You Want To Log Out</Main_Text>
@@ -158,6 +177,7 @@ return(<>
                  
             </div>
      </div> 
+}
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
                 <div style={{width:"100%",height:"fit-content",display:"flex",
             flexDirection:"row",padding:"10px"
@@ -182,9 +202,11 @@ return(<>
             </div>
              </div>
         
+        {track?<div style={{display:"flex",width:"100%",flexWrap:"wrap"}}><p>Please choose one from the sidebar</p></div>:
         <div className="bg"style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px"}}>
             {children}
         </div>
+}
         </div>
        
 </div>

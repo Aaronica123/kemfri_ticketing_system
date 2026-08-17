@@ -82,18 +82,26 @@ set_priority_array(data.data.data);
             display:"flex", flexDirection:"column", justifyContent:"center",alignItems:"center",
             gap:"5px",marginLeft:"25px"
         }}>
-            <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
-            }}>
-                <div style={{display:"flex",height:"100%",justifyContent:"center",alignItems:"center"}}>
-                    <Nav_button><ArrowLeftIcon/></Nav_button>
-                </div>
-                <div style={{width:"100%",
+            <div style={{display:"flex",flexDirection:"column",width:"100%",justifyContent:"left"}}>
+            <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
+                            display:"flex",gap:"5px",alignItems:"start"
+                        }}>
+                            <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
+                            {/* <Main_Text>System Overview and Admin</Main_Text> */}
+                            <div style={{width:"100%",
                     flexDirection:"column",display:"flex",height:"fit-content"
                 }}>
                     <Head_Text>Submit ICT Support Request</Head_Text>
                     <Main_Text>Describe Issue and Submit Ticket</Main_Text>
 
                 </div>
+            {/* <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
+            }}>
+                {/* <div style={{display:"flex",height:"100%",justifyContent:"center",alignItems:"center"}}>
+                    <Nav_button><ArrowLeftIcon/></Nav_button>
+                </div> */}
+                
+            </div> 
             </div>
             <div style={{display:"flex",width:"100%",height:"100%",justifyContent:"left"}}>
                 <Card style={{display:"flex",flexDirection:"column",

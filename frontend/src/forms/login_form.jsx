@@ -31,7 +31,7 @@ export default function Login_form(){
             console.log(data.status);
             alert("successfully received");
             localStorage.setItem('firstname',data.data.data.name)
-            nav('/dashboard')
+            nav('/submit')
         }).catch((error)=>{
             console.log(error);
             

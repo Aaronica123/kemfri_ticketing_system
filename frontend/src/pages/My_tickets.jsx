@@ -3,6 +3,9 @@ import Main_Text, { Head_Text, Input_Field } from "../ui/text";
 import { useState } from "react";
 import con from "../axios/axios";
 import { useEffect } from "react";
+import {AlertTriangle} from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import { Badge } from "@radix-ui/themes/dist/cjs/index.js";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -113,12 +116,14 @@ export default function MyTickets(){
                             <Table.Cell>Time</Table.Cell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body >
+                    <Table.Body>
                         
                         {final.map((item,index)=>(
-                            <Table.Row key={index}  >
+                            <Table.Row key={index} style={{cursor:"pointer"}} className="row">
                             {item.map((value,ind)=>(
-                                <Table.Cell key={ind}>{ind==4||ind==5?value==true?"TRUE":"FALSE":value}</Table.Cell>
+                                <Table.Cell key={ind}>{ind==4||ind==5?value==true?
+                                <AlertTriangle size={"20"} color="red"></AlertTriangle>:<CheckCircle size={"20"} color="green"></CheckCircle>:
+                                ind==3?<Badge variant="soft" size="3"color={value=="High"?"red":value=="Medium"?"orange":"teal"}>{value}</Badge>:value}</Table.Cell>
                             ))}
                              </Table.Row>
                         ))}

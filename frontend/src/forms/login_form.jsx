@@ -51,6 +51,19 @@ export default function Login_form(){
             // }))
             console.log(error);
             setload(false);
+            if(error.status==405){
+                alert("Check input")
+            }
+            else if(error.status==404){
+                alert("User not found")
+            }
+            else if(error.status==402){
+                alert("Enter all fields")
+            }
+            else {
+                alert("Contact admin cannot login")
+            }
+            
             
             
         })

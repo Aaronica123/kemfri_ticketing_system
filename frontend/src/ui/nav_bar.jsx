@@ -69,7 +69,8 @@ return(<>
     :
     <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
         background:"linear-gradient(30deg,rgba(23, 32, 25, 0.614),rgba(227, 233, 229, 0.829),rgba(154, 174, 158, 0.836),rgba(23, 32, 25, 0.614))"
-       }} >
+
+       }}className="anim" >
         
             <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px"}}>
             <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>    
@@ -198,19 +199,12 @@ return(<>
      </div> 
 }
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
-            <div style={{width:"100%",height:"fit-content",display:"flex",
-            flexDirection:"row",padding:"10px",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
+                {track?
+                 <div style={{width:"100%",height:"fit-content",display:"flex",
+                    justifyContent:"right",
+                    padding:"30px",gap:"10px",
+            flexDirection:"row",overflow:"hidden",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
             }}>
-                    {track?"":
-                    <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
-                flexDirection:"row",padding:"5px",gap:"10px"
-            }}>
-            <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
-            <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarOpen>
-            </div>
-        }
-            <div style={{width:"fit-content",height:"fit-content",display:"flex",justifyContent:"right",
-               flexDirection:"row",gap:"10px",margin:"10px"}}>
                 <div style={{width:"fit-content",height:"fit-content",display:"flex", 
                     justifyContent:"right",flexWrap:"wrap"}}>
                 <Heading size={"5"} weight={"regular"}>Kenya Marine And Research Institute</Heading>
@@ -221,8 +215,34 @@ return(<>
                 }}> */}
                 <Nav_button variant={"ghost"}><Bell size={"30"} color="black"></Bell></Nav_button>
                 {/* </div> */}
+            </div>:
+            <div style={{width:"100%",height:"fit-content",display:"flex",
+            flexDirection:"row",padding:"10px",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
+            }}>
+                    
+                    <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
+                flexDirection:"row",padding:"5px",gap:"10px"
+            }}>
+            <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
+            <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarOpen>
             </div>
+        
+            <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
+               flexDirection:"row",gap:"10px",margin:"10px"}}>
+                <div style={{width:"100%",height:"fit-content",display:"flex", 
+                    justifyContent:"right",flexWrap:"wrap"}}>
+                <Heading size={"5"} weight={"regular"}>Kenya Marine And Research Institute</Heading>
+                </div>
+                <Separator orientation={"vertical"} size={"2"} style={{fontWeight:"bold"}}/>
+                {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
+                    ,height:"fit-content"
+                }}> */}
+                <Nav_button variant={"ghost"}><Bell size={"30"} color="black"></Bell></Nav_button>
+                {/* </div> */}
+            </div>
+            
              </div>
+}
         
         {track?<div style={{display:"flex",width:"100%",flexWrap:"wrap"}}><p>Please choose one from the sidebar</p></div>:
         <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"linear-gradient(to right,rgba(154, 174, 158, 0.836)25%)"}}>

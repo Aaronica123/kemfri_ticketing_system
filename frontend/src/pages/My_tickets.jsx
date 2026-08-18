@@ -8,6 +8,9 @@ import { CheckCircle } from "lucide-react";
 import { XCircle } from "lucide-react";
 import { Badge } from "@radix-ui/themes/dist/cjs/index.js";
 import { Search } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
+import { ListX } from "lucide-react";
+import { Head_Mess } from "../ui/text";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -15,7 +18,7 @@ export default function MyTickets(){
     const [total,settotal]=useState("");
     const[track,settrack]=useState(false);
     const [input,setinput]=useState({ticket_id:""})
-    
+    const [load,setload]=useState(false);
 
     const change=(e)=>{
         const {name,value}=e.target;
@@ -39,6 +42,7 @@ export default function MyTickets(){
         // set_final_index(index);
     }
     const fetch=async()=>{
+        settrack(false);
         await con().get(`/get_tickets?ind=${index}`).then((data)=>{
             // alert('Data fetched');            
            const transformedData = data.data.data.map(item => Object.values(item));
@@ -46,11 +50,19 @@ export default function MyTickets(){
           console.log(data.data.total)
           settotal(data.data.total)
           settrack(true);
-        
+          
+          if(transformedData.length>0){
+                setinput({ticket_id:""})
+                setload(false)
+            }
+            else{
+                setload(true);
+            }
             
         }).catch((error)=>{
             console.log(error);
             settrack(true);
+            setload(true)
             // alert('failed to fetch')
         })
     }
@@ -65,12 +77,17 @@ export default function MyTickets(){
             settrack(true);
             if(fetched.length>0){
                 setinput({ticket_id:""})
+                setload(false)
+            }
+            else{
+                setload(true);
             }
 
             
 
         }).catch((error)=>{
             settrack(true);
+            setload(true)
             console.log(error);
         })
     }
@@ -158,6 +175,11 @@ export default function MyTickets(){
                     <div style={{display:"flex",position:"fixed",justifyContent:"center",padding:"10px",width:"100%"}}>
                     <Spinner size={"3"}></Spinner>
                     </div>:
+                    load?
+                    <div style={{position:'fixed',width:"100%",display:"flex",flexDirection:"row",justifyContent:"center",padding:"5px",gap:"10px"}}>
+                        <ListX size={"50"} color="red"></ListX>
+                        <Head_Mess>No Tickets Found</Head_Mess>
+                    </div>:
                     <Table.Body>
                         
                         {final.map((item,index)=>(
@@ -209,6 +231,9 @@ export default function MyTickets(){
                         <Main_Text color={"teal"}>Current page {index}</Main_Text>
                         <Button color={"teal"} onClick={back}style={{cursor:"pointer"}}>Back</Button>
                         <Button color={"teal"} onClick={next} style={{cursor:"pointer"}}>Next</Button>
+                         <Button style={{cursor:"pointer",display:"flex", gap:"5px"}} onClick={fetch}><RefreshCcw></RefreshCcw>
+                        Refresh</Button>
+                    
                        </div>
                 </Table.Root>
             </div>

@@ -18,6 +18,7 @@ import { CheckContxt } from "../auth/auth_context";
 import { useState } from "react";
 import { SidebarOpen } from "lucide-react";
 import { SidebarClose } from "lucide-react";
+import { ScrollArea } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Nav_bar({children}){
 const nav=useNavigate();
 const{group,authenticated,loading}=CheckContxt();
@@ -79,7 +80,9 @@ return(<>
             </div>
             <div style={{width:"100%",height:"100%", top:"10",display:"flex",
                 flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
-                border:"single 2px grey",borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
+                border:"single 2px grey",
+                borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
+            <ScrollArea type="always" scrollbars="vertical" size={"1"} style={{display:"flex",wdith:"100%",padding:"10px"}}>
             <div style={{display:"flex",flexDirection:"column",justifyContent:"left",
                 height:"fit-content",width:"100%",gap:"5px"
             }}>
@@ -105,17 +108,26 @@ return(<>
     }} onClick={()=>{tickets();update()}} ><ListTodo/>
     <Main_Text> My Tickets</Main_Text></Button>
     {group=='ICT'?
+    <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
+    <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
+    <Main_Text>Staff</Main_Text>
+    <Separator size={"4"} orientation={"horizontal"} ></Separator>
+    </div>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
     onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck />
     <Main_Text>Assigned Tickets</Main_Text>
     </Button>
+    </div>
     :""}
                 </div>
 
+
             </div>
+            </ScrollArea>
             </div> 
+            
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
                 {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
@@ -124,7 +136,7 @@ return(<>
                         <Card className="crd"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
                 }}>
                     <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
-                        <Avatar radius="full" fallback="UR" src="" color="blue"></Avatar>
+                        <Avatar radius="full" fallback={"KM"} src="" color="blue"></Avatar>
                     </div>
                     <div style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap",
@@ -136,7 +148,7 @@ return(<>
                          {/* <Main_Text>Otieno</Main_Text>  */}
                       {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
                         </div>
-                        <Badge variant="soft" size={"3"} style={{width:"fit-content",display:"flex"}}>User One</Badge>
+                        <Badge variant="soft" size={"3"} style={{width:"fit-content",display:"flex"}}>{localStorage.getItem("firstname")}</Badge>
                     </div>
                 </Card>
                     </AlertDialog.Trigger>

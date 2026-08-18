@@ -4,20 +4,28 @@ import Main_Text, { Head_Mess } from "../ui/text";
 import con from "../axios/axios";
 import { useEffect, useState } from "react";
 import { CheckContxt } from "../auth/auth_context";
+import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
+import { ListX } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 export default function StaffDashboard(){
     const{group,loading}=CheckContxt();
     const [data_,setdata]=useState([]);
     const [tick,settick]=useState(null);
-    
+    const [track,settrack]=useState(false);
+    const [found,setfound]=useState(false);
     const f=async()=>{
         try{
+            settrack(false);
             await con().get('/staff_tickets').then((data)=>{
                 const da=data.data.data.map((values)=>Object.values(values));
                 setdata(da);
                 console.log(da);
-                
-                // alert("fetched")
+            settrack(true);
+            if(da.length<=0){
+                setfound(true);
+            }                // alert("fetched")
             }).catch((error)=>{
+                settrack(true)
                 console.log(error);
             });
         }
@@ -63,8 +71,8 @@ export default function StaffDashboard(){
                 Welcome Back {localStorage.getItem('firstname')}
                 </Head_Mess>
             </div>
-            <div style={{width:"100%",display:"flex"}}>
-                <Table.Root size={"3"} style={{width:"fit-content",display:"flex",height:"100%"}}>
+            <div style={{width:"100%",height:"100%",display:"flex"}}>
+                <Table.Root size={"3"} style={{width:"fit-content",display:"flex",height:"100%"}} variant="surface">
                     <Table.Header >
                         <Table.Row>
                             <Table.Cell>Ticket ID</Table.Cell>
@@ -75,6 +83,15 @@ export default function StaffDashboard(){
                             <Table.Cell>Actions</Table.Cell>
                         </Table.Row>
                     </Table.Header>
+                    {!track?
+                    <div style={{position:"fixed",display:'flex',width:'100%',justifyContent:"center"}}>
+                    <Spinner></Spinner>
+                    </div>:
+                    found?
+                    <div style={{position:'fixed',width:"100%",display:"flex",flexDirection:"row",justifyContent:"center",padding:"5px",gap:"10px"}}>
+                        <ListX size={"50"} color="red"></ListX>
+                        <Head_Mess>No Tickets Found</Head_Mess>
+                    </div>:
                     <Table.Body >
                         {data_.map((value,index)=>(
                            <Table.Row key={index}>
@@ -132,10 +149,17 @@ export default function StaffDashboard(){
                             </Table.Cell>
                            </Table.Row> 
                         ))}
-                        
+                    
                     </Table.Body>
+}
+                <div style={{position:"fixed",display:'flex',width:"100%",height:"fit-content",bottom:"5px",left:"5px"}}>
+                <Button style={{cursor:"pointer",display:"flex", gap:"5px"}} onClick={f}><RefreshCcw></RefreshCcw>
+                Refresh</Button>
+                </div>
                 </Table.Root>
+
             </div>
+            
         </div>
         :<p>Denied access</p>
         }

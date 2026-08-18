@@ -91,11 +91,11 @@ set_priority_array(data.data.data);
             <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
                             display:"flex",gap:"5px",alignItems:"start"
                         }}>
-                            <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
-                            {/* <Main_Text>System Overview and Admin</Main_Text> */}
+                            {/* <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
+                            <Main_Text>System Overview and Admin</Main_Text>*/}
                             <div style={{width:"fit-content",
-                    flexDirection:"row",display:"flex",height:"fit-content"
-                }}>
+                   flexDirection:"row",display:"flex",height:"fit-content"
+                 }}> 
                     <Head_Text>Submit ICT Support Request</Head_Text>
                     
 

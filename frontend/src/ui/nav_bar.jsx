@@ -19,6 +19,7 @@ import { useState } from "react";
 import { SidebarOpen } from "lucide-react";
 import { SidebarClose } from "lucide-react";
 import { ScrollArea } from "@radix-ui/themes/dist/cjs/index.js";
+import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Nav_bar({children}){
 const nav=useNavigate();
 const{group,authenticated,loading}=CheckContxt();
@@ -70,9 +71,9 @@ return(<>
         background:"linear-gradient(30deg,rgba(23, 32, 25, 0.614),rgba(227, 233, 229, 0.829),rgba(154, 174, 158, 0.836),rgba(23, 32, 25, 0.614))"
        }} >
         
-            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px"}}>
-            <Avatar fallback="KM" size={"6"} src="" color="blue" radius="medium"></Avatar>    
-            <SidebarClose onClick={update} style={{width:"100%",height:"50%",cursor:"pointer"}}></SidebarClose>
+            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px"}}>
+            <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>    
+            <SidebarClose size={"50"} onClick={update} color="blue"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarClose>
             </div> 
             
             <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
@@ -197,32 +198,29 @@ return(<>
      </div> 
 }
             <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
-                <div style={{width:"100%",height:"fit-content",display:"flex",
+            <div style={{width:"100%",height:"fit-content",display:"flex",
             flexDirection:"row",padding:"10px",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
             }}>
-            {track?"":
-            <div style={{width:"fit-content",height:"fit-content",marginTop:"10px",display:"flex",
-        flexDirection:"row",padding:"5px",gap:"10px"
-    }}>
-       <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
-    <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"100%",height:"100%",cursor:"pointer"}}></SidebarOpen>
-    </div>
-}
-            {/* <div style={{width:"100%",height:"fit-content",display:"flex" ,margin:"15px",flex:2.5}}> */}
-                {/* <Nav_button variant={"ghost"}><Menu size={"30"} color="black"></Menu></Nav_button> */}
-            {/* </div> */}
-            <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
-               flexDirection:"row",gap:"30px",margin:"10px",alignItems:"flex-end",flex:1.5}}>
-                    <div style={{width:"fit-content",height:"fit-content",display:"flex", 
-                        alignItems:"center",gap:"10px"}}>
-                <Head_Text>Kenya Marine And Research Institute</Head_Text>
+                    {track?"":
+                    <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
+                flexDirection:"row",padding:"5px",gap:"10px"
+            }}>
+            <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
+            <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarOpen>
+            </div>
+        }
+            <div style={{width:"fit-content",height:"fit-content",display:"flex",justifyContent:"right",
+               flexDirection:"row",gap:"10px",margin:"10px"}}>
+                <div style={{width:"fit-content",height:"fit-content",display:"flex", 
+                    justifyContent:"right",flexWrap:"wrap"}}>
+                <Heading size={"5"} weight={"regular"}>Kenya Marine And Research Institute</Heading>
                 </div>
                 <Separator orientation={"vertical"} size={"2"} style={{fontWeight:"bold"}}/>
-                <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
+                {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
-                }}>
+                }}> */}
                 <Nav_button variant={"ghost"}><Bell size={"30"} color="black"></Bell></Nav_button>
-                </div>
+                {/* </div> */}
             </div>
              </div>
         

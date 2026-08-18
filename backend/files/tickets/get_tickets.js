@@ -52,8 +52,7 @@ export default async function GetTicket(req,res){
             from kemfri_schema.tickets as t join kemfri_schema.category c
 on t.category_id=c.category_id join kemfri_schema.priority p
 on p.id_=t.priority_id
-where t.date_entered<=$3 and t.user_id = $4 and
-t.time_entered<=current_time order by t.date_entered,t.time_entered desc 
+where t.date_entered<=$3 and t.user_id = $4 order by t.date_entered,t.time_entered desc 
             limit $1
             offset $2`,[batch,offset,new Date().toISOString(),req.session.user.user_id]).then((data)=>{
                 console.log(data.rows);

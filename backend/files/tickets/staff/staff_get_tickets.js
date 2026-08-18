@@ -18,7 +18,7 @@ export default async function GetStaffTickets(req,res){
         }
 
         
-        await conn.query(`select t.ticket_id,t.ticket_issue,t.user_id, c.category_name,p.priority from kemfri_schema.tickets t
+        await conn.query(`select t.ticket_id,t.ticket_issue,t.user_id, c.category_name,p.priority,t.resolved from kemfri_schema.tickets t
             join kemfri_schema.category c on c.category_id=t.category_id 
             join kemfri_schema.priority p on p.id_=t.priority_id
             where t.staff_id=$1`,[user_id]).then((data)=>{

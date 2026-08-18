@@ -7,12 +7,16 @@ import { CheckContxt } from "../auth/auth_context";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 import { ListX } from "lucide-react";
 import { RefreshCcw } from "lucide-react";
+import {AlertTriangle} from "lucide-react";
+import { CheckCircle } from "lucide-react";
 export default function StaffDashboard(){
     const{group,loading}=CheckContxt();
     const [data_,setdata]=useState([]);
     const [tick,settick]=useState(null);
     const [track,settrack]=useState(false);
     const [found,setfound]=useState(false);
+    const [save,setsave]=useState(false);
+    //  const[solve,setsolve]=useState(false);
     const f=async()=>{
         try{
             settrack(false);
@@ -43,12 +47,14 @@ export default function StaffDashboard(){
             {
                 alert("Must enter a ticket id")
             }else{
-                
+            setsave(true);
             await con().post('/update_ticket',{ticket_id:tick}).then((data)=>{
                 console.log(data);
-                alert("Updated")
+                alert("Updated");
+                setsave(false);
             }).catch((error)=>{
                 alert("error");
+                setsave(false);
                 console.log(error)
             })
             }
@@ -66,7 +72,7 @@ export default function StaffDashboard(){
     return(
         <>{
             group=='ICT'?
-        <div style={{width:'100%',height:"100%",display:"flex",flexDirection:"column"}}>
+        <div style={{width:'100%',height:"100%",display:"flex",flexDirection:"column",marginLeft:"25px",gap:"5px"}}>
             <div style={{width:"100%",display:"flex",height:"fit-content"}}><Head_Mess>
                 Welcome Back {localStorage.getItem('firstname')}
                 </Head_Mess>
@@ -80,6 +86,7 @@ export default function StaffDashboard(){
                             <Table.Cell>User ID</Table.Cell>
                             <Table.Cell>Category</Table.Cell>
                             <Table.Cell>Urgency</Table.Cell>
+                            <Table.Cell>State</Table.Cell>
                             <Table.Cell>Actions</Table.Cell>
                         </Table.Row>
                     </Table.Header>
@@ -96,10 +103,18 @@ export default function StaffDashboard(){
                         {data_.map((value,index)=>(
                            <Table.Row key={index}>
                             {value.map((data,index)=>(
-                                <Table.Cell key={index}>{data}</Table.Cell>
+                                (
+                                   <Table.Cell key={index}>{index==5&&data==true?<CheckCircle color="green" size="25"></CheckCircle>:index==5&&data==false?
+                                   <AlertTriangle color="red" size={"25"}></AlertTriangle>:data}</Table.Cell>
+                                )
+                                
+                                
+                                
                             ))}
                             <Table.Cell style={{width:"fit-content",height:"100%",display:"flex",padding:"5px"}}>
+                            {!save?
                             <AlertDialog.Root>
+                                
                                 <AlertDialog.Trigger>
                                      <Button onClick={()=>{
                                      settick(value[0]);   
@@ -127,25 +142,27 @@ export default function StaffDashboard(){
                                        style={{width:"fit-content",display:'flex'}} variant="outline" color="teal">{data}</Badge>
                                        </div>
                                        :<Main_Text>{data}</Main_Text>}
+                                       {/* {index==5&&data==true?setsolve(true):setsolve(false)} */}
                                        
                                        
                                     </AlertDialog.Description>
+                                    
                                     ))}
-                                    <AlertDialog.Description>
-                                        
-                                    </AlertDialog.Description>
                                     <div style={{width:"100%",display:"flex",flexDirection:"row",gap:"10px"}}>
                                     <AlertDialog.Cancel >
                                     <Button style={{width:"fit-content",display:'flex',cursor:"pointer"}} size="3" variant="outline">Cancel</Button>
                                 </AlertDialog.Cancel>
                                 <AlertDialog.Action>
+                                    {/* {solve?<Button disabled dis>Resolved</Button>} */}
                                     <Button onClick={update} size={"3"} color="green" style={{cursor:"pointer"}}>Resolve</Button>
+                                
                                 </AlertDialog.Action>
                                </div>
                                 </AlertDialog.Content>
                                 
                             </AlertDialog.Root>
-                            
+                            :
+                            <Button disabled color="amber" highContrast variant="classic"><Spinner></Spinner> Resolving</Button>}
                             </Table.Cell>
                            </Table.Row> 
                         ))}

@@ -18,7 +18,7 @@ export default async function Createcache(req,res){
             await p.json.set(`user:${sessionID}`,"$",{data}).then(()=>{
                 console.log("stored")
             });
-            await p.expire(`user:${sessionID}`,54000).then(()=>{
+            await p.expire(`user:${sessionID}`,900).then(()=>{
                 console.log("expire set")
             });
 //            await conf.close();

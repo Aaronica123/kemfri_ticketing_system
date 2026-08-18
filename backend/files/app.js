@@ -22,8 +22,9 @@ import GetStaffTickets from "./tickets/staff/staff_get_tickets.js";
 import CheckStatusLogin from "./actions/status.js";
 import UpdateTicket from "./tickets/staff/staff_update_tickets.js";
 import cors from "cors";
-import { DBcache } from "./connection/pool.js";
+// import { DBcache } from "./connection/pool.js";
 import { conf } from "./connection/redis.js";
+import FilterTickets from "./tickets/filter_tickets.js";
 configDotenv();
 const app=express();
 
@@ -47,7 +48,7 @@ export const connfig=new Pool({
 })
 async()=>{
     await conn.connect();
-    
+    await conf.connect();
 //   await DBcache.connect();
 }
 
@@ -89,4 +90,5 @@ app.get('/api/resolved_tickets',ResolvedTickets);
 app.get('/api/staff_tickets',GetStaffTickets);
 app.get('/api/get_login_status',CheckStatusLogin);
 app.post('/api/update_ticket',UpdateTicket);
+app.get('/api/filter_tickets',FilterTickets);
 export default app;

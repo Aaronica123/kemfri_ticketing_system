@@ -6,6 +6,7 @@ import { Avatar, Card } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useEffect, useState } from "react";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
+
 export default function Dashboard(){
   
     const [count,setcount]=useState({total:0,pending:0,solved:0})

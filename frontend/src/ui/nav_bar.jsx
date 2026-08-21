@@ -20,6 +20,9 @@ import { SidebarOpen } from "lucide-react";
 import { SidebarClose } from "lucide-react";
 import { ScrollArea } from "@radix-ui/themes/dist/cjs/index.js";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
+import { useEffect } from "react";
+
+
 export default function Nav_bar({children}){
 const nav=useNavigate();
 const{group,authenticated,loading}=CheckContxt();
@@ -29,6 +32,35 @@ const [lg,setlg]=useState(false);
 const update=()=>{
     settrack(!track);
 }
+// const path=new WebSocket('ws://localhost:3009/get_notify')
+const [count,setcount]=useState(0);
+const Connection=()=>{
+try{
+    const path=new WebSocket('ws://localhost:3009/get_notify')
+path.onopen=()=>{
+    console.log("Connected")
+    path.send(JSON.stringify({user_id:4561}))
+    
+}
+path.onmessage=(data_)=>{
+    
+    const v=JSON.parse(data_.data).data.map((value)=>Object.values(value));
+    console.log(JSON.parse(data_.data).length)
+    console.log(v);
+    setcount(JSON.parse(data_.data).length);
+    path.close();
+}
+
+
+}
+catch(error){
+    console.log(error)
+}
+
+}
+useEffect(()=>{
+Connection();
+},[])
 async function logout(){
     setlg(true);
     await con().post('/logout',{}).then((data)=>{
@@ -45,6 +77,7 @@ async function logout(){
     });
 }
 const tickets=()=>{nav('/my_tickets')}
+const notify=()=>{nav('/notifications')};
 const dir=(value)=>{
     if(value==1){
         nav('/dashboard')
@@ -109,6 +142,12 @@ return(<>
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }} onClick={()=>{tickets();update()}} ><ListTodo/>
     <Main_Text> My Tickets</Main_Text></Button>
+    <Button className="btn12"variant="ghost" color="black"style={{width:"fit-content",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{notify();update()}} >
+        <div style={{display:"flex",width:"fit-content",padding:"5px"}}>
+            <Badge style={{marginRight:"-10px",marginTop:"-10px"}} radius="full" >{count}</Badge><Bell size={"25"}></Bell></div>
+    <Main_Text>Notifications</Main_Text></Button>
     {group=='ICT'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
@@ -213,7 +252,12 @@ return(<>
                 {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
                 }}> */}
-                <Nav_button variant={"ghost"}><Bell size={"30"} color="black"></Bell></Nav_button>
+                <Button variant="ghost" color="grass" highContrast onClick={Connection} style={{cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}><Bell size={"30"} color="red" style={{display:"flex",marginRight:"-10px",marginTop:"13px"}}></Bell>
+                <Badge variant="soft" radius="full" highContrast color="teal">
+                    {count}
+                </Badge>
+                
+                </Button>
                 {/* </div> */}
             </div>:
             <div style={{width:"100%",height:"fit-content",display:"flex",
@@ -237,7 +281,12 @@ return(<>
                 {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
                 }}> */}
-                <Nav_button variant={"ghost"}><Bell size={"30"} color="black"></Bell></Nav_button>
+                <Button variant="ghost" color="grass" highContrast onClick={Connection} style={{cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}><Bell size={"30"} color="red" style={{display:"flex",marginRight:"-10px",marginTop:"13px"}}></Bell>
+                <Badge variant="soft" radius="full" highContrast color="teal">
+                    {count}
+                </Badge>
+                
+                </Button>
                 {/* </div> */}
             </div>
             

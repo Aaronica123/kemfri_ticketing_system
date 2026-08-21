@@ -3,6 +3,8 @@ import app from "./app.js";
 import {configDotenv} from "dotenv";
 // import { conn } from "./app.js";
 import { conf } from "./connection/redis.js";
+import Rabbit from "./rabbit/rabbit.js";
+import { RabbitReceive } from "./rabbit/rabbit.js";
 configDotenv();
 // const con=new Client({
 //     connectionString:`postgresql://postgres.xuatrkfjhmoqsomwzdwk:${encodeURIComponent(process.env.password)}@aws-0-ap-southeast-2.pooler.supabase.com:5432/postgres`
@@ -11,6 +13,8 @@ async function start(){
     try{
         await conf.connect().then(()=>{console.log("connected")})
 app.listen(3001);
+RabbitReceive();
+Rabbit();
 
 console.log("listening");
     }catch(error){

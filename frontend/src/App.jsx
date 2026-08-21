@@ -10,6 +10,7 @@ import MyTickets from "./pages/My_tickets";
 import StaffDashboard from "./pages/Staff_Dashboard";
 import './App.css'
 import AuthContext from "./auth/auth_context";
+import Notify from "./pages/Notifications";
 function App() {
 
 
@@ -48,6 +49,13 @@ function App() {
               <StaffDashboard/>
               </Nav_bar>
               </AuthContext>}/>
+              <Route path="/notifications" element={
+                <AuthContext>
+                  <Nav_bar>
+                    <Notify></Notify>
+                  </Nav_bar>
+                </AuthContext>
+              }/>
               
              
           </Routes>

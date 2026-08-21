@@ -20,26 +20,30 @@ import { SidebarOpen } from "lucide-react";
 import { SidebarClose } from "lucide-react";
 import { ScrollArea } from "@radix-ui/themes/dist/cjs/index.js";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
-import { useEffect } from "react";
-
-
+// import { useEffect } from "react";
+// import user from "../auth/hold.js";
+// import UserManager from "../auth/hold.js";
 export default function Nav_bar({children}){
 const nav=useNavigate();
-const{group,authenticated,loading}=CheckContxt();
+const{group,authenticated,loading,user_id}=CheckContxt();
 
+console.log(group,user_id);
 const [track,settrack]=useState(false);
 const [lg,setlg]=useState(false);
+const [count,setcount]=useState(0);
 const update=()=>{
     settrack(!track);
 }
+const usr=user_id;
+console.log(usr);
 // const path=new WebSocket('ws://localhost:3009/get_notify')
-const [count,setcount]=useState(0);
+
 const Connection=()=>{
 try{
-    const path=new WebSocket('ws://localhost:3009/get_notify')
+    const path=new WebSocket('ws://localhost:3009/get_false')
 path.onopen=()=>{
     console.log("Connected")
-    path.send(JSON.stringify({user_id:4561}))
+    path.send(JSON.stringify({user_id:usr}))
     
 }
 path.onmessage=(data_)=>{
@@ -58,9 +62,7 @@ catch(error){
 }
 
 }
-useEffect(()=>{
-Connection();
-},[])
+
 async function logout(){
     setlg(true);
     await con().post('/logout',{}).then((data)=>{
@@ -87,6 +89,7 @@ const dir=(value)=>{
     }
 }
 
+    console.log('');
 if(loading){
     return (
     <p>Loading Please Wait</p>)
@@ -94,7 +97,35 @@ if(loading){
 else if(!authenticated){
     return (<p>User is not allowed</p>)
 }
-else
+else{
+    const{user_id}=CheckContxt();
+    const Connection=()=>{
+try{
+    const path=new WebSocket('ws://localhost:3009/get_false')
+path.onopen=()=>{
+    console.log("Connected")
+    path.send(JSON.stringify({user_id:user_id}))
+    
+}
+path.onmessage=(data_)=>{
+    
+    const v=JSON.parse(data_.data).data.map((value)=>Object.values(value));
+    console.log(JSON.parse(data_.data).length)
+    console.log(v);
+    setcount(JSON.parse(data_.data).length);
+    path.close();
+}
+
+
+}
+catch(error){
+    console.log(error)
+}
+
+}
+Connection()
+}
+
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     {!track?

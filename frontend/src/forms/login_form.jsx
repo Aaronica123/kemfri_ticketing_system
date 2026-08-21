@@ -10,6 +10,8 @@ import { Separator } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import { set } from "../auth/hold.js";
+// import UserManager from "../auth/hold.js";
 // import { Load_button } from "../ui/buttons";
 export default function Login_form(){
     // const {set_q}=Toast_use();
@@ -18,6 +20,7 @@ export default function Login_form(){
     //     set_q(true,"Logging In");
     // }
    // const [track,settrack]=useState({fetched:null,failed:null});
+   
     const [loading,setload]=useState(false);
     const nav=useNavigate();
     const [form_,setform]=useState({email:"",password:""})
@@ -37,6 +40,7 @@ export default function Login_form(){
             setload(false);
             alert("successfully received");
             localStorage.setItem('firstname',data.data.data.name)
+            // UserManager.set(data.data.data.user_id)
             nav('/submit');
             // settrack(()=>({
             //     failed:false,

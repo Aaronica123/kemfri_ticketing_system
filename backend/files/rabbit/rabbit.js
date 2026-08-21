@@ -1,17 +1,20 @@
 import amqp from "amqplib";
 
-export default async function Rabbit(){
+export default async function Rabbit(data){
+const{user_id,name,tag}=data;
  const conn=await amqp.connect('amqp://switchback.proxy.rlwy.net:24754');
  const chan=await conn.createChannel()
  const test='test_queue'
  await chan.assertQueue(test,{durable:true,autoDelete:false})
+var rand=Math.floor(Math.random()*1000)
 const body={
-    user_id:4561,
-    notify_id:2109,
-    name:"Ticket has been submitted",
-    issue:"submit",
+    user_id:user_id,
+    notify_id:rand,
+    name:name,
+    issue:tag,
     status:false
 }
+
  const bf=Buffer.from(JSON.stringify(body));
  const y=chan.sendToQueue(test,bf,{persistent:true});
 if(y){

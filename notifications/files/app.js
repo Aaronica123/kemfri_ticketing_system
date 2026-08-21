@@ -64,6 +64,16 @@ connect.on('connection',(wsl,url)=>{
             // wsl.terminate();
             // return{length:data_.length,data:data_.data}
         }
+        if(url.url==="/update_state"){
+            const {user_id,notify_id}=JSON.parse(data)
+            async function update(){
+                await UpdateNotification(user_id,notify_id).then((data)=>{
+                    wsl.send("status returned is "+data.status);
+                })
+            }
+            update();
+            
+        }
     })
 
     wsl.on('close',()=>{
@@ -94,8 +104,8 @@ async function startSession(){
 //await CreateNotification({user_id:123,notify_id:100,name:"Ticket failure",issue:"submit",status:false})
 // const f=await FilterNotificationFalse(4561)
 // console.log(f);
-const t=await FilterNotificationTrue(4561)
-console.log(t)
+// const t=await FilterNotificationTrue(4561)
+// console.log(t)
 }
 // async()=>{await GetNotification(4561);}
 startSession();

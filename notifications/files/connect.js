@@ -28,7 +28,7 @@ export async function GetNotification(id){
         await mongoose.connect(`${process.env.db_connect}`).then(()=>{console.log("connected to mongoose")})
     .catch((error)=>{console.log(error)})
     var data_=null
-        await mg.find({user_id:id},{_id:0,user_id:0,notify_id:0,__v:0}).then((data)=>{console.log(data); data_=data});
+        await mg.find({user_id:id},{_id:0,user_id:0,__v:0}).then((data)=>{console.log(data); data_=data});
         const data=data_
         return {length:data_.length,data};
     }
@@ -44,7 +44,7 @@ export async function FilterNotificationTrue(id){
          await mongoose.connect(`${process.env.db_connect}`).then(()=>{console.log("connected to mongoose")})
     .catch((error)=>{console.log(error)})
         var data_=null
-        await mg.find({user_id:id},{_id:0,user_id:0,notify_id:0,__v:0}).where({status:true}).then((data)=>{
+        await mg.find({user_id:id},{_id:0,user_id:0,__v:0}).where({status:true}).then((data)=>{
             console.log(data);
             data_=data
 
@@ -63,7 +63,7 @@ export async function FilterNotificationFalse(id){
          await mongoose.connect(`${process.env.db_connect}`).then(()=>{console.log("connected to mongoose")})
     .catch((error)=>{console.log(error)})
         var data_=null
-        await mg.find({user_id:id,status:false},{_id:0,user_id:0,notify_id:0,__v:0}).then((data)=>{
+        await mg.find({user_id:id,status:false},{_id:0,user_id:0,__v:0}).then((data)=>{
             console.log(data);
             data_=data
         });
@@ -81,8 +81,10 @@ export async function UpdateNotification(id,notifyid){
         await mongoose.connect(`${process.env.db_connect}`).then(()=>{console.log("connected to mongoose")})
     .catch((error)=>{console.log(error)})
     await mg.findOneAndUpdate({user_id:id,notify_id:notifyid},{status:true,date: Date.now()}).then(()=>{console.log("updated")})
+    return {status:201}
     }
     catch(error){
-        console.log(error)
+        console.log(error);
+        return {status:500}
     }
 }

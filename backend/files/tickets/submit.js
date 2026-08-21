@@ -5,6 +5,7 @@ import {randomUUID} from "crypto";
 import { TicketsGetCache } from "../cache/tickets_cache.js";
 import { conf } from "../connection/redis.js";
 import { PendingTicketsCacheGet } from "../cache/tickets_cache.js";
+import Rabbit from "../rabbit/rabbit.js";
 export default async function SubmitTicket(req,res){
      
     try{
@@ -45,6 +46,7 @@ if(staff_id){
                
                 return res.status(500).json({message:"Failed to create ticket"})
             })
+        Rabbit({user_id:req.session.user.user_id,name:`Ticket has been submitted`,tag:"submit"})
         const result=await TicketsGetCache(req);
         const pend=await PendingTicketsCacheGet(req);
         if(result.status==200&&pend.status==200){

@@ -6,7 +6,8 @@ export default function AuthContext({children}){
         group_role:null,
         role:null,
         loading:true,
-        authenticated:false
+        authenticated:false,
+        user_id:null
     })
     const f=useCallback(async()=>{
         try{
@@ -14,18 +15,18 @@ export default function AuthContext({children}){
                 console.log(data.data.user);
                 if(data.data.user.group&&data.data.user.role){
                     console.log("values set")
-                    setvalues({group_role:data.data.user.group,role:data.data.user.role,authenticated:true,loading:false})
+                    setvalues({group_role:data.data.user.group,user_id:data.data.user.user_id,role:data.data.user.role,authenticated:true,loading:false})
                 }
                 else{
                     console.log("unaunthenticated");
-                    setvalues({group_role:null,role:null,authenticated:false,loading:false})
+                    setvalues({group_role:null,role:null,authenticated:false,loading:false,user_id:null})
                 }
             })
         }
         catch(error){
             console.log(error);
             // alert("An error occured");
-            setvalues({group_role:null,role:null,authenticated:false,loading:false})
+            setvalues({group_role:null,role:null,authenticated:false,loading:false,user_id:null})
         }},[])
     useEffect(()=>{
         f();
@@ -35,7 +36,8 @@ export default function AuthContext({children}){
             group:values.group_role,
             role:values.role,
             loading:values.loading,
-            authenticated:values.authenticated
+            authenticated:values.authenticated,
+            user_id:values.user_id
         }}>
             {children}
 

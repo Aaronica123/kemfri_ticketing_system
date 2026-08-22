@@ -1,32 +1,38 @@
 //use tab roots and tabs tabs on radix to create notifications
-import { Button, Table, Tabs } from "@radix-ui/themes/dist/cjs/index.js";
-import { Head_Mess } from "../ui/text";
+import { AlertDialog, Button, Table, Tabs } from "@radix-ui/themes/dist/cjs/index.js";
+import Main_Text, { Head_Mess } from "../ui/text";
 import { useEffect, useState } from "react";
 import { XCircle } from "lucide-react";
 import { CheckCircle } from "lucide-react";
 // import user from "../auth/hold.js";
 // import UserManager from "../auth/hold";
 import { CheckContxt } from "../auth/auth_context";
+import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
+
 export default function Notify(){
     const [arr,setarr]=useState([]);
     const [tr,settr]=useState([]);
     const [general,setgeneral]=useState([]);
+    const[load,setload]=useState(false);
     const{user_id}=CheckContxt();
     console.log(user_id);
-    const usr=user_id
+    const usr=user_id;
     const Connection=()=>{
+
         console.log("get connection")
         const pth = new WebSocket("ws://localhost:3009/get_false");
        
         pth.onopen=()=>{
             if(pth.readyState){
-                pth.send(JSON.stringify({user_id:usr}))
+                pth.send(JSON.stringify({user_id:usr}));
+                
             }
         }
         pth.onmessage=(data)=>{
            // console.log(data.data);
             const final=JSON.parse(data.data).data.map((value)=>Object.values(value));
             setarr(final);
+            
             pth.onclose=()=>{
                 console.log("Is closed")
             }
@@ -43,9 +49,11 @@ export default function Notify(){
             if(path.readyState){
                 
                 path.send(JSON.stringify({user_id:usr,notify_id:notify_id}))
+                setload(true);
             }
         }
         path.onmessage=(data)=>{
+            setload(false);
             console.log(data.data);
 
         }
@@ -125,8 +133,33 @@ export default function Notify(){
                                     ))}
                                     
                                     <Table.Cell>
+                                        
+                                        <AlertDialog.Root>
+                                        <AlertDialog.Trigger>
                                         <Button size={"1"} variant="classic" onClick={()=>update(value[0])}>Mark Done</Button>
-                                    </Table.Cell>
+                                        </AlertDialog.Trigger>
+                                        <AlertDialog.Content>
+                                        {load?
+                                        <AlertDialog.Description style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}>
+                                            <Spinner size={"3"}></Spinner>
+                                            <Main_Text>Updating notification status</Main_Text>
+                                        </AlertDialog.Description>
+                                        :
+
+                                        <AlertDialog.Description style={{display:"Flex",flexDirection:"column",width:"100%",height:"100%"}}>
+                                            <CheckCircle></CheckCircle>
+                                            <Main_Text>Notification has been marked as done you can exit</Main_Text>
+                                        </AlertDialog.Description>
+}
+                                        {load?"":
+                                        <AlertDialog.Cancel>
+                                                <Button>Back</Button>
+                                        </AlertDialog.Cancel>
+}
+                                        </AlertDialog.Content>
+                                        </AlertDialog.Root>
+                                        
+                                        </Table.Cell>
                                     
                                 </Table.Row>
                                 

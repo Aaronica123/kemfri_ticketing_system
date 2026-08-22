@@ -5,7 +5,7 @@ export default async function consume() {
     
    const connect=await amqp.connect('amqp://switchback.proxy.rlwy.net:24754');
    const channel=await connect.createChannel();
-   const queue='test_queue';
+   const queue='ticket_created';
    await channel.assertQueue(queue,{durable:true});
    await channel.prefetch(1);
    await channel.consume(queue,(message)=>{

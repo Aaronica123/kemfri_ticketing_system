@@ -4,8 +4,13 @@ export default async function Rabbit(data){
 const{user_id,name,tag}=data;
  const conn=await amqp.connect('amqp://switchback.proxy.rlwy.net:24754');
  const chan=await conn.createChannel()
- const test='test_queue'
- await chan.assertQueue(test,{durable:true,autoDelete:false})
+ const bind_key='users'
+ const exchange="kemfri"
+ await chan.assertExchange(exchange,'direct');
+ const ticket_create_bind='ticket_created'
+ await chan.assertQueue(ticket_create_bind,{durable:true,autoDelete:false})
+
+ await chan.bindQueue(ticket_create_bind,exchange,bind_key);
 var rand=Math.floor(Math.random()*1000)
 const body={
     user_id:user_id,
@@ -16,8 +21,10 @@ const body={
 }
 
  const bf=Buffer.from(JSON.stringify(body));
- const y=chan.sendToQueue(test,bf,{persistent:true});
-if(y){
+
+ const pb=chan.publish(exchange,bind_key,bf);
+//  const y=chan.sendToQueue(test,bf,{persistent:true});
+if(pb){
     console.log("Sent to rabbit")
 }else{
     console.log("Not sent")

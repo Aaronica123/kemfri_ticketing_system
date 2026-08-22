@@ -48,10 +48,12 @@ export default function StaffDashboard(){
                 alert("Must enter a ticket id")
             }else{
             setsave(true);
+            
             await con().post('/update_ticket',{ticket_id:tick}).then((data)=>{
                 console.log(data);
-                alert("Updated");
+                alert("Ticket has been resolved");
                 setsave(false);
+                f();
             }).catch((error)=>{
                 alert("error");
                 setsave(false);
@@ -112,13 +114,13 @@ export default function StaffDashboard(){
                                 
                             ))}
                             <Table.Cell style={{width:"fit-content",height:"100%",display:"flex",padding:"5px"}}>
-                            {!save?
+                            {value[5]==true?<Button disabled size={"2"}>Resolved</Button>:
                             <AlertDialog.Root>
                                 
                                 <AlertDialog.Trigger>
-                                     <Button onClick={()=>{
-                                     settick(value[0]);   
-                                     }} style={{cursor:"pointer"}}>Resolve</Button>
+                                    
+                                     <Button style={{cursor:"pointer"}} onClick={()=>settick(value[0])}>Resolve</Button>
+                                    
                                 </AlertDialog.Trigger>
                                 <AlertDialog.Content style={{width:"fit-content",height:"fit-contend",display:"flex",justifyContent:'center',alignItems:"center",flexDirection:"column",gap:"5px"}}>
                                     {value.map((data,index)=>(
@@ -142,7 +144,7 @@ export default function StaffDashboard(){
                                        style={{width:"fit-content",display:'flex'}} variant="outline" color="teal">{data}</Badge>
                                        </div>
                                        :<Main_Text>{data}</Main_Text>}
-                                       {/* {index==5&&data==true?setsolve(true):setsolve(false)} */}
+                                       
                                        
                                        
                                     </AlertDialog.Description>
@@ -152,17 +154,16 @@ export default function StaffDashboard(){
                                     <AlertDialog.Cancel >
                                     <Button style={{width:"fit-content",display:'flex',cursor:"pointer"}} size="3" variant="outline">Cancel</Button>
                                 </AlertDialog.Cancel>
-                                <AlertDialog.Action>
-                                    {/* {solve?<Button disabled dis>Resolved</Button>} */}
-                                    <Button onClick={update} size={"3"} color="green" style={{cursor:"pointer"}}>Resolve</Button>
                                 
-                                </AlertDialog.Action>
+                                    {/* {solve?<Button disabled dis>Resolved</Button>} */}
+                                    {save?<Button ><Spinner></Spinner>Loading</Button>:
+                                    <Button onClick={update} size={"3"} color="green" style={{cursor:"pointer"}}>Resolve</Button>
+}
                                </div>
                                 </AlertDialog.Content>
                                 
                             </AlertDialog.Root>
-                            :
-                            <Button disabled color="amber" highContrast variant="classic"><Spinner></Spinner> Resolving</Button>}
+}
                             </Table.Cell>
                            </Table.Row> 
                         ))}

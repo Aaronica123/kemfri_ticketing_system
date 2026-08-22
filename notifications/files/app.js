@@ -1,6 +1,7 @@
 import {WebSocketServer} from "ws";
 import express from "express";
 import consume from "./consumer.js";
+import { staff_consume } from "./consumer.js";
 import mongoose from "mongoose";
 import {configDotenv} from "dotenv";
 import CreateNotification from "./connect.js";
@@ -94,6 +95,7 @@ connect.on('listening',()=>{
     console.log("connected to web socket server")
 })
 consume();
+staff_consume();
 
 async function startSession(){
 

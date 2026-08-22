@@ -1,16 +1,29 @@
 import amqp from "amqplib";
 
-export default async function Rabbit(data){
+const queues={
+    users:"users",
+    staff:"staff"
+}
+ const exchange="kemfri"
+export default async function Rabbit(data,bind){
 const{user_id,name,tag}=data;
+const{queue}=bind;
  const conn=await amqp.connect('amqp://switchback.proxy.rlwy.net:24754');
  const chan=await conn.createChannel()
- const bind_key='users'
- const exchange="kemfri"
- await chan.assertExchange(exchange,'direct');
- const ticket_create_bind='ticket_created'
- await chan.assertQueue(ticket_create_bind,{durable:true,autoDelete:false})
+//const bind_key='users'
 
- await chan.bindQueue(ticket_create_bind,exchange,bind_key);
+ await chan.assertExchange(exchange,'direct');
+//  const ticket_create_bind='ticket_created'
+ await chan.assertQueue(queue,{durable:true,autoDelete:false})
+ var bind_key=null;
+ if(queue===queues.staff){
+await chan.bindQueue(queue,exchange,queues.staff);
+bind_key=queues.staff;
+ }else if(queue===queues.users){
+    await chan.bindQueue(queue,exchange,queues.users);
+    bind_key=queues.users
+ }
+ 
 var rand=Math.floor(Math.random()*1000)
 const body={
     user_id:user_id,

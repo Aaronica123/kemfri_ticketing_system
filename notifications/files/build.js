@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 const types={
     submit: "submit",
-    approved: "approved"
+    solved: "solved",
+    pending:"pending",
 }
 const notify_schema=new mongoose.Schema({
     user_id:{

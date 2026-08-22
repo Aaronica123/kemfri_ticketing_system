@@ -40,7 +40,7 @@ console.log(usr);
 
 const Connection=()=>{
 try{
-    const path=new WebSocket('ws://notify-production-a4da.up.railway.app/get_false')
+    const path=new WebSocket('wss://notify-production-a4da.up.railway.app/get_false')
 path.onopen=()=>{
     console.log("Connected")
     path.send(JSON.stringify({user_id:usr}))
@@ -101,7 +101,7 @@ else{
     const{user_id}=CheckContxt();
     const Connection=()=>{
 try{
-    const path=new WebSocket('ws://notify-production-a4da.up.railway.app/get_false')
+    const path=new WebSocket('wss://notify-production-a4da.up.railway.app/get_false')
 path.onopen=()=>{
     console.log("Connected")
     path.send(JSON.stringify({user_id:user_id}))

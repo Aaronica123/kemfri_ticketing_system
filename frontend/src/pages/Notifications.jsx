@@ -20,7 +20,7 @@ export default function Notify(){
     const Connection=()=>{
 
         console.log("get connection")
-        const pth = new WebSocket("ws://notify-production-a4da.up.railway.app/get_false");
+        const pth = new WebSocket("wss://notify-production-a4da.up.railway.app/get_false");
        
         pth.onopen=()=>{
             if(pth.readyState){
@@ -41,7 +41,7 @@ export default function Notify(){
 
     }
     const update=(value)=>{
-        const path=new WebSocket('ws://notify-production-a4da.up.railway.app/update_state')
+        const path=new WebSocket('wss://notify-production-a4da.up.railway.app/update_state')
         const notify_id=value
         console.log(arr)
         console.log("path is "+notify_id)
@@ -63,7 +63,7 @@ export default function Notify(){
     }
     const Read=()=>{
        console.log("Read connection")
-            const path=new WebSocket('ws://notify-production-a4da.up.railway.app/get_true');
+            const path=new WebSocket('wss://notify-production-a4da.up.railway.app/get_true');
         
         
         path.onopen=()=>{
@@ -81,7 +81,7 @@ export default function Notify(){
     }
     }
     const General=()=>{
-        const path=new WebSocket('ws://notify-production-a4da.up.railway.app/get_notify');
+        const path=new WebSocket('wss://notify-production-a4da.up.railway.app/get_notify');
         path.onopen=()=>{
             console.log("Open");
             if(path.readyState){

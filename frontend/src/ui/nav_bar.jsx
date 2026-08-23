@@ -19,6 +19,7 @@ import { useState } from "react";
 import { SidebarOpen } from "lucide-react";
 import { SidebarClose } from "lucide-react";
 import { ScrollArea } from "@radix-ui/themes/dist/cjs/index.js";
+
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 // import { useEffect } from "react";
 // import user from "../auth/hold.js";
@@ -131,20 +132,29 @@ return(<>
     {!track?
    ""
     :
-    <div style={{width:"fit-content",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
-        background:"linear-gradient(30deg,rgba(23, 32, 25, 0.614),rgba(227, 233, 229, 0.829),rgba(154, 174, 158, 0.836),rgba(23, 32, 25, 0.614))"
+    <div style={{flex:0.2,width:"100%",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
+        background:"#03103B 90%",flexGrow:"none"
 
        }}className="anim" >
         
             <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px"}}>
-            <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>    
-            <SidebarClose size={"50"} onClick={update} color="blue"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarClose>
+            {/* <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>  */}
+            <div style={{width:"fit-content"}}>
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Text size={"5"} weight={"bold"} style={{color:"white"}}>KM</Text>
+                </div> 
+            </div>
+            <div style={{width:"100%",justifyContent:"right",alignItems:"center",display:"flex"}}>
+            <Button variant="ghost">
+            <SidebarClose size={"25"} onClick={update} color="#BEBEBE"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarClose>
+            </Button>  
+            </div>
             </div> 
             
             <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
-            <Head_Text>ICT Help Desk</Head_Text>    
+            <Heading weight={"bold"} style={{color:"#BEBEBE",fontSize:"20px"}}>ICT Help Desk</Heading> 
             </div>
-            <div style={{width:"100%",height:"100%", top:"10",display:"flex",
+            <div style={{width:"100%",height:"100%",display:"flex",
                 flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
                 border:"single 2px grey",
                 borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
@@ -153,43 +163,46 @@ return(<>
                 height:"fit-content",width:"100%",gap:"5px"
             }}>
                 <div style={{display:"flex",padding:"5px"}}>
-                <Main_Text>Main</Main_Text>
+                <Text weight={"medium"} style={{color:"#BEBEBE"}}>Main</Text>
                 </div>
                 <Separator size={"4"} orientation={"horizontal"} ></Separator>
-                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"ft-content",
+                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"fit-content",
                     gap:"20px",
                     padding:"10px"
                 }}>
                      <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
-        color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{dir(1);update()}}><LayoutDashboard></LayoutDashboard>
-    <Main_Text> Dashboard</Main_Text></Button>
+        background:"#132CB5 80%"
+    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
+    <Text weight={"medium"} style={{color:"#E2E2E5"}}>Dashboard</Text>
+    </Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{dir(2);update();}}><TicketPlus/>
-    <Main_Text> Submit Ticket</Main_Text></Button>
+        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
+    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
+    <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text>
+    </Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{tickets();update()}} ><ListTodo/>
-    <Main_Text> My Tickets</Main_Text></Button>
-    <Button className="btn12"variant="ghost" color="black"style={{width:"fit-content",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
+     <Text weight={"medium"} style={{color:"#E2E2E5"}}>My Tickets</Text></Button>
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }} onClick={()=>{notify();update()}} >
-        <div style={{display:"flex",width:"fit-content",padding:"5px"}}>
-            <Badge style={{marginRight:"-10px",marginTop:"-10px"}} radius="full" >{count}</Badge><Bell size={"25"}></Bell></div>
-    <Main_Text>Notifications</Main_Text></Button>
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5"}}>Notifications</Text>
+    </Button>
     {group=='ICT'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
-    <Main_Text>Staff</Main_Text>
+     <Text weight={"medium"} style={{color:"#BEBEBE",fontSize:"16px"}}>Staff</Text>
     <Separator size={"4"} orientation={"horizontal"} ></Separator>
     </div>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
-    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck />
-    <Main_Text>Assigned Tickets</Main_Text>
+    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
+     <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text>
     </Button>
     </div>
     :""}
@@ -200,29 +213,37 @@ return(<>
             </ScrollArea>
             </div> 
             
-            <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px",transform:"translate(10,20)"}}>
+            <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
                 {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
-                        <Card className="crd"size={"1"} style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",backgroundColor:"white"
+                        <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"
                 }}>
                     <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
-                        <Avatar radius="full" fallback={"KM"} src="" color="blue"></Avatar>
+                        <div style={{width:"fit-content"}}>
+                            
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Text size={"5"} weight={"bold"} style={{color:"white"}}>KM</Text>
+                </div> 
+            </div>
+                        
                     </div>
                     <div style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap",
                             gap:"2px"
                         }}>
-                       
-                         <Main_Text>{localStorage.getItem('firstname')}</Main_Text> 
+                        <Text weight={"medium"} style={{fontSize:"17px",color:"#FFFFFF"}}>
+                            {localStorage.getItem('firstname')}
+                        </Text>
+                        
                          <br></br>
                          {/* <Main_Text>Otieno</Main_Text>  */}
                       {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
                         </div>
-                        <Badge variant="soft" size={"3"} style={{width:"fit-content",display:"flex"}}>{localStorage.getItem("firstname")}</Badge>
+                        <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F"}}>{localStorage.getItem("firstname")}</Text>
                     </div>
-                </Card>
+                </div>
                     </AlertDialog.Trigger>
                     <AlertDialog.Content 
     style={{
@@ -268,23 +289,25 @@ return(<>
             </div>
      </div> 
 }
-            <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}> 
+            <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column",flex:1}}> 
                 {track?
                  <div style={{width:"100%",height:"fit-content",display:"flex",
                     justifyContent:"right",
                     padding:"30px",gap:"10px",
-            flexDirection:"row",overflow:"hidden",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
+            flexDirection:"row",overflow:"hidden",background:"#F6F6F6 90%"
             }}>
                 <div style={{width:"fit-content",height:"fit-content",display:"flex", 
                     justifyContent:"right",flexWrap:"wrap"}}>
-                <Heading size={"5"} weight={"regular"}>Kenya Marine And Research Institute</Heading>
+                <Heading weight={"bold"} color="black" style={{fontFamily:"sans-serif",fontSize:"22px"}}>Kenya Marine And Research Institute</Heading>
                 </div>
                 <Separator orientation={"vertical"} size={"2"} style={{fontWeight:"bold"}}/>
                 {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
                 }}> */}
-                <Button variant="ghost" color="grass" highContrast onClick={Connection} style={{cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}><Bell size={"30"} color="red" style={{display:"flex",marginRight:"-10px",marginTop:"13px"}}></Bell>
-                <Badge variant="soft" radius="full" highContrast color="teal">
+                <Button variant="ghost" color="black" highContrast onClick={Connection} 
+                style={{width:"fit-content",height:"fit-content", cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}>
+                <Bell size={"30"} color="black" style={{display:"flex",width:"fit-content"}}></Bell>
+                <Badge variant="soft" radius="full" highContrast color="black" style={{marginTop:"-20px",marginLeft:"-12px"}}>
                     {count}
                 </Badge>
                 
@@ -292,7 +315,7 @@ return(<>
                 {/* </div> */}
             </div>:
             <div style={{width:"100%",height:"fit-content",display:"flex",
-            flexDirection:"row",padding:"10px",background:"linear-gradient(to right,rgba(220, 225, 221, 0.84)25%)"
+            flexDirection:"row",padding:"10px",background:"#F6F6F6 90%"
             }}>
                     
                     <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
@@ -303,17 +326,19 @@ return(<>
             </div>
         
             <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
-               flexDirection:"row",gap:"10px",margin:"10px"}}>
+               flexDirection:"row",gap:"10px",padding:'20px'}}>
                 <div style={{width:"100%",height:"fit-content",display:"flex", 
                     justifyContent:"right",flexWrap:"wrap"}}>
-                <Heading size={"5"} weight={"regular"}>Kenya Marine And Research Institute</Heading>
+                <Heading weight={"bold"} color="black" style={{fontFamily:"sans-serif",fontSize:"22px"}}>Kenya Marine And Research Institute</Heading>
                 </div>
                 <Separator orientation={"vertical"} size={"2"} style={{fontWeight:"bold"}}/>
                 {/* <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
                 }}> */}
-                <Button variant="ghost" color="grass" highContrast onClick={Connection} style={{cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}><Bell size={"30"} color="red" style={{display:"flex",marginRight:"-10px",marginTop:"13px"}}></Bell>
-                <Badge variant="soft" radius="full" highContrast color="teal">
+                <Button variant="ghost" color="black" highContrast onClick={Connection} 
+                style={{width:"fit-content",height:"fit-content", cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}>
+                <Bell size={"30"} color="black" style={{display:"flex",width:"fit-content"}}></Bell>
+                <Badge variant="soft" radius="full" highContrast color="black" style={{marginTop:"-20px",marginLeft:"-12px"}}>
                     {count}
                 </Badge>
                 

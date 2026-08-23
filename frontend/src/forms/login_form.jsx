@@ -1,4 +1,4 @@
-import { Card } from "@radix-ui/themes/dist/cjs/index.js";
+import { Button, Card, Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 import { Load_button } from "../ui/buttons";
 import { Head_Text } from "../ui/text";
 import Main_Text from "../ui/text";
@@ -10,6 +10,10 @@ import { Separator } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
+import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
+import {useMediaQuery} from "react-responsive";
 // import { set } from "../auth/hold.js";
 // import UserManager from "../auth/hold.js";
 // import { Load_button } from "../ui/buttons";
@@ -31,6 +35,7 @@ export default function Login_form(){
         [name]:value
        }))
     }
+    const min=useMediaQuery({maxWidth:"768px"})
     async function connect(e){
         
         e.preventDefault();
@@ -78,52 +83,64 @@ export default function Login_form(){
     return(
     <>
     <div style={{width:"100vw",height:"100vh",boxSizing:"border-box",display:"flex",
-        flexDirection:"row",justifyContent:"center",alignItems:"center",background:"linear-gradient(90deg,rgba(81, 45, 188, 0.35), rgba(25, 34, 212, 0.35), rgba(62, 19, 217, 0.35))"}}>
-        <div style={{width:"fit-content",height:"fit-content", justifyContent:"center",
+        flexDirection:"row",justifyContent:"center",alignItems:"center",background:"whitesmoke 80%"}}>
+        {/* <div style={{width:"fit-content",height:"fit-content", justifyContent:"center",
             alignItems:"center"
-        }}>
-            <Card size={"4"} style={{width:"fit-content", height:"fit-content",
-                display:"flex",flexDirection:"column",alignItems:"center",
-                gap:"5px"
+        }}> */}
+            <Card size={"1"} variant="ghost" style={{width:min?"100%":"50%", height:"fit-content",
+                display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',
+                gap:"15px"
             }}>
-                <div style={{width:"100%",height:"fit-content",display:"flex", alignItems:"center",
+                {/* <div style={{width:"100%",height:"fit-content",display:"flex", alignItems:"center",
                     justifyContent:"center"}}>
                     <Avatar size={"5"} src="" fallback="KM" variant="solid" radius={"large"}>
                     </Avatar>
-                </div>
+                </div> */}
                 <div style={{width:"100%",height:"fit-content",display:"flex",
-                    alignItems:"center", flexDirection:"column",flexWrap:"wrap",gap:"5px",marginBottom:"5px"}}>
-                    <Head_Text>Welcome to KEMFRI Login</Head_Text>
-                    <Main_Text>Login To Continue</Main_Text>
+                    alignItems:"center", flexDirection:"column",flexWrap:"wrap",gap:"8px",marginBottom:"5px"}}>
+                    {/* <Head_Text>Welcome to KEMFRI Login</Head_Text> */}
+                    <Text weight={"medium"} style={{width:"100%",fontSize:"16px",color:"blue"}}>Staff Portal</Text>
+                    <Heading style={{width:"100%",fontSize:"28px",fontWeight:"Bold",fontFamily:"sans-serif", color:"black"}}>Login</Heading>
+                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To Kemfri Ticketing System</Text>
+                    {/* <Main_Text>Login To Continue</Main_Text> */}
                 </div>
                 <Separator size={"4"} orientation={"horizontal"}/>
                 <div style={{ width:"100%",height:"fit-content",flexDirection:"column",display:"flex",
                 justifyContent:"left",gap:"25px"
                 }}>
-                    <div style={{width:"fit-content",height:"fit-content",flexDirection:"column",display:'flex',
-                        justifyContent:"left",gap:"5px"
+                    <div style={{width:"100%",height:"fit-content",flexDirection:"column",display:'flex',
+                        justifyContent:"left",gap:"8px"
                     }}>
-                        <Main_Text>STAFF EMAIL</Main_Text>
-                        <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field>
+                        <Text weight={"medium"} style={{width:"100%",fontSize:"14px"}}>Email</Text>
+                        <TextField.Root type="email" required size={"3"} placeholder="Enter email" 
+                        value={form_.email} name="email" onChange={check}
+                        style={{width:"100%",fontSize:"16px",color:"black",background:"#e6e6e6e4 70%"}}>
+                        </TextField.Root>
+                        {/* <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field> */}
                     </div>
-                     <div style={{width:"fit-content",height:"fit-content",flexDirection:"column",display:'flex',
-                        justifyContent:"left",gap:"5px"
+                     <div style={{width:"100%",height:"fit-content",flexDirection:"column",display:'flex',
+                        justifyContent:"left",gap:"8px"
                     }}>
-                        <Main_Text>PASSWORD</Main_Text>
-                        <Input_Field placeholder={"ENTER PASSWORD"} type={"password"} max={10} value={form_.password} name={"password"} change={check}></Input_Field>
+                        <Text weight={"medium"} style={{width:"100%",fontSize:"14px"}}>Password</Text>
+                        <TextField.Root type="password" required size={"3"} placeholder="Enter password"
+                        value={form_.password} name="password" onChange={check} style={{width:"100%",fontSize:"16px",color:"black",background:"#e6e6e6e4 70%"}}>
+                        </TextField.Root>
+                        {/* <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field> */}
                     </div>
                 </div>
                 {loading? 
-                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
-                    <Load_button text={"Logging In"}></Load_button>
+                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
+                    
+                    <Button radius="medium" size={"3"} variant="classic" color="blue" style={{width:"100%",justifyContent:"center",cursor:"none"}}><Spinner></Spinner><Text weight={"medium"} color="white" size={"5"}>Logging In</Text></Button>
                 </div>
                 :
-                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px", cursor:"pointer"}}>
-                    <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button>
+                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
+                    <Button radius="medium" size={"3"} variant="classic" type={"button"} onClick={connect} color="blue" style={{cursor:"pointer",width:"100%",justifyContent:"center"}}><Text weight={"medium"} color="white" size={"5"}>Log In</Text></Button>
+                    {/* <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button> */}
                 </div>
 }
             </Card>
         </div>
-    </div>
+    {/* </div> */}
     </>)
 }

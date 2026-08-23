@@ -8,7 +8,7 @@ import { CheckCircle } from "lucide-react";
 // import UserManager from "../auth/hold";
 import { CheckContxt } from "../auth/auth_context";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
-
+import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Notify(){
     const [arr,setarr]=useState([]);
     const [tr,settr]=useState([]);
@@ -102,9 +102,9 @@ export default function Notify(){
     },[])
     return(
         <>
-        <div style={{width:"100%",height:"100%",flexDirection:"column"}}>
+        <div style={{width:"100%",height:"100%",flexDirection:"column",marginLeft:"25px"}}>
             <div style={{height:"fit-content",width:"100%",display:"flex"}}>
-                <Head_Mess>View Notifications</Head_Mess>
+                <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">View Notifications</Heading>
             </div>
             {/* <div style={{width:"fit-content",height:"100%"}}> */}
                 <Tabs.Root defaultValue="pending" style={{width:"fit-content",height:"100%",overflow:"hidden"}} >

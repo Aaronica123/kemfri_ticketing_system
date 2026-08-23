@@ -11,6 +11,8 @@ import { Search } from "lucide-react";
 import { RefreshCcw } from "lucide-react";
 import { ListX } from "lucide-react";
 import { Head_Mess } from "../ui/text";
+import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
+import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -113,8 +115,8 @@ export default function MyTickets(){
             <div style={{display:"flex",flexDirection:"column",gap:"2px",
                 justifyContent:"left",width:"100%",height:"fit-content"
             }}>
-                <Head_Text>My Tickets</Head_Text>
-                <Main_Text>Track status</Main_Text>
+                <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">My Tickets</Heading>
+                <Text weight={"light"} style={{fontSize:"18px",fontFamily:"sans-serif",color:"#6B7280"}}>Track status</Text>
             </div>
             <div style={{display:"flex",flexDirection:"column",flexWrap:"nowrap",
                 width:"100%",height:"fit-content",gap:"15px"

@@ -130,10 +130,166 @@ Connection()
 return(<>
 <div style={{width:"100vw",height:"100vh", display:"flex",flexDirection:"row"}}>
     {!track?
-   ""
+    <div style={{flex:0,width:"100%",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
+        background:"#03103B 90%",flexGrow:"none",transition: "all 0.5s ease-out"
+
+       }}className="anim" >
+        
+            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px"}}>
+            {/* <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>  */}
+            {/* <div style={{width:"fit-content"}}>
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Text size={"5"} weight={"bold"} style={{color:"white"}}>KM</Text>
+                </div> 
+            </div> */}
+            <div style={{width:"100%",justifyContent:"center",alignItems:"center",display:"flex"}}>
+            <Button variant="ghost">
+            <SidebarOpen size={"25"} onClick={update} color="#BEBEBE"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarOpen>
+            </Button>  
+            </div>
+            </div> 
+            
+            {/* <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
+            <Heading weight={"bold"} style={{color:"#BEBEBE",fontSize:"20px"}}>ICT Help Desk</Heading> 
+            </div> */}
+            <div style={{width:"100%",height:"100%",display:"flex",
+                flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
+                border:"single 2px grey",
+                borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
+            <ScrollArea type="always" scrollbars="vertical" size={"1"} style={{display:"flex",wdith:"100%",padding:"10px"}}>
+            <div style={{display:"flex",flexDirection:"column",justifyContent:"left",
+                height:"fit-content",width:"100%",gap:"5px"
+            }}>
+                {/* <div style={{display:"flex",padding:"5px"}}>
+                <Text weight={"medium"} style={{color:"#BEBEBE"}}>Main</Text>
+                </div> */}
+                <Separator size={"4"} orientation={"horizontal"} ></Separator>
+                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"fit-content",
+                    gap:"20px",
+                    padding:"10px"
+                }}>
+                     <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
+        background:"#132CB5 80%"
+    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
+    {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Dashboard</Text> */}
+    </Button>
+     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
+    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
+    {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text> */}
+    </Button>
+     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
+     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>My Tickets</Text> */}
+     </Button>
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{notify();update()}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Notifications</Text> */}
+    </Button>
+    {group=='ICT'?
+    <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
+    <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
+     {/* <Text weight={"medium"} style={{color:"#BEBEBE",fontSize:"16px"}}>Staff</Text> */}
+    <Separator size={"4"} orientation={"horizontal"} ></Separator>
+    </div>
+     <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }}
+    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
+     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text> */}
+    </Button>
+    </div>
+    :""}
+                </div>
+
+
+            </div>
+            </ScrollArea>
+            </div> 
+            
+            <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
+                {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
+                {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
+                <AlertDialog.Root>
+                    <AlertDialog.Trigger>
+                        <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"
+                }}>
+                    <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
+                        <div style={{width:"fit-content"}}>
+                            
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Text size={"5"} weight={"bold"} style={{color:"white",fontFamily:"sans-serif"}}>KM</Text>
+                </div> 
+            </div>
+                        
+                    </div>
+                    {/* <div style={{width:"fit-content",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
+                        <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap",
+                            gap:"2px"
+                        }}>
+                        <Text weight={"medium"} style={{fontSize:"17px",color:"#FFFFFF"}}>
+                            {localStorage.getItem('firstname')}
+                        </Text>
+                        
+                         <br></br>
+                         <Main_Text>Otieno</Main_Text> 
+                      <Main_Text>{localStorage.getItem('lastname')}</Main_Text> 
+                        </div>
+                        <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F"}}>{localStorage.getItem("firstname")}</Text>
+                    </div> */}
+                </div>
+                    </AlertDialog.Trigger>
+                    <AlertDialog.Content 
+    style={{
+        gap:"20px",
+        display:"flex",
+        flexDirection:"column",
+        width:"fit-content",
+        height:"fit-content",
+        backgroundColor:"white",
+        
+        borderRadius:"12px",
+        boxShadow:"0 8px 32px 0 rgba(0, 0, 0, 0.37)",
+        padding:"30px"
+       
+    }}
+>
+    <div style={{width:"fit-content",height:"100%",display:"flex"}}>
+        
+    <AlertDialog.Description style={{display:"flex",flexDirection:"column",gap:"15px",justifyContent:"center",alignItems:"center",width:"fit-content"}}>
+        <LogOut size={"50"}/>
+        <div style={{width:"100%",display:"flex"}}>
+        <Main_Text>Are You Sure You Want To Log Out</Main_Text>
+        </div>
+    </AlertDialog.Description>
+    </div>
+     <div style={{width:"100%",height:"100%",display:"flex",justifyContent:"center",alignItems:"center",gap:"25px",flexDirection:"row"}}>
+    <AlertDialog.Cancel>
+        <Button size="3" variant="outline" highContrast style={{cursor:"pointer",width:"fit-content",height:"fit-content",display:"flex",padding:"10px",}}>Cancel</Button>
+    </AlertDialog.Cancel>
+    
+    <AlertDialog.Action>
+        <Button size="3" variant="classic" color="red" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"10px",
+            flexDirection:"row",gap:"5px",cursor:"pointer"}} onClick={logout}>Log Out</Button>
+    </AlertDialog.Action>
+    {/* <Load_button text={"logging out"}></Load_button> */}
+    </div>
+    
+</AlertDialog.Content>
+</AlertDialog.Root>
+
+        }
+                 
+            </div>
+     </div> 
     :
-    <div style={{flex:0.2,width:"100%",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
-        background:"#03103B 90%",flexGrow:"none"
+    <div style={{flex:0,width:"100%",display:"flex",height:"100%",flexDirection:"column",justifyContent:"left",
+        background:"#03103B 90%",flexGrow:"none",transition: "all 2.5s ease-in-out"
 
        }}className="anim" >
         
@@ -152,7 +308,7 @@ return(<>
             </div> 
             
             <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
-            <Heading weight={"bold"} style={{color:"#BEBEBE",fontSize:"20px"}}>ICT Help Desk</Heading> 
+            <Heading weight={"bold"} style={{color:"#BEBEBE",fontFamily:"sans-serif",fontSize:"20px"}}>ICT Help Desk</Heading> 
             </div>
             <div style={{width:"100%",height:"100%",display:"flex",
                 flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
@@ -163,7 +319,7 @@ return(<>
                 height:"fit-content",width:"100%",gap:"5px"
             }}>
                 <div style={{display:"flex",padding:"5px"}}>
-                <Text weight={"medium"} style={{color:"#BEBEBE"}}>Main</Text>
+                <Text weight={"medium"} style={{color:"#BEBEBE",fontFamily:"sans-serif"}}>Main</Text>
                 </div>
                 <Separator size={"4"} orientation={"horizontal"} ></Separator>
                 <div style={{display:"flex",flexDirection:"column",width:"100%",height:"fit-content",
@@ -174,35 +330,35 @@ return(<>
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
         background:"#132CB5 80%"
     }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
-    <Text weight={"medium"} style={{color:"#E2E2E5"}}>Dashboard</Text>
+    <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Dashboard</Text>
     </Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
     }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
-    <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text>
+    <Text  weight={"medium"} style={{width:"100%",color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
     </Button>
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5"}}>My Tickets</Text></Button>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text></Button>
     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }} onClick={()=>{notify();update()}} >
         <div style={{display:"flex",width:"fit-content"}}>
             <Bell size={"25"} color="whitesmoke"></Bell></div>
-     <Text weight={"medium"} style={{color:"#E2E2E5"}}>Notifications</Text>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
     </Button>
     {group=='ICT'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
-     <Text weight={"medium"} style={{color:"#BEBEBE",fontSize:"16px"}}>Staff</Text>
+     <Text weight={"medium"} style={{color:"#BEBEBE",fontFamily:"sans-serif",fontSize:"16px"}}>Staff</Text>
     <Separator size={"4"} orientation={"horizontal"} ></Separator>
     </div>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
     onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
     </Button>
     </div>
     :""}
@@ -233,7 +389,7 @@ return(<>
                         <div style={{display:"flex",flexDirection:"row",justifyContent:"center",width:"fit-content",height:"fit-content",flexWrap:"nowrap",
                             gap:"2px"
                         }}>
-                        <Text weight={"medium"} style={{fontSize:"17px",color:"#FFFFFF"}}>
+                        <Text weight={"medium"} style={{fontSize:"17px",color:"#FFFFFF",fontFamily:"sans-serif"}}>
                             {localStorage.getItem('firstname')}
                         </Text>
                         
@@ -241,7 +397,7 @@ return(<>
                          {/* <Main_Text>Otieno</Main_Text>  */}
                       {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
                         </div>
-                        <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F"}}>{localStorage.getItem("firstname")}</Text>
+                        <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F",fontFamily:"sans-serif"}}>{localStorage.getItem("firstname")}</Text>
                     </div>
                 </div>
                     </AlertDialog.Trigger>
@@ -318,12 +474,12 @@ return(<>
             flexDirection:"row",padding:"10px",background:"#F6F6F6 90%"
             }}>
                     
-                    <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
+                    {/* <div style={{width:"100%",height:"fit-content",marginTop:"10px",display:"flex",
                 flexDirection:"row",padding:"5px",gap:"10px"
             }}>
             <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>     
             <SidebarOpen onClick={update} color="blue" size={"50"} style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarOpen>
-            </div>
+            </div> */}
         
             <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
                flexDirection:"row",gap:"10px",padding:'20px'}}>
@@ -350,7 +506,7 @@ return(<>
 }
         
         {track?<div style={{display:"flex",width:"100%",flexWrap:"wrap"}}><p>Please choose one from the sidebar</p></div>:
-        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"linear-gradient(to right,rgba(154, 174, 158, 0.836)25%)"}}>
+        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"#ebebefdc 10%"}}>
             {children}
         </div>
 }

@@ -1,7 +1,7 @@
 import { Nav_button } from "../ui/buttons"
 import { ArrowLeftIcon } from "lucide-react"
 import Main_Text, { Head_Mess, Head_Text, Input_Field } from "../ui/text"
-import { Button, Card, DropdownMenu, TextArea } from "@radix-ui/themes/dist/cjs/index.js"
+import { Button, Card, DropdownMenu, Heading, Spinner, Text, TextArea } from "@radix-ui/themes/dist/cjs/index.js"
 import { useState } from "react";
 import con from "../axios/axios";
 import { useEffect } from "react";
@@ -96,9 +96,7 @@ set_priority_array(data.data.data);
                             <div style={{width:"fit-content",
                    flexDirection:"row",display:"flex",height:"fit-content"
                  }}> 
-                    <Head_Text>Submit ICT Support Request</Head_Text>
-                    
-
+                 <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">Submit Ticket</Heading>
                 </div>
             {/* <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
             }}>
@@ -111,29 +109,32 @@ set_priority_array(data.data.data);
             <div style={{display:"flex",width:"100%",height:"100%",justifyContent:"left"}}>
                 <Card style={{display:"flex",flexDirection:"column",
                     justifyContent:'left',width:"100%",height:"fit-content",padding:"20px",
-                    gap:"10px"
+                    gap:"15px"
                 }}>
-                    <Head_Mess>Issue Details</Head_Mess>
-                    <div style={{display:"flex",
+                    <Text weight={"regular"} style={{fontSize:'17px',fontFamily:"sans-serif",color:"darkgray"}}>Issue Details</Text>
+                    {/* <div style={{display:"flex",
                         flexDirection:"column",gap:"10px",width:"100%",
                         height:"fit-content"
                     }}>
                         <Head_Text>Subject </Head_Text>
                         <Input_Field placeholder={'Subject'}></Input_Field>  
-                    </div>
+                    </div> */}
                     <div style={{display:"flex",flexDirection:"row",
                         width:"fit-content",height:"fit-content",
-                        flexWrap:"wrap",gap:"10px"
+                        flexWrap:"wrap",gap:"15px"
                     }}>
                         <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex' ,gap:"10px"
                         }}>
-                            <Head_Text>Category </Head_Text>
+                            <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Priority</Text>
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
-                                <Button size={"3"} style={{cursor:"pointer"}} type="button" variant="soft" color="gray"><Main_Text>{defcat}</Main_Text></Button>
+                                <Button size={"3"} style={{cursor:"pointer",color:"black"}} type="button" variant="outline" color="gray">
+                                    {/* <Main_Text>{defcat}</Main_Text> */}
+                                    <Text weight={"medium"} style={{fontSize:"16px",color:"black"}}>{defcat}</Text>
+                                    </Button>
                                 </DropdownMenu.Trigger>
-                                <DropdownMenu.Content >
+                                <DropdownMenu.Content>
                                     {priority_arr.map((item,index)=>(
                                         <DropdownMenu.Item onClick={()=>priority_drop(item.priority,item.id_)} 
                                         key={index}>
@@ -148,10 +149,12 @@ set_priority_array(data.data.data);
                         <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex',gap:"10px"
                         }}>
-                            <Head_Text>Priority</Head_Text>
+                            <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Text>
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
-                                <Button size={"3"} type="button" style={{cursor:"pointer"}} variant="soft" color="gray"><Main_Text>{def}</Main_Text></Button>
+                                <Button size={"3"} type="button" style={{cursor:"pointer",color:"black"}} variant="outline" color="gray">
+                                    <Text weight={"medium"} style={{fontSize:"16px",color:"black"}}>{def}</Text>
+                                </Button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
                                     {arr.map((item)=>(
@@ -167,11 +170,13 @@ set_priority_array(data.data.data);
                         </div>
                     </div>
                     <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
-                        <Head_Text>Description </Head_Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Text>
                        <TextArea value={frm.ticket_issue} onChange={change} name="ticket_issue" ></TextArea>
                     </div>
-                    {track?<Load_button text={"Submitting"}></Load_button>:
-                    <Button size={"3"} variant="classic" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
+                    {track?
+                    <Button size="3" variant="classic" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>
+                    :
+                    <Button size={"3"} variant="classic" color="blue" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
 }
                 </Card>
 

@@ -6,7 +6,8 @@ import { Avatar, Card } from "@radix-ui/themes/dist/cjs/index.js";
 import con from "../axios/axios";
 import { useEffect, useState } from "react";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
-
+import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
+import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 export default function Dashboard(){
   
     const [count,setcount]=useState({total:0,pending:0,solved:0})
@@ -58,9 +59,18 @@ export default function Dashboard(){
         <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
                 display:"flex",gap:"5px",alignItems:"start"
             }}>
-                <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
-                <Main_Text>System Overview and Admin</Main_Text>
+                <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">Dashboard</Heading>
+                <Text weight={"light"} style={{fontSize:"18px",fontFamily:"sans-serif",color:"#6B7280"}}>
+                    Welcome Back  {localStorage.getItem('firstname')}
+                </Text>
+                {/* <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess> */}
+                {/* <Text weight={"light"} style={{fontSize:"15px",color:"black"}}>
+                   Dashboard Tickets
+                </Text> */}
             </div>
+            <Text weight={"light"} style={{fontSize:"16px",fontFamily:"sans-serif",color:"black"}}>
+                   Dashboard Tickets
+                </Text>
             <div style={{display:"flex",flexDirection:"row",width:"fit-content",
             gap:"20px",height:"fit-content",flexWrap:"wrap"
             }}>
@@ -70,8 +80,9 @@ export default function Dashboard(){
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
                     }}>
-                        <Main_Text>Total Tickets</Main_Text>
-                        <Main_Text>{count.total}</Main_Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"20px"}}>Total Tickets</Text>
+                        {/* <Main_Text>Total Tickets</Main_Text> */}
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"18px"}}>{count.total}</Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
@@ -86,8 +97,8 @@ export default function Dashboard(){
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
                     }}>
-                        <Main_Text>Pending Tickets</Main_Text>
-                        <Main_Text>{count.pending}</Main_Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"20px"}}>Pending Tickets</Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"18px"}}>{count.pending}</Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>
@@ -101,8 +112,8 @@ export default function Dashboard(){
                     <div style={{display:"flex",flexDirection:"column",justifyContent:'left',
                         flexWrap:"wrap",gap:"3px",width:"100%",height:"fit-content"
                     }}>
-                        <Main_Text>Resolved Tickets</Main_Text>
-                        <Main_Text>{count.solved}</Main_Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"20px"}}>Resolved Tickets</Text>
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"18px"}}>{count.solved}</Text>
                     </div>
                     <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                         <div style={{width:"fit-content",height:"fit-content",padding:"10px",background:"rgba(9, 41, 147, 0.29)",borderRadius:"10px"}}>

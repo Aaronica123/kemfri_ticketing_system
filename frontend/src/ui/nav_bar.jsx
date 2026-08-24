@@ -578,7 +578,7 @@ return(<>
             </div>
      </div> 
 }
-            <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column",flex:1}}> 
+            <div style={{width:"100%",height:"100%",display:"flex",overflow:"auto",flexDirection:"column",flex:1}}> 
                 {track?
                  <div style={{width:"100%",height:"fit-content",display:"flex",
                     justifyContent:"right",

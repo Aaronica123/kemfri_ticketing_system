@@ -1,4 +1,4 @@
-import { AlertDialog, Button, DropdownMenu, Spinner, Table } from "@radix-ui/themes/dist/cjs/index.js";
+import { AlertDialog, Button, DropdownMenu, Spinner, Table, TextField } from "@radix-ui/themes/dist/cjs/index.js";
 import Main_Text, { Head_Text, Input_Field } from "../ui/text";
 import { useState } from "react";
 import con from "../axios/axios";
@@ -13,6 +13,7 @@ import { ListX } from "lucide-react";
 import { Head_Mess } from "../ui/text";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { useMediaQuery } from "react-responsive";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -21,7 +22,7 @@ export default function MyTickets(){
     const[track,settrack]=useState(false);
     const [input,setinput]=useState({ticket_id:""})
     const [load,setload]=useState(false);
-
+    const min=useMediaQuery({maxWidth:"768px"})
     const change=(e)=>{
         const {name,value}=e.target;
         setinput((data)=>({
@@ -121,9 +122,14 @@ export default function MyTickets(){
             <div style={{display:"flex",flexDirection:"column",flexWrap:"nowrap",
                 width:"100%",height:"fit-content",gap:"15px"
             }}>
-                <div style={{display:"flex",width:"50%",flex:1,height:"fit-content",gap:"5px"}}>
-                    <Input_Field placeholder={"Search Tickets..."} name={"ticket_id"} value={input.ticket_id} change={change}>
-                    </Input_Field>
+                <div style={{display:"flex",width:min?"100%":"50%",flex:1,height:"fit-content",gap:"5px"}}>
+                    {/* <TextField.Root></TextField.Root> */}
+
+                    <TextField.Root
+                    size={"3"}
+                    style={{width:"100%",color:"black"}}
+                    placeholder={"Search Tickets..."} name={"ticket_id"} value={input.ticket_id} onChange={change}>
+                    </TextField.Root>
                     <Button variant="classic" highContrast color="blue" style={{cursor:"pointer"}} onClick={filter}><Search></Search></Button>
                 </div>
                 <div style={{display:"flex",flexDirection:"row",width:"100%",height:"fit-content",gap:"10px"}}>

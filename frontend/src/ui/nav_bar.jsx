@@ -32,6 +32,7 @@ console.log(group,user_id);
 const [track,settrack]=useState(false);
 const [lg,setlg]=useState(false);
 const [count,setcount]=useState(0);
+const [btn,trackbtn]=useState({btn1:false,btn2:true,btn3:false,btn4:false})
 const update=()=>{
     settrack(!track);
 }
@@ -79,14 +80,24 @@ async function logout(){
         // alert("An error has encountered");
     });
 }
-const tickets=()=>{nav('/my_tickets')}
-const notify=()=>{nav('/notifications')};
+
+const tickets=()=>{nav('/my_tickets');
+    trackbtn(()=>({btn1:false,btn2:false,btn3:true,btn4:false}))
+}
+const notify=()=>{nav('/notifications');
+    trackbtn(()=>({btn1:false,btn2:false,btn:false,btn4:true}))
+
+};
 const dir=(value)=>{
     if(value==1){
-        nav('/dashboard')
+        nav('/dashboard');
+        trackbtn(()=>({btn1:true,btn2:false,btn3:false,btn4:false}))
     }
     else{
-        nav('/submit')
+        nav('/submit');
+        trackbtn(()=>({btn1:false,btn2:true,btn3:false,btn4:false}))
+        
+       
     }
 }
 
@@ -168,29 +179,62 @@ return(<>
                     gap:"20px",
                     padding:"10px"
                 }}>
-                     <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
-        background:"#132CB5 80%"
-    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
+                    {btn.btn1?
+                     <Button className="btn12_active"  variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",background:"#132CB5 80%"
+    }} onClick={()=>{dir(1)}}><LayoutDashboard color="white"></LayoutDashboard>
     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Dashboard</Text> */}
     </Button>
+:
+<Button   variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
+    }} onClick={()=>{dir(1)}}><LayoutDashboard color="white"></LayoutDashboard>
+    {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Dashboard</Text> */}
+    </Button>
+}
+{btn.btn2?
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{dir(2);}}><TicketPlus color="whitesmoke"/>
+    {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text> */}
+    </Button>:
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
-    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
+    }} onClick={()=>{dir(2);}}><TicketPlus color="whitesmoke"/>
     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text> */}
     </Button>
-     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
+}
+{btn.btn3?
+<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{tickets();}} ><ListTodo color="whitesmoke"/>
      {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>My Tickets</Text> */}
      </Button>
-    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{notify();update()}} >
+:
+     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{tickets();}} ><ListTodo color="whitesmoke"/>
+     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>My Tickets</Text> */}
+     </Button>
+}
+{btn.btn4?
+<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{notify();}} >
         <div style={{display:"flex",width:"fit-content"}}>
             <Bell size={"25"} color="whitesmoke"></Bell></div>
      {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Notifications</Text> */}
     </Button>
+:
+
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+    }} onClick={()=>{notify();}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Notifications</Text> */}
+    </Button>
+}
     {group=='ICT'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
@@ -200,7 +244,7 @@ return(<>
      <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
-    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
+    onClick={()=>{nav('/staff_dashboard'); }} ><BookOpenCheck color="whitesmoke"/>
      {/* <Text weight={"medium"} style={{color:"#E2E2E5"}}>Submit Ticket</Text> */}
     </Button>
     </div>
@@ -214,7 +258,34 @@ return(<>
             
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
-                {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
+                {lg?
+               <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"
+                }}>
+                    <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
+                        <div style={{width:"fit-content"}}>
+                            
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Spinner></Spinner>
+                </div> 
+            </div>
+                        
+                    </div>
+                    {/* <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}> */}
+                        {/* <div style={{display:"flex",alignItems:"center",flexDirection:"row",justifyContent:"center",width:"100%",height:"fit-content",flexWrap:"nowrap",
+                            gap:"2px"
+                        }}>
+                        <Text weight={"medium"} style={{width:"100%",fontSize:"15px",color:"#FFFFFF",fontFamily:"sans-serif",flexDirection:"row"}}>
+                            Logging Out
+                        </Text> */}
+                        
+                         {/* <br></br> */}
+                         {/* <Main_Text>Otieno</Main_Text>  */}
+                      {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
+                        {/* </div> */}
+                        {/* <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F",fontFamily:"sans-serif"}}>{localStorage.getItem("firstname")}</Text> */}
+                    {/* </div> */}
+                </div>
+               :
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
                         <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"
@@ -326,28 +397,63 @@ return(<>
                     gap:"20px",
                     padding:"10px"
                 }}>
+                    {btn.btn1?
                      <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
         background:"#132CB5 80%"
     }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Dashboard</Text>
+    </Button>:
+    <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none"
+    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
+    <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Dashboard</Text>
     </Button>
+            
+}
+{btn.btn2?
+<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
+    <Text  weight={"medium"} style={{width:"100%",color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
+    </Button>
+:
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
     }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
     <Text  weight={"medium"} style={{width:"100%",color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
     </Button>
+}
+{btn.btn3?
+<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text>
+     </Button>
+:
      <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text></Button>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text>
+     </Button>
+}
+{btn.btn4?
+
+<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row",background:"#132CB5 80%"
+    }} onClick={()=>{notify();update()}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
+    </Button>:
     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
+        justifyContent:"left",gap:"12px",flexDirection:"row"
     }} onClick={()=>{notify();update()}} >
         <div style={{display:"flex",width:"fit-content"}}>
             <Bell size={"25"} color="whitesmoke"></Bell></div>
      <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
     </Button>
+}
     {group=='ICT'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
@@ -371,7 +477,34 @@ return(<>
             
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
                 {/* <Execute_Button variant={"solid"} type={"button"} color={"blue"} onClick={""}>Execute</Execute_Button> */}
-                {lg?<Load_button text={"Logging out"} variant={"solid"} color={"blue"}></Load_button>:
+                {lg?
+                 <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"
+                }}>
+                    <div style={{width:"fit-content",height:"fit-content",justifyContent:"center",alignItems:"center",display:"flex"}}>
+                        <div style={{width:"fit-content"}}>
+                            
+                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
+                    <Spinner></Spinner>
+                </div> 
+            </div>
+                        
+                    </div>
+                    <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",justifyContent:"left",gap:"8px"}}>
+                        <div style={{display:"flex",alignItems:"center",flexDirection:"row",justifyContent:"center",width:"100%",height:"fit-content",flexWrap:"nowrap",
+                            gap:"2px"
+                        }}>
+                        <Text weight={"medium"} style={{width:"100%",fontSize:"15px",color:"#FFFFFF",fontFamily:"sans-serif",flexDirection:"row"}}>
+                            Logging Out
+                        </Text>
+                        
+                         {/* <br></br> */}
+                         {/* <Main_Text>Otieno</Main_Text>  */}
+                      {/* <Main_Text>{localStorage.getItem('lastname')}</Main_Text>  */}
+                        </div>
+                        {/* <Text weight={"medium"} style={{fontSize:"12px",color:"#7F7F7F",fontFamily:"sans-serif"}}>{localStorage.getItem("firstname")}</Text> */}
+                    </div>
+                </div>
+                :
                 <AlertDialog.Root>
                     <AlertDialog.Trigger>
                         <div className="crd" style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",gap:"8px",cursor:"pointer",background:"#07014F 100%",padding:'8px',borderRadius:"10px"

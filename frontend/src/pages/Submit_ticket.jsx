@@ -6,6 +6,7 @@ import { useState } from "react";
 import con from "../axios/axios";
 import { useEffect } from "react";
 import { Load_button } from "../ui/buttons";
+import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
 export default function SubmitForm(){
     const [set,setf]=useState({data_m:"options"})
     const [cat,setcat]=useState({data_m:"options"})
@@ -171,7 +172,12 @@ set_priority_array(data.data.data);
                     </div>
                     <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
                         <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Text>
-                       <TextArea value={frm.ticket_issue} onChange={change} name="ticket_issue" ></TextArea>
+                        
+                            
+                       
+                       <TextArea value={frm.ticket_issue} variant="surface" size={"3"} color="black" resize={"vertical"} placeholder="Describe Issue" onChange={change} name="ticket_issue"  style={{width:"100%",height:"100%",fontSize:"20px",color:"black",fontWeight:"bold"}} >
+
+                       </TextArea>
                     </div>
                     {track?
                     <Button size="3" variant="classic" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>

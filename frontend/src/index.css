@@ -66,7 +66,15 @@
   background: linear-gradient(rgba(227, 233, 229, 0.829)); 
 }
 
-.btn12:hover{
+.btn12_active{
+background-color:#824a06 96%;
+/* transform: translateX(2px) translateY(-2px); */
+box-shadow: 0px 4px 15px rgba(19, 18, 18, 0.441);  
+cursor: pointer;
+transition: all 0.15s ease-in-out;
+
+}
+.btn12_inactive:hover{
 background-color:#062382 96%;
 /* transform: translateX(2px) translateY(-2px); */
 box-shadow: 0px 4px 15px rgba(19, 18, 18, 0.441);  

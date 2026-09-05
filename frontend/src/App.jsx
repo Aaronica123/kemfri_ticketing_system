@@ -11,6 +11,7 @@ import StaffDashboard from "./pages/Staff_Dashboard";
 import './App.css'
 import AuthContext from "./auth/auth_context";
 import Notify from "./pages/Notifications";
+import Input from "./forms/submit";
 function App() {
 
 
@@ -20,6 +21,7 @@ function App() {
       <Router>
         <Toast_Provider>
           <Routes>
+            <Route path="/input" element={<Input/>}/>
             <Route path="/" element={<Login_form/>}/>
             <Route path="/nav" element={<Nav_bar/>}/>
             <Route path="/dashboard" element={

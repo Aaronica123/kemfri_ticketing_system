@@ -12,8 +12,10 @@
   "dependencies": {
     "amqp": "^0.2.7",
     "amqplib": "^2.0.1",
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "minio": "^8.0.7",
     "mongoose": "^9.9.3",
     "ws": "^8.21.3"
   }

@@ -9,8 +9,13 @@ import { GetNotification } from "./connect.js";
 import { UpdateNotification } from "./connect.js";
 import { FilterNotificationFalse } from "./connect.js";
 import { FilterNotificationTrue } from "./connect.js";
+import Min from "./upload.js";
+import cors from "cors";
+
+
 configDotenv();
 const app =express();
+app.use(cors({origin:"http://localhost:5173",methods:["GET","POST"],credentials:"true"}))
 const connect=new WebSocketServer({port:3009});
 export const store =new Map()
 connect.on('connection',(wsl,url)=>{
@@ -90,6 +95,13 @@ connect.on('connection',(wsl,url)=>{
     
 
 })
+app.use(express.json());
+async function Read(req,res){
+    console.log(req.body);
+    
+}
+app.post('/input',Read)
+app.post('/min',Min);
 console.log(connect.clients);
 connect.on('listening',()=>{
     console.log("connected to web socket server")

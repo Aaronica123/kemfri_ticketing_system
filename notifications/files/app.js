@@ -9,9 +9,12 @@ import { GetNotification } from "./connect.js";
 import { UpdateNotification } from "./connect.js";
 import { FilterNotificationFalse } from "./connect.js";
 import { FilterNotificationTrue } from "./connect.js";
+import { Upload } from "./upload.js";
 import Min from "./upload.js";
 import cors from "cors";
-
+import  multer from "multer";
+import fs from "fs";
+// import { Dir } from "fs";
 
 configDotenv();
 const app =express();
@@ -95,13 +98,46 @@ connect.on('connection',(wsl,url)=>{
     
 
 })
+const up=multer({dest:"uload/",limits:{fileSize:1024*1024*5,files:3}})
+
 app.use(express.json());
 async function Read(req,res){
-    console.log(req.body);
+    console.log(req.files);
+    var invalid=[]
+    var valid=[]
+    req.files.forEach((data)=>{if(data.mimetype!='image/jpeg')
+    {
+        console.log("invalid");
+         invalid.push(data);
+        
+    }
+    else{
+        console.log("valid")
+        valid.push(data);
+    }
+    
+        
+    })
+    if(invalid.length>0){
+     invalid.forEach((data)=>{
+        console.log(data.path)
+         fs.unlink(`${data.destination}${data.filename}`,()=>{})
+        })
+    invalid=[]
+    console.log("invalid array created")
+    }
+    if(valid.length>0){
+        valid.forEach((data)=>{
+            fs.unlink(`${data.destination}${data.filename}`,()=>{}); 
+        })
+        valid=[]
+        console.log("valid array created")
+    }
     
 }
-app.post('/input',Read)
+app.post('/input',up.array('fle',3),Read)
 app.post('/min',Min);
+app.post('/upload',Upload)
 console.log(connect.clients);
 connect.on('listening',()=>{
     console.log("connected to web socket server")

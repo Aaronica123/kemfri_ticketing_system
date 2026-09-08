@@ -20,7 +20,7 @@ export default function Input(){
         const filea=e.target.files;
         setfile({input:filea})
     }
-    const fill=new FormData();
+    
     const click=async(e)=>{
         e.preventDefault();
         console.log(file.input.length)
@@ -28,16 +28,20 @@ export default function Input(){
             alert("number of images allowed exceeded")
             // setfile({input:null})
         }
-        // console.log(file.input[1].name)
-        //  console.log(file.input[0].name)
-        fill.append('fle',file.input)
+        const fill=new FormData();
+        var x=0
+        while(file.input.length>=x){
+             fill.append('fle',file.input[x]);
+             x++;
+        }
+       
         // console.log(file.input);
         
         console.log(fill.get('fle'))
-        // await fetch('http://localhost:3002/input',{
-        //     method:"POST",
-        //     body:fill
-        // })
+        await fetch('http://localhost:3002/input',{
+            method:"POST",
+            body:fill
+        })
         
     }
     return(

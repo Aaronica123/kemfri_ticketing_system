@@ -1,0 +1,45 @@
+name: CD begin
+
+on:
+ # push:
+ #    branches: ['main']
+ pull_request:
+    branches: ['main']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: aaronica123
+          password: ${{secrets.DOCKER_TOKEN}}
+      - name: docker pull
+        run: |
+          docker pull aaronica123/redis_stable:1.0
+          docker pull aaronica123/backend_stable:1.0
+          docker pull aaronica123/frontend_stable:1.0
+          docker pull aaronica123/db_stable:1.0
+      
+      - name: Create env file
+        run: |
+          cat > .env << EOF
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          passwordsess=${{ secrets.passwordsess }}
+          passwordstaff=${{ secrets.passwordstaff }}
+          passwordusers=${{ secrets.passwordusers }}
+          passworddb=${{ secrets.passworddb }}
+          EOF
+      
+      - name: Pull and deploy
+        run: |
+          docker compose -f docker-compose.prod.yml pull
+          docker compose -f docker-compose.prod.yml up -d
+      
+      # - name: Health check
+      #   run: |
+      #     sleep 10
+      #     docker compose -f docker-compose.prod.yml ps

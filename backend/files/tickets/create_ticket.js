@@ -25,7 +25,16 @@ export async function Ticket_Recieve(){
         if(status?.status==200){
             const{data:da,error}=await client.schema("usecase_kemfri").from("tickets").update({urgency:String(status?.data?.urgency).toLowerCase()}).eq('ticket_id',JSON.parse(data.content)?.ticket_id);
             console.log(da);
-            console.log(error)
+            console.log(error);
+            const{data:new_data,error:new_error}=await client.schema("usecase_kemfri").from(`branch_${JSON.parse(data.content)?.branch}`).select("staff_id").eq('staff_category',JSON.parse(data.content)?.category).eq('state',false).limit(1);
+            console.log(new_data[0]?.staff_id);
+            if(new_data[0]?.staff_id){
+                await client.schema("usecase_kemfri").from("tickets").update({staff_id:new_data[0]?.staff_id,ticket_state:"assigned"}).eq("ticket_id",JSON.parse(data.content)?.ticket_id);
+                await client.schema("usecase_kemfri").from("staff").update({state:true}).eq("staff_id",new_data[0].staff_id);
+            }else{
+                console.log("All staff are occupied");
+            }
+            console.log(new_error);
             rec.ack(data,true);
         }
         else if(status?.status==500)
@@ -37,8 +46,8 @@ export async function Ticket_Recieve(){
 }
 export default async function Create_Ticket(req,res){
 try{
-    const{ticket_id,ticket_type,description}=req?.body;
-    if(!ticket_id||!ticket_type||!description){
+    const{ticket_id,ticket_type,description,branch}=req?.body;
+    if(!ticket_id||!ticket_type||!description||!branch){
         return res.status(409).json({message:"Check user input"});
     }
     const{data,error}=await client.schema("usecase_kemfri").from("tickets").insert({
@@ -48,6 +57,7 @@ try{
         ticket_state:"pending",
         urgency:null,
         team:ticket_type,
+        branch:branch,
         created:new Date().toLocaleString()
     })
     if(data){
@@ -56,7 +66,7 @@ try{
     if(error){
         console.log(error)
     }
-    await Ticket_Message({ticket_id:ticket_id,description:description});
+    await Ticket_Message({ticket_id:ticket_id,description:description,branch:branch,category:ticket_type});
     return res.status(200).json({message:"Ticket created"})
 }catch(error){
     console.log(error);

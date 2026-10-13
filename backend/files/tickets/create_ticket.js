@@ -22,13 +22,15 @@ export async function Ticket_Recieve(){
     await rec.consume('ai_queue',async(data)=>{
         const status=await classifyTicket(JSON.parse(data.content))
         console.log(status);
-        if(status.status==200){
-            await client.schema("usecase_kemfri").from("tickets").update({urgency:String(status.data).toLowerCase()}).eq('ticket_id',JSON.parse(data.content)?.ticket_id);
+        if(status?.status==200){
+            const{data:da,error}=await client.schema("usecase_kemfri").from("tickets").update({urgency:String(status?.data?.urgency).toLowerCase()}).eq('ticket_id',JSON.parse(data.content)?.ticket_id);
+            console.log(da);
+            console.log(error)
             rec.ack(data,true);
         }
-        else if(status.status==500)
+        else if(status?.status==500)
         {
-            rec.nack(data,false,true)
+            rec.nack(data,false,false)
             
         }
     },{noAck:false})

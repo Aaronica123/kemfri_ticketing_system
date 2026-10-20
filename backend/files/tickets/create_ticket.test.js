@@ -6,7 +6,8 @@ test.only("create ticket ",async()=>{
 const res=await request(app).post("/api/create_ticket").send({
     ticket_id:"TCK123",
     ticket_type:"networking",
-    description:"My wifi has failed and i cannot connect to the internet"
+    description:"My wifi has failed and i cannot connect to the internet",
+    branch:"kisumu"
 })
 expect(res.status).toBe(200);
 })

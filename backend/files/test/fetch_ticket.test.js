@@ -1,7 +1,8 @@
 import { client } from "../supabase.js";
-import Fetch_tickets from "./fetch_ticket.js";
+import Fetch_tickets from "../tickets/fetch_ticket.js";
 import request from "supertest"
 import app from "../app.js";
+import Auth from "../auth.js";
 jest.mock("../supabase.js", () => ({
   client: {
     schema: jest.fn().mockReturnThis(),
@@ -11,6 +12,7 @@ jest.mock("../supabase.js", () => ({
     limit:jest.fn()
   },
 }));
+jest.mock("../auth.js");
 
 describe('fetch ticket files',()=>{
     let res;
@@ -20,8 +22,10 @@ describe('fetch ticket files',()=>{
             status: jest.fn().mockReturnThis(),
             json:jest.fn().mockReturnThis()
         }
+        Auth.mockResolvedValue(true);
     })
     test.only('Fetch tickets',async()=>{
+        
         client.limit.mockResolvedValue([{"data":1},{"data":2}],{count:2});
         await Fetch_tickets({body:{index:1,type:null}},res)
         expect(res.status).toHaveBeenCalledWith(200);

@@ -14,6 +14,7 @@ import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
 import {useMediaQuery} from "react-responsive";
+import { supabase } from "../auth/supabase";
 // import { set } from "../auth/hold.js";
 // import UserManager from "../auth/hold.js";
 // import { Load_button } from "../ui/buttons";
@@ -36,6 +37,26 @@ export default function Login_form(){
        }))
     }
     const min=useMediaQuery({maxWidth:"768px"})
+
+    const login=async(e)=>{
+        e.preventDefault();
+        if(!form_.email||!form_.password){
+            alert("Enter all fields")
+            return;
+        }
+        const {data,error}=await supabase.auth.signInWithPassword({email:form_.email,password:form_.password});
+        if(data?.user){
+            localStorage.setItem('firstname',data.user.user_metadata.first_name);
+            alert("Log In Successful")
+            nav('/submit')
+            return;
+        }
+        else{
+            alert("An error occured");
+            console.log(error);
+            return;
+        }
+    }
     async function connect(e){
         
         e.preventDefault();
@@ -135,7 +156,7 @@ export default function Login_form(){
                 </div>
                 :
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
-                    <Button radius="medium" size={"3"} variant="classic" type={"button"} onClick={connect} color="blue" style={{cursor:"pointer",width:"100%",justifyContent:"center"}}><Text weight={"medium"} color="white" size={"5"}>Log In</Text></Button>
+                    <Button radius="medium" size={"3"} variant="classic" type={"button"} onClick={login} color="blue" style={{cursor:"pointer",width:"100%",justifyContent:"center"}}><Text weight={"medium"} color="white" size={"5"}>Log In</Text></Button>
                     {/* <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button> */}
                 </div>
 }

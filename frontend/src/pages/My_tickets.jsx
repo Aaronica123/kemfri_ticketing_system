@@ -1,7 +1,7 @@
 import { AlertDialog, Button, DropdownMenu, Spinner, Table, TextField } from "@radix-ui/themes/dist/cjs/index.js";
 import Main_Text, { Head_Text, Input_Field } from "../ui/text";
 import { useState } from "react";
-import con from "../axios/axios";
+import con, { connect } from "../axios/axios";
 import { useEffect } from "react";
 import {AlertTriangle} from "lucide-react";
 import { CheckCircle } from "lucide-react";
@@ -14,6 +14,7 @@ import { Head_Mess } from "../ui/text";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 import { useMediaQuery } from "react-responsive";
+import { Check_auth } from "../auth/new_auth";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -23,6 +24,8 @@ export default function MyTickets(){
     const [input,setinput]=useState({ticket_id:""})
     const [load,setload]=useState(false);
     const min=useMediaQuery({maxWidth:"768px"})
+    const[type,settype]=useState(null);
+    const{user}=Check_auth();
     const change=(e)=>{
         const {name,value}=e.target;
         setinput((data)=>({
@@ -44,6 +47,26 @@ export default function MyTickets(){
         // await fetch();
         // set_final_index(index);
     }
+    const fetch_tickets=async(type)=>{
+        
+        const data=await connect.post('/api/fetch_ticket',{
+            index:index,
+            type:type,
+            user_id:user.user_id,
+            role:user.role
+        })
+        
+        console.log(data.data.data)
+        if(data.data?.data){
+        const fetched=data.data.data.map((val)=>Object.values(val))
+         setfinal(fetched);
+        }
+        else{
+            setfinal([]);
+        }
+       
+    }
+
     const fetch=async()=>{
         settrack(false);
         await con().get(`/get_tickets?ind=${index}`).then((data)=>{
@@ -75,7 +98,7 @@ export default function MyTickets(){
         console.log(input.ticket_id)
         await con().get(`/filter_tickets?filter=${input.ticket_id}`).then((data)=>{
             console.log(data.data);
-            const fetched=data.data.data.map((value)=>Object.values(value));
+            const fetched=data.data?.data?.map((value)=>Object.values(value));
             setfinal(fetched);
             settrack(true);
             if(fetched.length>0){
@@ -134,34 +157,14 @@ export default function MyTickets(){
                 </div>
                 <div style={{display:"flex",flexDirection:"row",width:"100%",height:"fit-content",gap:"10px"}}>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                    <DropdownMenu.Root >
-                    <DropdownMenu.Trigger>
-                        <Button variant="soft" color="gray">All Categories</Button>
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <DropdownMenu.Item>Others</DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                    </DropdownMenu.Root>
+                    <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{settype(null);fetch_tickets(null)}}>All</Button>
                 </div>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                    <DropdownMenu.Root >
-                    <DropdownMenu.Trigger>
-                        <Button variant="soft" color="gray">All Categories</Button>
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <DropdownMenu.Item>Others</DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                    </DropdownMenu.Root>
+                     <Button type="button" size={"2"} variant="classic" highContrast onClick={()=>{settype("pending");fetch_tickets("pending")}}>Pending</Button>
+                    
                 </div>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                    <DropdownMenu.Root >
-                    <DropdownMenu.Trigger>
-                        <Button variant="soft" color="gray">All Categories</Button>
-                    </DropdownMenu.Trigger>
-                    <DropdownMenu.Content style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                        <DropdownMenu.Item>Others</DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                    </DropdownMenu.Root>
+                     <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{settype("assigned");fetch_tickets("assigned")}}>Assigned</Button>
                 </div>
                 </div>
             </div>

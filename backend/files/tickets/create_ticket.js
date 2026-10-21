@@ -2,6 +2,8 @@ import { client } from "../supabase.js";
 import amqp from "amqplib"
 import { classifyTicket } from "./ai.js";
 import { configDotenv } from "dotenv";
+import Auth from "../auth.js";
+import { randomUUID } from "crypto";
 configDotenv();
 async function Ticket_Message(data){
     const connect=await amqp.connect(process.env.rabbitmq);
@@ -45,11 +47,13 @@ export async function Ticket_Recieve(){
     },{noAck:false})
 }
 export default async function Create_Ticket(req,res){
+if(await Auth(req)){
 try{
-    const{ticket_id,ticket_type,description,branch}=req?.body;
-    if(!ticket_id||!ticket_type||!description||!branch){
+    const{ticket_type,description,branch,user_id}=req?.body;
+    if(!ticket_type||!description||!branch||!user_id){
         return res.status(409).json({message:"Check user input"});
     }
+    const ticket_id=randomUUID().replace(/-/g,'').slice(0,6).toUpperCase();
     const{data,error}=await client.schema("usecase_kemfri").from("tickets").insert({
         ticket_id:ticket_id,
         ticket_type:ticket_type,
@@ -57,6 +61,7 @@ try{
         ticket_state:"pending",
         urgency:null,
         team:ticket_type,
+        user_id:user_id,
         branch:branch,
         created:new Date().toLocaleString()
     })
@@ -66,11 +71,20 @@ try{
     if(error){
         console.log(error)
     }
+    if(req?.body?.test){
+        console.log("test success")
+        return res.status(200).json({message:"Ticket created"})
+    }
+    else{
     await Ticket_Message({ticket_id:ticket_id,description:description,branch:branch,category:ticket_type});
     return res.status(200).json({message:"Ticket created"})
+    }
 }catch(error){
     console.log(error);
     return res.status(500).json({message:"Server error"})
+}}
+else{
+    return res.status(409).json({message:"Unauthenticated"})
 }
 }
 

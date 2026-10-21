@@ -3,10 +3,11 @@ import { ArrowLeftIcon } from "lucide-react"
 import Main_Text, { Head_Mess, Head_Text, Input_Field } from "../ui/text"
 import { Button, Card, DropdownMenu, Heading, Spinner, Text, TextArea } from "@radix-ui/themes/dist/cjs/index.js"
 import { useState } from "react";
-import con from "../axios/axios";
+import con, { connect } from "../axios/axios";
 import { useEffect } from "react";
 import { Load_button } from "../ui/buttons";
 import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
+import { Check_auth } from "../auth/new_auth";
 export default function SubmitForm(){
     const [set,setf]=useState({data_m:"options"})
     const [cat,setcat]=useState({data_m:"options"})
@@ -16,10 +17,19 @@ export default function SubmitForm(){
     const [priority_arr,set_priority_array]=useState([]);
     const [val_priority,set_valuepriority]=useState("")
     const[val_category,set_valuecategory]=useState("");
+    const[form,setform]=useState({ticket_issue:"",category:""})
     const [frm,setfrm]=useState({ticket_issue:""})
+    const {user}=Check_auth();
     const change=(e)=>{
         const{name,value}=e.target;
         setfrm(()=>({
+            [name]:value
+        }))
+    }
+    const form_change=(e)=>{
+        const{value,name}=e.target;
+        setform((data)=>({
+            ...data,
             [name]:value
         }))
     }
@@ -67,6 +77,19 @@ set_priority_array(data.data.data);
             settrack(false);
             // alert("An error occured");
         })
+    }
+    const create_ticket=async(e)=>{
+        e.preventDefault();
+        const data=await connect.post('/api/create_ticket',{
+            description:form.ticket_issue,
+            ticket_type:form.category,
+            branch:user.branch,
+            user_id:user.user_id
+        })
+        if(data.status==200){
+            alert("Ticket has been created");
+            setform({ticket_issue:"",category:""})
+        }
     }
     async function fetch(){
         
@@ -124,15 +147,23 @@ set_priority_array(data.data.data);
                         width:"fit-content",height:"fit-content",
                         flexWrap:"wrap",gap:"15px"
                     }}>
-                        <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
+                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Text>
+                        <select onChange={form_change} name="category" required>
+                            <option value={""}>Choose Category</option>
+                            <option value={"hardware"}>Hardware</option>
+                            <option value={"software"}>Software</option>
+                            <option value={"networking"}>Networking</option>
+                            <option value={"security"}>Security</option>
+                        </select>
+                        {/* <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex' ,gap:"10px"
                         }}>
                             <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Priority</Text>
                             <DropdownMenu.Root>
                                 <DropdownMenu.Trigger>
-                                <Button size={"3"} style={{cursor:"pointer",color:"black"}} type="button" variant="outline" color="gray">
+                                <Button size={"3"} style={{cursor:"pointer",color:"black"}} type="button" variant="outline" color="gray"> */}
                                     {/* <Main_Text>{defcat}</Main_Text> */}
-                                    <Text weight={"medium"} style={{fontSize:"16px",color:"black"}}>{defcat}</Text>
+                                    {/* <Text weight={"medium"} style={{fontSize:"16px",color:"black"}}>{defcat}</Text>
                                     </Button>
                                 </DropdownMenu.Trigger>
                                 <DropdownMenu.Content>
@@ -141,13 +172,13 @@ set_priority_array(data.data.data);
                                         key={index}>
                                             {item.priority}
                                         </DropdownMenu.Item>
-                                    ))}
+                                    ))} */}
                                     {/* <DropdownMenu.Item onClick={()=>change_cat("Network")}>Network</DropdownMenu.Item>
                                      <DropdownMenu.Item onClick={()=>change_cat("Software")}>Software</DropdownMenu.Item> */}
-                                </DropdownMenu.Content>
+                                {/* </DropdownMenu.Content>
                             </DropdownMenu.Root>
-                        </div>
-                        <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
+                        </div> */}
+                        {/* <div style={{width:"fit-content",justifyContent:"left",height:"fit-content",
                             flexDirection:"column",display:'flex',gap:"10px"
                         }}>
                             <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Text>
@@ -157,32 +188,29 @@ set_priority_array(data.data.data);
                                     <Text weight={"medium"} style={{fontSize:"16px",color:"black"}}>{def}</Text>
                                 </Button>
                                 </DropdownMenu.Trigger>
-                                <DropdownMenu.Content>
-                                    {arr.map((item)=>(
+                                <DropdownMenu.Content onChange={form_change}> */}
+                                    {/* {arr.map((item)=>(
                                     <DropdownMenu.Item onClick={()=>category_drop(item.category_name,item.category_id)} 
                                     key={item.category_id}>{item.category_name}</DropdownMenu.Item>
 
-                                    ))}
+                                    ))} */}
+                                    
                                     
                                     {/* <DropdownMenu.Item onClick={()=>change("low")} >Low</DropdownMenu.Item>
                                     <DropdownMenu.Item onClick={()=>change("medium")} >Medium</DropdownMenu.Item> */}
-                                </DropdownMenu.Content>
+                                {/* </DropdownMenu.Content>
                             </DropdownMenu.Root>
-                        </div>
+                        </div> */}
                     </div>
                     <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
-                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Text>
-                        
-                            
-                       
-                       <TextArea value={frm.ticket_issue} variant="surface" size={"3"} color="black" resize={"vertical"} placeholder="Describe Issue" onChange={change} name="ticket_issue"  style={{width:"100%",height:"100%",fontSize:"20px",color:"black",fontWeight:"bold"}} >
-
+                       <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Text>
+                       <TextArea required value={form.ticket_issue} variant="surface" size={"3"} color="black" resize={"vertical"} placeholder="Describe Issue" onChange={form_change} name="ticket_issue"  style={{width:"100%",height:"100%",fontSize:"20px",color:"black",fontWeight:"bold"}} >
                        </TextArea>
                     </div>
                     {track?
                     <Button size="3" variant="classic" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>
                     :
-                    <Button size={"3"} variant="classic" color="blue" style={{width:"fit-content",cursor:"pointer"}} onClick={Submit}>Submit</Button>
+                    <Button size={"3"} variant="classic" color="blue" style={{width:"fit-content",cursor:"pointer"}} onClick={create_ticket}>Create</Button>
 }
                 </Card>
 

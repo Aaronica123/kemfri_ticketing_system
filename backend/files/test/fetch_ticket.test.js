@@ -8,8 +8,10 @@ jest.mock("../supabase.js", () => ({
     schema: jest.fn().mockReturnThis(),
     from: jest.fn().mockReturnThis(),
     select: jest.fn().mockReturnThis(),
+    limit:jest.fn().mockReturnThis(),
     range:jest.fn().mockReturnThis(),
-    limit:jest.fn()
+    eq:jest.fn().mockReturnThis(),
+    like:jest.fn()
   },
 }));
 jest.mock("../auth.js");
@@ -24,20 +26,31 @@ describe('fetch ticket files',()=>{
         }
         Auth.mockResolvedValue(true);
     })
+    test.only('No user id test',async()=>{
+        await Fetch_tickets({body:{}},res)
+        expect(res.status).toHaveBeenCalledWith(403);
+
+    })
     test.only('Fetch tickets',async()=>{
         
-        client.limit.mockResolvedValue([{"data":1},{"data":2}],{count:2});
-        await Fetch_tickets({body:{index:1,type:null}},res)
-        expect(res.status).toHaveBeenCalledWith(200);
+        client.like.mockResolvedValue({count:5});
+        await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
+        expect(res.status).toHaveBeenCalledWith(201);
+    })
+     test.only("Tickets test response",async()=>{
+        client.like.mockResolvedValue({count:5})
+        const da=await request(app).post("/api/fetch_ticket").send({index:1,type:null,user_id:123,role:"STAFF"})
+        expect(da.status).toBe(201);
+        
     })
     test.only('no tickets',async()=>{
-        client.limit.mockResolvedValue([{data:0}],{count:0});
-        await Fetch_tickets({body:{index:1,type:null}},res)
+        client.like.mockResolvedValue(0);
+        await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
         expect(res.status).toHaveBeenCalledWith(200);
     })
     test.only("no tickets test response",async()=>{
-        client.limit.mockResolvedValue({count:0})
-        const da=await request(app).get("/api/fetch_ticket").send({index:1,type:null})
+        client.like.mockResolvedValue(0)
+        const da=await request(app).post("/api/fetch_ticket").send({index:1,type:null,user_id:123,role:"STAFF"})
         expect(da.status).toBe(200);
         expect(da.body.data).toBe("");
     })

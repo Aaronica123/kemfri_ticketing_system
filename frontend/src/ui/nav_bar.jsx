@@ -25,6 +25,7 @@ import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 // import user from "../auth/hold.js";
 // import UserManager from "../auth/hold.js";
 import { Check_auth } from "../auth/new_auth";
+import { supabase } from "../auth/supabase";
 export default function Nav_bar({children}){
 const nav=useNavigate();
 const{loading,user,error}=Check_auth();
@@ -66,6 +67,19 @@ catch(error){
 
 }
 
+const signout=async()=>{
+    const {data,error}=await supabase.auth.signOut({scope:"local"})
+    
+        alert("Signed out successfully");
+        nav('/', { replace: true });
+       localStorage.removeItem('lastname');
+       localStorage.removeItem('firstname');
+       setlg(false);
+       console.log(data);
+       console.log(error)
+ 
+
+}
 async function logout(){
     setlg(true);
     await con().post('/logout',{}).then((data)=>{
@@ -367,7 +381,7 @@ return(<>
     
     <AlertDialog.Action>
         <Button size="3" variant="classic" color="red" highContrast style={{width:"fit-content",height:"fit-content",display:"flex",padding:"10px",
-            flexDirection:"row",gap:"5px",cursor:"pointer"}} onClick={logout}>Log Out</Button>
+            flexDirection:"row",gap:"5px",cursor:"pointer"}} onClick={signout}>Log Out</Button>
     </AlertDialog.Action>
     {/* <Load_button text={"logging out"}></Load_button> */}
     </div>

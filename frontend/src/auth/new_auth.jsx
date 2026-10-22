@@ -8,13 +8,15 @@ const New_Auth=createContext();
 export default function Auth({children}){
     const[loading,setloading]=useState(false);
     const[error,setError]=useState(false);
-    const[user,setUser]=useState({role:null,user_id:null,authenticated:false})
+    const[user,setUser]=useState({role:null,user_id:null,authenticated:false,branch:null})
 
     const fetch=useCallback(async()=>{
         setloading(true);
         const {data}=await supabase.auth.getUser();
         if(data?.user){
-            setUser({role:data.user.user_metadata.role,user_id:data.user.user_metadata.staff_id,authenticated:true})
+            setUser({role:data.user.user_metadata.role,user_id:data.user.user_metadata.staff_id,authenticated:true
+                ,branch:data.user.user_metadata.branch
+            })
             setError(false);
             setloading(false);
         }

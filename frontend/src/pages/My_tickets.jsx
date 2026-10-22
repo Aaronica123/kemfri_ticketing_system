@@ -26,6 +26,7 @@ export default function MyTickets(){
     const min=useMediaQuery({maxWidth:"768px"})
     const[type,settype]=useState(null);
     const{user}=Check_auth();
+    const[myfetch,setfetch]=useState([])
     const change=(e)=>{
         const {name,value}=e.target;
         setinput((data)=>({
@@ -48,7 +49,8 @@ export default function MyTickets(){
         // set_final_index(index);
     }
     const fetch_tickets=async(type)=>{
-        
+        settrack(false)
+        settype(type)
         const data=await connect.post('/api/fetch_ticket',{
             index:index,
             type:type,
@@ -59,10 +61,14 @@ export default function MyTickets(){
         console.log(data.data.data)
         if(data.data?.data){
         const fetched=data.data.data.map((val)=>Object.values(val))
-         setfinal(fetched);
+         setfetch(fetched)
+         settrack(true)
+         setload(false)
         }
         else{
             setfinal([]);
+            settrack(true)
+            setload(true)
         }
        
     }
@@ -118,7 +124,7 @@ export default function MyTickets(){
         })
     }
     useEffect(()=>{
-        fetch();
+        fetch(type);
     },[index]);
 
     // const ft=()=>{
@@ -166,21 +172,37 @@ export default function MyTickets(){
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
                      <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{settype("assigned");fetch_tickets("assigned")}}>Assigned</Button>
                 </div>
+                
                 </div>
             </div>
             <div style={{display:"flex",width:"100%",height:"100%"}}>
                 <Table.Root size={"3"} variant="surface">
                     <Table.Header >
-                        <Table.Row>
+                        
+                        
+                            {min?
+                            <Table.Row>
+                            <Table.Cell>
+                                Ticket
+                            </Table.Cell>
+                            <Table.Cell>
+                                Category
+                            </Table.Cell>
+                            <Table.Cell>
+                                State
+                            </Table.Cell>
+                            </Table.Row>:
+                            <Table.Row>
                             <Table.Cell>Ticket</Table.Cell>
                             <Table.Cell>Subject</Table.Cell>
-                            <Table.Cell>Category</Table.Cell>
-                            <Table.Cell>Priority</Table.Cell>
-                            <Table.Cell>Pending</Table.Cell>
-                            <Table.Cell>Resolved</Table.Cell>
-                            <Table.Cell>Date</Table.Cell>
-                            <Table.Cell>Time</Table.Cell>
-                        </Table.Row>
+                            <Table.Cell>Description</Table.Cell>
+                            <Table.Cell>Status</Table.Cell>
+                            <Table.Cell>Team</Table.Cell>
+                            <Table.Cell>Created</Table.Cell>
+                            
+                            </Table.Row>
+                            }
+                        
                     </Table.Header>
                     {!track?
                     <div style={{display:"flex",position:"fixed",justifyContent:"center",padding:"10px",width:"100%"}}>
@@ -192,39 +214,66 @@ export default function MyTickets(){
                         <Head_Mess>No Tickets Found</Head_Mess>
                     </div>:
                     <Table.Body>
-                        
-                        {final.map((item,index)=>(
+                        {min?myfetch.map((item,index)=>(
                             <AlertDialog.Root>
                             <AlertDialog.Trigger>
+                            
                             <Table.Row key={index} style={{cursor:"pointer"}} className="row">
                             {item.map((value,ind)=>(
-                                <Table.Cell key={ind}>{ind==4?value==true?
-                                <AlertTriangle size={"20"} color="red"></AlertTriangle>:<CheckCircle size={"20"} color="green"></CheckCircle>:
-                                ind==5?value==true?
-                                <CheckCircle size={"20"} color="green"></CheckCircle>:<XCircle size={"20"} color="red"></XCircle>:
-                                ind==3?<Badge variant="soft" size="3"color={value=="High"?"red":value=="Medium"?"orange":"teal"}>{value}</Badge>:value}</Table.Cell>
+                                ind==0||ind==1||ind==3?
+                                <Table.Cell key={ind}>
+                                    {ind==3?<Badge color={value=="assigned"?"yellow":value=="pending"?"red":"green"}>{value}</Badge>:value}
+                                </Table.Cell>
+                                :""
                             ))}
                              </Table.Row>
                              </AlertDialog.Trigger>
                              <AlertDialog.Content style={{justifyContent:"center", display:"flex",width:"fit-content",flexDirection:"column",gap:"15px"}}>
                                 <AlertDialog.Description style={{cursor:"default",justifyContent:"center",display:'flex',flexDirection:"row",gap:"30px",padding:"5px",width:"fit-content"}}>
-                                    <div style={{display:"flex",flexDirection:"column",gap:"20px",width:"fit-content"}}>
-                                    <Head_Text>Ticket</Head_Text>
-                                    <Head_Text>Subject</Head_Text>
-                                    <Head_Text>Category</Head_Text>
-                                    <Head_Text>Priority</Head_Text>
-                                    <Head_Text>Pending</Head_Text>
-                                    <Head_Text>Resolved</Head_Text>
-                                    <Head_Text>Date</Head_Text>
-                                    <Head_Text>Time</Head_Text>
-                                    </div>
-                                    <div style={{display:"flex",flexDirection:"column",gap:"20px",width:"100%"}}>
+                                    
+                                    <div style={{display:"flex",flexDirection:"column",gap:"10px",width:"100%"}}>
                                         {item.map((value,ind)=>(
-                                <Main_Text key={ind}>{ind==4?value==true?
-                                <AlertTriangle size={"20"} color="red"></AlertTriangle>:<CheckCircle size={"20"} color="green"></CheckCircle>:
-                                ind==5?value==true?
-                                <CheckCircle size={"20"} color="green"></CheckCircle>:<XCircle size={"20"} color="red"></XCircle>:
-                            ind==3?<Badge variant="soft" size="3"color={value=="High"?"red":value=="Medium"?"orange":"teal"}>{value}</Badge>:value}</Main_Text>
+                                ind==0?<div style={{flexDirection:"row",width:"100%",display:"flex",}}>
+                                    <Head_Text>Ticket</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>:ind==1?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Category</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :ind==2?
+                                 <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Description</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :ind==3?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Status</Head_Text>
+                                    <div style={{width:"100%"}}>
+                                    <Badge size={"3"} color={value=="assigned"?"yellow":value=="pending"?"red":"green"} style={{width:"fit-content"}}>{value}</Badge>
+                                    </div>
+                                </div>
+                                :ind==4?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Team</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :    
+                                 <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Date</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>                        
+                                
                             ))}
                                     </div>
                                 </AlertDialog.Description>
@@ -233,19 +282,106 @@ export default function MyTickets(){
                                 </AlertDialog.Cancel>
                              </AlertDialog.Content>
                              </AlertDialog.Root>
-                        ))}
+                        ))
+                        :
+                        myfetch.map((item,index)=>(
+                            <AlertDialog.Root>
+                            <AlertDialog.Trigger>
+                            
+                            <Table.Row key={index} style={{cursor:"pointer"}} className="row">
+                            {item.map((value,ind)=>(
+                                
+                                <Table.Cell key={ind}>
+                                    {ind==3?<Badge color={value=="assigned"?"yellow":value=="pending"?"red":"green"}>{value}</Badge>:value}
+                                </Table.Cell>
+                                
+                            ))}
+                             </Table.Row>
+                             </AlertDialog.Trigger>
+                             <AlertDialog.Content style={{justifyContent:"center", display:"flex",width:"fit-content",flexDirection:"column",gap:"15px"}}>
+                               <AlertDialog.Description style={{cursor:"default",justifyContent:"center",display:'flex',flexDirection:"row",gap:"30px",padding:"5px",width:"fit-content"}}>
+                                    
+                                    <div style={{display:"flex",flexDirection:"column",gap:"10px",width:"100%"}}>
+                                        {item.map((value,ind)=>(
+                                ind==0?<div style={{flexDirection:"row",width:"100%",display:"flex",}}>
+                                    <Head_Text>Ticket</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>:ind==1?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Category</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :ind==2?
+                                 <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Description</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :ind==3?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Status</Head_Text>
+                                    <div style={{width:"100%"}}>
+                                    <Badge size={"3"} color={value=="assigned"?"yellow":value=="pending"?"red":"green"} style={{width:"fit-content"}}>{value}</Badge>
+                                    </div>
+                                </div>
+                                :ind==4?
+                                <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Team</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>
+                                :    
+                                 <div style={{flexDirection:"row",display:"flex",}}>
+                                    <Head_Text>Date</Head_Text>
+                                    <Main_Text key={ind}>
+                                    {value}
+                                </Main_Text>
+                                </div>                        
+                                
+                            ))}
+                                    </div>
+                                </AlertDialog.Description>
+                                <AlertDialog.Cancel style={{display:"flex",width:"fit-content",cursor:"pointer"}}>
+                                    <Button>Go Back</Button>
+                                </AlertDialog.Cancel>
+                             </AlertDialog.Content>
+                             </AlertDialog.Root>
+                        ))
+                        }
                        
                        
                     </Table.Body>
 }
-                    <div style={{position:"fixed",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",height:"fit-content",gap:"5px"}}>
-                        <Main_Text color={"teal"}>Current page {index}</Main_Text>
-                        <Button color={"teal"} onClick={back}style={{cursor:"pointer"}}>Back</Button>
+{myfetch.length>0?
+                    <div style={{position:"absolute",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",width:"100%",height:"fit-content",padding:"5px"}}>
+                         
+                        <div style={{width:"fit-content",justifyContent:"center",alignItems:'center'}}>
+                        <Badge size={"3"} color={"teal"} style={{height:"100%"}}>{index}</Badge>
+                        </div>
+                        <div style={{display:"flex",width:"100%",justifyContent:"right",gap:"10px",marginBottom:"3px",marginRight:"2px"}}>
+                        <Button color={"bronze"} variant="outline" onClick={back}style={{cursor:"pointer"}}>Back</Button>
                         <Button color={"teal"} onClick={next} style={{cursor:"pointer"}}>Next</Button>
+                        {track?
                          <Button style={{cursor:"pointer",display:"flex", gap:"5px"}} onClick={fetch}><RefreshCcw></RefreshCcw>
                         Refresh</Button>
+                        :""
+                        }
+                        </div>
+                        
+
                     
                        </div>
+                       :
+                       <div style={{position:"fixed",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",height:"fit-content",gap:"5px",padding:"5px"}}>
+                        <Badge size={"3"} color={"teal"}>{index}</Badge>
+                       </div>
+                       }
                 </Table.Root>
             </div>
         </div>

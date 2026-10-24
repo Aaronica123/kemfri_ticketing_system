@@ -4,7 +4,13 @@ import { classifyTicket } from "./ai.js";
 import { configDotenv } from "dotenv";
 import Auth from "../auth.js";
 import { randomUUID } from "crypto";
+import * as Minio from 'minio'
+import fs from "fs"
 configDotenv();
+    let ticketid='';
+    let userid='';
+    let dateid='';
+
 async function Ticket_Message(data){
     const connect=await amqp.connect(process.env.rabbitmq);
     const mes=await connect.createChannel();
@@ -53,6 +59,8 @@ try{
     if(!ticket_type||!description||!branch||!user_id){
         return res.status(409).json({message:"Check user input"});
     }
+    const created=new Date().toLocaleString()
+
     const ticket_id=randomUUID().replace(/-/g,'').slice(0,6).toUpperCase();
     const{data,error}=await client.schema("usecase_kemfri").from("tickets").insert({
         ticket_id:ticket_id,
@@ -63,7 +71,7 @@ try{
         team:ticket_type,
         user_id:user_id,
         branch:branch,
-        created:new Date().toLocaleString()
+        created:created
     })
     if(data){
         console.log(data)
@@ -77,6 +85,9 @@ try{
     }
     else{
     await Ticket_Message({ticket_id:ticket_id,description:description,branch:branch,category:ticket_type});
+    ticketid=ticket_id;
+    userid=user_id;
+    dateid=created;
     return res.status(200).json({message:"Ticket created"})
     }
 }catch(error){
@@ -86,5 +97,67 @@ try{
 else{
     return res.status(409).json({message:"Unauthenticated"})
 }
+}
+
+export async function Upload_files(req,res){
+    try {
+        
+    
+    const client=new Minio.Client({
+        endPoint:process.env.endPoint,
+            secretKey:process.env.secretKey,
+            accessKey:process.env.accessKey,
+            port:process.env.port,
+            useSSL:false
+    })
+    let files;
+   let invalid=[];
+   let valid=[]
+   
+    if(req?.file||req?.files){
+        
+        files=req?.file||req?.files
+        console.log(files)
+        files.forEach((data)=>{
+            if(data.mimetype!='image/png'){
+                invalid.push(data);
+            }
+            else{
+                valid.push(data)
+            }
+        })
+        console.log("part 2")
+        if(invalid.length>0){
+            console.log("Invalid")
+            invalid.forEach((data)=>{
+                fs.unlink(data.path,()=>{})
+            })
+        }
+        if(valid.length>0){
+            console.log(valid)
+            const data=await client.bucketExists('kemfriimages');
+            
+            if(!data){
+                console.log("Created")
+                await client.makeBucket("kemfriimages");
+            }
+            
+           for (const da of valid){
+            const stream= fs.createReadStream(da.path);
+            console.log(dateid);
+            console.log(ticketid);
+            console.log(userid);
+            await client.putObject('kemfriimages',`${ticketid}${userid}${dateid}${da.filename}`,stream,da.size).then((data)=>{console.log("Uploaded")});
+            console.log("Uploaded")
+            fs.unlink(da.path,()=>{});
+           }
+           return res.status(200).json({message:"Image uplaod success"})
+        }
+    }else{
+        return;
+    }
+    } catch (error) {
+        console.log(error)
+    }
 }
 

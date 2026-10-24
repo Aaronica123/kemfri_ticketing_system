@@ -1,5 +1,5 @@
 import { Nav_button } from "../ui/buttons"
-import { ArrowLeftIcon } from "lucide-react"
+import { ArrowLeftIcon, Badge } from "lucide-react"
 import Main_Text, { Head_Mess, Head_Text, Input_Field } from "../ui/text"
 import { Button, Card, DropdownMenu, Heading, Spinner, Text, TextArea } from "@radix-ui/themes/dist/cjs/index.js"
 import { useState } from "react";
@@ -19,6 +19,7 @@ export default function SubmitForm(){
     const[val_category,set_valuecategory]=useState("");
     const[form,setform]=useState({ticket_issue:"",category:""})
     const [frm,setfrm]=useState({ticket_issue:""})
+    const[input,setinput]=useState({file:null})
     const {user}=Check_auth();
     const change=(e)=>{
         const{name,value}=e.target;
@@ -32,6 +33,25 @@ export default function SubmitForm(){
             ...data,
             [name]:value
         }))
+    }
+    const file_change=(e)=>{
+        setinput({file:e.target.files})
+    }
+    const file_upload=async()=>{
+        console.log(input.file)
+        const hold=new FormData();
+        var x=0
+        while(input.file.length>=x){
+            hold.append('kemfri_images',input.file[x]);
+            x++;
+        }
+        console.log(hold.get('kemfri_images'))
+       
+        await connect.post('/api/upload_file',hold,{
+            headers:{
+                'Content-Type':'multipart/form-data'
+            }
+        })
     }
     const [track,settrack]=useState(false);
     
@@ -89,6 +109,7 @@ set_priority_array(data.data.data);
         if(data.status==200){
             alert("Ticket has been created");
             setform({ticket_issue:"",category:""})
+            await file_upload();
         }
     }
     async function fetch(){
@@ -103,6 +124,7 @@ set_priority_array(data.data.data);
         fetch();
         FetchPriority();
     },[])
+    
 
 
     return(
@@ -134,7 +156,14 @@ set_priority_array(data.data.data);
                 <Card style={{display:"flex",flexDirection:"column",
                     justifyContent:'left',width:"100%",height:"fit-content",padding:"20px",
                     gap:"15px"
-                }}>
+                }}> 
+                    
+                    <Text weight={"regular"} style={{fontSize:'17px',fontFamily:"sans-serif",color:"darkgray"}}>Image Upload</Text>
+                    <div style={{width:"fit-content",display:"flex",flexDirection:"row",gap:"10px"}}>
+                     <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Upload</Text>
+                    <input type="file"  onChange={file_change} multiple style={{width:"fit-content",flexWrap:"wrap"}}></input>
+                    </div>
+                   
                     <Text weight={"regular"} style={{fontSize:'17px',fontFamily:"sans-serif",color:"darkgray"}}>Issue Details</Text>
                     {/* <div style={{display:"flex",
                         flexDirection:"column",gap:"10px",width:"100%",

@@ -11,7 +11,9 @@ on:
         type: string
         
 permissions: write-all
-
+env:
+  VITE_API_URL: ${{secrets.VITE_API_URL}}
+  VITE_API_KEY: ${{secrets.VITE_API_KEY}}
 jobs:
   docker:
     runs-on: ubuntu-latest

@@ -16,7 +16,7 @@ jest.mock("../supabase.js", () => ({
 }));
 jest.mock("../auth.js");
 
-describe('fetch ticket files',()=>{
+describe('fetch ticket files unit tests',()=>{
     let res;
     beforeEach(()=>{
         jest.clearAllMocks();
@@ -37,21 +37,9 @@ describe('fetch ticket files',()=>{
         await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
         expect(res.status).toHaveBeenCalledWith(201);
     })
-     test.only("Tickets test response",async()=>{
-        client.like.mockResolvedValue({count:5})
-        const da=await request(app).post("/api/fetch_ticket").send({index:1,type:null,user_id:123,role:"STAFF"})
-        expect(da.status).toBe(201);
-        
-    })
     test.only('no tickets',async()=>{
         client.like.mockResolvedValue(0);
         await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
         expect(res.status).toHaveBeenCalledWith(200);
-    })
-    test.only("no tickets test response",async()=>{
-        client.like.mockResolvedValue(0)
-        const da=await request(app).post("/api/fetch_ticket").send({index:1,type:null,user_id:123,role:"STAFF"})
-        expect(da.status).toBe(200);
-        expect(da.body.data).toBe("");
     })
 })

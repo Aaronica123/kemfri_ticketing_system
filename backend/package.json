@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./files/index.js",
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "test int": "jest ./files/intergration_test/status.test.js"
   },
   "author": "",
@@ -13,6 +13,8 @@
   "description": "",
   "dependencies": {
     "@babel/preset-env": "^7.29.7",
+    "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.117.3",
     "amqplib": "^2.0.1",
     "babel-jest": "^30.4.1",
     "bcrypt": "^6.0.0",
@@ -23,6 +25,9 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jest": "^30.4.2",
+    "minio": "^8.0.7",
+    "multer": "^2.5.0",
+    "openai": "^7.23.0",
     "pg": "^8.22.0",
     "redis": "^6.1.0",
     "supertest": "^7.2.2"

@@ -47,7 +47,7 @@ export default function SubmitForm(){
         }
         console.log(hold.get('kemfri_images'))
        
-        await connect.post('/api/upload_file',hold,{
+        await connect.post('/upload_file',hold,{
             headers:{
                 'Content-Type':'multipart/form-data'
             }
@@ -100,7 +100,7 @@ set_priority_array(data.data.data);
     }
     const create_ticket=async(e)=>{
         e.preventDefault();
-        const data=await connect.post('/api/create_ticket',{
+        const data=await connect.post('/create_ticket',{
             description:form.ticket_issue,
             ticket_type:form.category,
             branch:user.branch,

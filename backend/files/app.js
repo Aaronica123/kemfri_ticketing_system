@@ -22,55 +22,62 @@ import GetStaffTickets from "./tickets/staff/staff_get_tickets.js";
 import CheckStatusLogin from "./actions/status.js";
 import UpdateTicket from "./tickets/staff/staff_update_tickets.js";
 import cors from "cors";
+import { classifyTicket } from "./tickets/ai.js";
 // import { DBcache } from "./connection/pool.js";
 import { conf } from "./connection/redis.js";
 import FilterTickets from "./tickets/filter_tickets.js";
+import Register from "./actions/create.js";
+import Create_Ticket, { Upload_files } from "./tickets/create_ticket.js";
+
+import Fetch_tickets from "./tickets/fetch_ticket.js";
+import multer from "multer";
 configDotenv();
 const app=express();
 
 app.use(cors({methods:["GET","POST","DELETE"],origin:`https://${process.env.frontendurl}/`
-    ,allowedHeaders:["Content-Type"]
+    ,allowedHeaders:["Content-Type","Authorization"]
     ,credentials:true}))
 
-export const conn=new Pool({
-    database:process.env.envdatabase,
-    user:process.env.envuser,
-    host:process.env.envhost,
-    password:process.env.envpassword,
-    port:process.env.envport
-})
-export const connfig=new Pool({
-    database:process.env.envdatabase,
-    user:process.env.envuser,
-    host:process.env.envhost,
-    password:process.env.envpassword,
-    port:process.env.envport
-})
-async()=>{
-    await conn.connect();
-    await conf.connect();
-//   await DBcache.connect();
-}
+// export const conn=new Pool({
+//     database:process.env.envdatabase,
+//     user:process.env.envuser,
+//     host:process.env.envhost,
+//     password:process.env.envpassword,
+//     port:process.env.envport
+// })
+// export const connfig=new Pool({
+//     database:process.env.envdatabase,
+//     user:process.env.envuser,
+//     host:process.env.envhost,
+//     password:process.env.envpassword,
+//     port:process.env.envport
+// })
+// async()=>{
+//     await conn.connect();
+//     await conf.connect();
+// //   await DBcache.connect();
+// }
 
-const pl=pgSession(session);
-const config={
-    saveUninitialized:false,
-    resave:false,
-    secret:process.env.passwordsess,
-    store:new pl({
-       schemaName:"kemfri_schema",
-       tableName:"sessions",
-       pool:conn,
-       createTableIfMissing:true,
-       prunesessionInterval:900000      
-    }),
-      cookie: {
-        httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-        maxAge: 900000 // 24 hours
-    }
-}
-app.use(session(config))
+// const pl=pgSession(session);
+// const config={
+//     saveUninitialized:false,
+//     resave:false,
+//     secret:process.env.passwordsess,
+//     store:new pl({
+//        schemaName:"kemfri_schema",
+//        tableName:"sessions",
+//        pool:conn,
+//        createTableIfMissing:true,
+//        prunesessionInterval:900000      
+//     }),
+//       cookie: {
+//         httpOnly: true,
+//         secure: false, // Set to true in production with HTTPS
+//         maxAge: 900000 // 24 hours
+//     }
+// }
+const upload=multer({dest:'images/',limits:{fileSize:1024*1024*5,files:3}})
+// app.use(session(config))
 app.use(express.json());
 app.post('/api/rate',Rate);
 app.post('/api/create',CreateSession);
@@ -91,4 +98,10 @@ app.get('/api/staff_tickets',GetStaffTickets);
 app.get('/api/get_login_status',CheckStatusLogin);
 app.post('/api/update_ticket',UpdateTicket);
 app.get('/api/filter_tickets',FilterTickets);
+app.post('/api/ai_ticket',classifyTicket);
+app.post('/api/register',Register);
+app.post('/api/create_ticket',Create_Ticket);
+app.post('/api/fetch_ticket',Fetch_tickets);
+app.post('/api/upload_file',upload.array('kemfri_images',3),Upload_files);
+
 export default app;

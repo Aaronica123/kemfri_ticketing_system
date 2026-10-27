@@ -29,8 +29,9 @@ jobs:
           touch .env
           echo "url=${{secrets.URL}}">>.env
           echo "api_key=${{secrets.API_KEY}}">>.env
+          echo "frontendurl=${{secrets.FRONTEND_URL}}">>.env
           npm install
-          npm test files/test/fetch_tickets_controller.test  
+          npm test files/test
       - name: Success write comment
         if: success()
         uses: thollander/actions-comment-pull-request@v3

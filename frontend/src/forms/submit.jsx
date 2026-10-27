@@ -1,5 +1,5 @@
 import { useState } from "react"
-import login from "../auth/supabase.js";
+
 export default function Input(){
     const [file,setfile]=useState({input:null});
     const [input,setinput]=useState({email:"",password:""})
@@ -10,11 +10,7 @@ export default function Input(){
             [name]:value
         }))
     }
-    const login_action=async(e)=>{
-        e.preventDefault();
-        await login(input);
-
-    }
+    
 
     const change=(e)=>{
         const filea=e.target.files;
@@ -31,14 +27,14 @@ export default function Input(){
         const fill=new FormData();
         var x=0
         while(file.input.length>=x){
-             fill.append('fle',file.input[x]);
+             fill.append('files',file.input[x]);
              x++;
         }
        
         // console.log(file.input);
         
         console.log(fill.get('fle'))
-        await fetch('http://localhost:3002/input',{
+        await fetch('http://localhost:3002/images_up',{
             method:"POST",
             body:fill
         })
@@ -56,7 +52,7 @@ export default function Input(){
             <input type="email" value={input.email} name="email" onChange={input_change} placeholder="email"/>
             <label>Password</label>
             <input type="password" value={input.password} name="password" onChange={input_change} placeholder="password"/>
-            <button type="button" onClick={login_action}>Check Credentials</button>
+            <button type="button">Check Credentials</button>
         </form>
         </>
     )

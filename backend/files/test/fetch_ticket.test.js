@@ -43,4 +43,3 @@ describe('fetch ticket files unit tests',()=>{
         expect(res.status).toHaveBeenCalledWith(200);
     })
 })
-describe()

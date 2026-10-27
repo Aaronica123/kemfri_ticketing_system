@@ -1,7 +1,7 @@
 import { client } from "../supabase.js";
 import Auth from "../auth.js";
 
-jest.mock('./supabase.js',()=>({
+jest.mock('../supabase.js',()=>({
     client:{
         auth:{
         getUser:jest.fn()

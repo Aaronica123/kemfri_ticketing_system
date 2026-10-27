@@ -30,7 +30,7 @@ jobs:
           echo "url=${{secrets.URL}}">>.env
           echo "api_key=${{secrets.API_KEY}}">>.env
           npm install
-          npm test files/test/fetch_ticket.test.js
+          npm test files/test/fetch_tickets_controller.test  
       - name: Success write comment
         if: success()
         uses: thollander/actions-comment-pull-request@v3

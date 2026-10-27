@@ -1,12 +1,14 @@
 import { client } from "../supabase.js";
 export default async function Register(req,res){
     try {
+    
     const{email,password,staff_role,branch,staff_id,first_name,last_name}=req.body;
     if(!email||!password||!staff_role||!branch||!staff_id||!first_name||!last_name){
         return res.status(403).json({message:"Enter all fields"})
     }
     if(staff_role!="STAFF"){
         const{data,error}=await client.auth.admin.createUser({email:email,password:password,
+            email_confirm: true,
             user_metadata:{role:staff_role,branch:branch,staff_id:staff_id,
             first_name:first_name,last_name:last_name}})
         console.log(data);
@@ -21,6 +23,7 @@ export default async function Register(req,res){
     else{
         const category=req.body.category;
         const{data,error}=await client.auth.admin.createUser({email:email,password:password,
+            email_confirm:true,
             user_metadata:{role:staff_role,branch:branch,staff_id:staff_id,
             first_name:first_name,last_name:last_name}})
         console.log("data is "+data)

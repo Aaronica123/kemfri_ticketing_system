@@ -26,6 +26,9 @@ jobs:
       - name: Install and test
         run: |
           cd backend
+          touch .env
+          echo "url=${{secrets.URL}}">>.env
+          echo "api_key=${{secrets.API_KEY}}">>.env
           npm install
           npm test files/test
       - name: Success write comment

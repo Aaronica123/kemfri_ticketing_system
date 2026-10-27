@@ -1,0 +1,48 @@
+
+name: Test Backend Workflow
+
+on:
+  pull_request:
+    branches: [ "backend" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+permissions: write-all
+env:
+  url: ${{secrets.URL}}
+  api_key: ${{secrets.API_KEY}}
+  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  test_backend:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+      - name: Build node
+        uses: actions/setup-node@v7
+      - name: Install and test
+        run: |
+          cd backend
+          touch .env
+          echo "url=${{secrets.URL}}">>.env
+          echo "api_key=${{secrets.API_KEY}}">>.env
+          npm install
+          npm test files/test/fetch_ticket.test.js
+      - name: Success write comment
+        if: success()
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            All tests have passed
+          reactions: rocket
+      - name: Failed write comment
+        if: failure()
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: | 
+            Tests have failed
+          reactions: eyes, tears
+  

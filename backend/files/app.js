@@ -38,46 +38,46 @@ app.use(cors({methods:["GET","POST","DELETE"],origin:`https://${process.env.fron
     ,allowedHeaders:["Content-Type","Authorization"]
     ,credentials:true}))
 
-export const conn=new Pool({
-    database:process.env.envdatabase,
-    user:process.env.envuser,
-    host:process.env.envhost,
-    password:process.env.envpassword,
-    port:process.env.envport
-})
-export const connfig=new Pool({
-    database:process.env.envdatabase,
-    user:process.env.envuser,
-    host:process.env.envhost,
-    password:process.env.envpassword,
-    port:process.env.envport
-})
-async()=>{
-    await conn.connect();
-    await conf.connect();
-//   await DBcache.connect();
-}
+// export const conn=new Pool({
+//     database:process.env.envdatabase,
+//     user:process.env.envuser,
+//     host:process.env.envhost,
+//     password:process.env.envpassword,
+//     port:process.env.envport
+// })
+// export const connfig=new Pool({
+//     database:process.env.envdatabase,
+//     user:process.env.envuser,
+//     host:process.env.envhost,
+//     password:process.env.envpassword,
+//     port:process.env.envport
+// })
+// async()=>{
+//     await conn.connect();
+//     await conf.connect();
+// //   await DBcache.connect();
+// }
 
-const pl=pgSession(session);
-const config={
-    saveUninitialized:false,
-    resave:false,
-    secret:process.env.passwordsess,
-    store:new pl({
-       schemaName:"kemfri_schema",
-       tableName:"sessions",
-       pool:conn,
-       createTableIfMissing:true,
-       prunesessionInterval:900000      
-    }),
-      cookie: {
-        httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-        maxAge: 900000 // 24 hours
-    }
-}
+// const pl=pgSession(session);
+// const config={
+//     saveUninitialized:false,
+//     resave:false,
+//     secret:process.env.passwordsess,
+//     store:new pl({
+//        schemaName:"kemfri_schema",
+//        tableName:"sessions",
+//        pool:conn,
+//        createTableIfMissing:true,
+//        prunesessionInterval:900000      
+//     }),
+//       cookie: {
+//         httpOnly: true,
+//         secure: false, // Set to true in production with HTTPS
+//         maxAge: 900000 // 24 hours
+//     }
+// }
 const upload=multer({dest:'images/',limits:{fileSize:1024*1024*5,files:3}})
-app.use(session(config))
+// app.use(session(config))
 app.use(express.json());
 app.post('/api/rate',Rate);
 app.post('/api/create',CreateSession);

@@ -12,6 +12,8 @@ import './App.css'
 import AuthContext from "./auth/auth_context";
 import Notify from "./pages/Notifications";
 import Input from "./forms/submit";
+import Register from "./pages/Register";
+import Auth from "./auth/new_auth";
 function App() {
 
 
@@ -21,42 +23,43 @@ function App() {
       <Router>
         <Toast_Provider>
           <Routes>
+            <Route path="/register" element={<Register/>}/>
             <Route path="/input" element={<Input/>}/>
             <Route path="/" element={<Login_form/>}/>
             <Route path="/nav" element={<Nav_bar/>}/>
             <Route path="/dashboard" element={
-              <AuthContext>
+              <Auth>
               <Nav_bar>
                 <Dashboard/>
               </Nav_bar>
-              </AuthContext>
+              </Auth>
             }/>
             <Route path='/submit' element={
-             <AuthContext> 
+             <Auth> 
                <Nav_bar>
                 <SubmitForm/>
               </Nav_bar>
-              </AuthContext>
+              </Auth>
             }/>
             <Route path="/my_tickets" element={
-              <AuthContext>
+              <Auth>
               <Nav_bar>
               <MyTickets/>
               </Nav_bar>
-              </AuthContext>}/>
+              </Auth>}/>
               <Route path="/staff_dashboard"
               element={
-                <AuthContext>
+                <Auth>
               <Nav_bar>
               <StaffDashboard/>
               </Nav_bar>
-              </AuthContext>}/>
+              </Auth>}/>
               <Route path="/notifications" element={
-                <AuthContext>
+                <Auth>
                   <Nav_bar>
                     <Notify></Notify>
                   </Nav_bar>
-                </AuthContext>
+                </Auth>
               }/>
               
              

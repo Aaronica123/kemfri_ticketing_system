@@ -99,24 +99,31 @@ set_priority_array(data.data.data);
         })
     }
     const create_ticket=async(e)=>{
+        try {
         e.preventDefault();
         settrack(true)
+        console.log(form.category,form.ticket_issue,user.branch,user.user_id);
         const data=await connect.post('/create_ticket',{
-            description:form.ticket_issue,
-            ticket_type:form.category,
+            description:String(form.ticket_issue).toLowerCase(),
+            ticket_type:String(form.category).toLowerCase(),
             branch:user.branch,
             user_id:user.user_id
         })
         if(data.status==200){
             settrack(false)
             alert("Ticket has been created");
-            setform({ticket_issue:""})
+            setform((data)=>({...data,ticket_issue:""}))
             await file_upload();
         }
         else{
             settrack(false)
             alert("An error occured");
 
+        }
+            } catch (error) {
+                alert("An error occured could not submit")
+             settrack(false)
+             console.log(error)
         }
     }
     async function fetch(){
@@ -185,7 +192,7 @@ set_priority_array(data.data.data);
                     }}>
                         <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Text>
                         <select onChange={form_change} name="category" required>
-                            <option value={""}>Choose Category</option>
+                            <option value={""}>Choose A Category</option>
                             <option value={"hardware"}>Hardware</option>
                             <option value={"software"}>Software</option>
                             <option value={"networking"}>Networking</option>

@@ -110,7 +110,7 @@ set_priority_array(data.data.data);
         if(data.status==200){
             settrack(false)
             alert("Ticket has been created");
-            setform({ticket_issue:"",category:""})
+            setform({ticket_issue:""})
             await file_upload();
         }
         else{

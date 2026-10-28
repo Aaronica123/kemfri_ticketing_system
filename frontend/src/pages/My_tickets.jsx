@@ -51,7 +51,7 @@ export default function MyTickets(){
     const fetch_tickets=async(type)=>{
         settrack(false)
         settype(type)
-        const data=await connect.post('/api/fetch_ticket',{
+        const data=await connect.post('/fetch_ticket',{
             index:index,
             type:type,
             user_id:user.user_id,
@@ -175,9 +175,9 @@ export default function MyTickets(){
                 
                 </div>
             </div>
-            <div style={{display:"flex",width:"100%",height:"100%"}}>
-                <Table.Root size={"3"} variant="surface">
-                    <Table.Header >
+            <div style={{display:"flex",flexDirection:"column",width:"100%",height:"100%"}}>
+                <Table.Root size={"3"} variant="surface" style={{height:"100%",overflow:"scroll"}}>
+                    <Table.Header>
                         
                         
                             {min?
@@ -213,7 +213,7 @@ export default function MyTickets(){
                         <ListX size={"50"} color="red"></ListX>
                         <Head_Mess>No Tickets Found</Head_Mess>
                     </div>:
-                    <Table.Body>
+                    <Table.Body >
                         {min?myfetch.map((item,index)=>(
                             <AlertDialog.Root>
                             <AlertDialog.Trigger>
@@ -358,11 +358,13 @@ export default function MyTickets(){
                        
                     </Table.Body>
 }
-{myfetch.length>0?
-                    <div style={{position:"absolute",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",width:"100%",height:"fit-content",padding:"5px"}}>
+
+                </Table.Root>
+                {myfetch.length>0?
+                    <div style={{position:"",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",width:"fit-content",height:"15%",padding:"5px"}}>
                          
                         <div style={{width:"fit-content",justifyContent:"center",alignItems:'center'}}>
-                        <Badge size={"3"} color={"teal"} style={{height:"100%"}}>{index}</Badge>
+                        <Badge size={"3"} color={"teal"}>{index}</Badge>
                         </div>
                         <div style={{display:"flex",width:"100%",justifyContent:"right",gap:"10px",marginBottom:"3px",marginRight:"2px"}}>
                         <Button color={"bronze"} variant="outline" onClick={back}style={{cursor:"pointer"}}>Back</Button>
@@ -382,7 +384,6 @@ export default function MyTickets(){
                         <Badge size={"3"} color={"teal"}>{index}</Badge>
                        </div>
                        }
-                </Table.Root>
             </div>
         </div>
         </>

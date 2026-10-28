@@ -99,7 +99,7 @@ set_priority_array(data.data.data);
         })
     }
     const create_ticket=async(e)=>{
-        try {
+        
         e.preventDefault();
         settrack(true)
         console.log(form.category,form.ticket_issue,user.branch,user.user_id);
@@ -113,18 +113,20 @@ set_priority_array(data.data.data);
             settrack(false)
             alert("Ticket has been created");
             setform((data)=>({...data,ticket_issue:""}))
-            await file_upload();
+            if(input.file.length>0){
+                await file_upload();
+            }
+            else{
+                alert("no image uploaded")
+            }
+            
         }
         else{
             settrack(false)
             alert("An error occured");
 
         }
-            } catch (error) {
-                alert("An error occured could not submit")
-             settrack(false)
-             console.log(error)
-        }
+            
     }
     async function fetch(){
         

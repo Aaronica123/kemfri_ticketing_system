@@ -21,6 +21,6 @@ ENV redisurl=${redisurl}
 ARG rabbitmq
 ENV rabbitmq=${rabbitmq}
 
-
+RUN echo "$url,${api_key},${endPoint},${port},${accessKey},${secretKey},${frontendurl},${redisurl},${rabbitmq}"
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 CMD ["node","./files/index.js"]

@@ -41,6 +41,16 @@ jobs:
           context: backend
           push: true
           tags: ${{secrets.DOCKER_USERNAME}}/km_backend:latest
+          build-args: |
+            url=${{secrets.URL_BACKEND}}
+            api_key=${{secrets.API_KEY_BACKEND}}
+            endPoint=${{secrets.ENDPOINT}}
+            port=${{secrets.PORT}}
+            accessKey=${{secrets.ACCESSKEY}}
+            secretKey=${{secrets.SECRETKEY}}
+            frontendurl=${{secrets.FRONTENDURL_BACKEND}}
+            redisurl=${{secrets.REDISURL_BACKEND}}
+            rabbitmq=${{secrets.RABBITMQ}}
        
       - name: Build and push
         uses: docker/build-push-action@v7

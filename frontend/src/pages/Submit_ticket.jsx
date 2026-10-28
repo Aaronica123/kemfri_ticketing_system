@@ -101,6 +101,7 @@ set_priority_array(data.data.data);
     const create_ticket=async(e)=>{
         e.preventDefault();
         settrack(true)
+        console.log(form.category,form.ticket_issue,user.branch,user.user_id);
         const data=await connect.post('/create_ticket',{
             description:form.ticket_issue,
             ticket_type:form.category,

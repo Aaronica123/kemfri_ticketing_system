@@ -57,7 +57,7 @@ if(await Auth(req)){
 try{
     const{ticket_type,description,branch,user_id}=req?.body;
     if(!ticket_type||!description||!branch||!user_id){
-        return res.status(409).json({message:"Check user input"});
+        return res.status(403).json({message:"Check user input"});
     }
     const created=new Date().toLocaleString()
 

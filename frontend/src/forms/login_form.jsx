@@ -39,65 +39,69 @@ export default function Login_form(){
     const min=useMediaQuery({maxWidth:"768px"})
 
     const login=async(e)=>{
+        setload(true)
         e.preventDefault();
         if(!form_.email||!form_.password){
             alert("Enter all fields")
+            setload(false);
             return;
         }
         const {data,error}=await supabase.auth.signInWithPassword({email:form_.email,password:form_.password});
         if(data?.user){
+            setload(false)
             localStorage.setItem('firstname',data.user.user_metadata.first_name);
             alert("Log In Successful")
             nav('/submit')
             return;
         }
         else{
+            setload(false);
             alert("An error occured");
             console.log(error);
             return;
         }
     }
-    async function connect(e){
+    // async function connect(e){
         
-        e.preventDefault();
-        setload(true);
-        await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
-            console.log(data.status);
-            setload(false);
-            alert("successfully received");
-            localStorage.setItem('firstname',data.data.data.name)
-            // UserManager.set(data.data.data.user_id)
-            nav('/submit');
-            // settrack(()=>({
-            //     failed:false,
-            //     fetched:true
-            // }))
+    //     e.preventDefault();
+    //     setload(true);
+    //     await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
+    //         console.log(data.status);
+    //         setload(false);
+    //         alert("successfully received");
+    //         localStorage.setItem('firstname',data.data.data.name)
+    //         // UserManager.set(data.data.data.user_id)
+    //         nav('/submit');
+    //         // settrack(()=>({
+    //         //     failed:false,
+    //         //     fetched:true
+    //         // }))
         
 
-        }).catch((error)=>{
-            // settrack(()=>({
-            //     failed:true,
-            //     fetched:false
-            // }))
-            console.log(error);
-            setload(false);
-            if(error.status==405){
-                alert("Check input")
-            }
-            else if(error.status==404){
-                alert("User not found")
-            }
-            else if(error.status==402){
-                alert("Enter all fields")
-            }
-            else {
-                alert("Contact admin cannot login")
-            }
+    //     }).catch((error)=>{
+    //         // settrack(()=>({
+    //         //     failed:true,
+    //         //     fetched:false
+    //         // }))
+    //         console.log(error);
+    //         setload(false);
+    //         if(error.status==405){
+    //             alert("Check input")
+    //         }
+    //         else if(error.status==404){
+    //             alert("User not found")
+    //         }
+    //         else if(error.status==402){
+    //             alert("Enter all fields")
+    //         }
+    //         else {
+    //             alert("Contact admin cannot login")
+    //         }
             
             
             
-        })
-    }
+    //     })
+    // }
     
     
     
@@ -152,7 +156,7 @@ export default function Login_form(){
                 {loading? 
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
                     
-                    <Button radius="medium" size={"3"} variant="classic" color="blue" style={{width:"100%",justifyContent:"center",cursor:"none"}}><Spinner></Spinner><Text weight={"medium"} color="white" size={"5"}>Logging In</Text></Button>
+                    <Button radius="medium" size={"3"} variant="outline" color="blue"   style={{width:"100%",justifyContent:"center",cursor:"none"}}><Spinner></Spinner><Text weight={"medium"} color="white" size={"5"}>Logging In</Text></Button>
                 </div>
                 :
                 <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>

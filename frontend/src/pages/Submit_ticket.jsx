@@ -100,6 +100,7 @@ set_priority_array(data.data.data);
     }
     const create_ticket=async(e)=>{
         e.preventDefault();
+        settrack(true)
         const data=await connect.post('/create_ticket',{
             description:form.ticket_issue,
             ticket_type:form.category,
@@ -107,9 +108,15 @@ set_priority_array(data.data.data);
             user_id:user.user_id
         })
         if(data.status==200){
+            settrack(false)
             alert("Ticket has been created");
             setform({ticket_issue:"",category:""})
             await file_upload();
+        }
+        else{
+            settrack(false)
+            alert("An error occured");
+
         }
     }
     async function fetch(){
@@ -237,7 +244,7 @@ set_priority_array(data.data.data);
                        </TextArea>
                     </div>
                     {track?
-                    <Button size="3" variant="classic" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>
+                    <Button size="3" variant="outline" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>
                     :
                     <Button size={"3"} variant="classic" color="blue" style={{width:"fit-content",cursor:"pointer"}} onClick={create_ticket}>Create</Button>
 }

@@ -33,31 +33,31 @@ if(req?.body?.index>=pages){
     offset=(req.body.index-1)*limit
 }
 if(!req.body?.type){
-if(req.body.role=="STAFF"){
-const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("staff_id",req?.body?.user_id);
-console.log(da);
-console.log(er);
-return res.status(201).json({message:"General tickets fetched",data:da});
-}else{
+// if(req.body.role=="STAFF"){
+// const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("staff_id",req?.body?.user_id);
+// console.log(da);
+// console.log(er);
+// return res.status(201).json({message:"General tickets fetched",data:da});
+// }else{
 const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("user_id",req?.body?.user_id);
 console.log(da);
 console.log(er);
 return res.status(201).json({message:"General tickets fetched",data:da});
-}
+
 }
 else{
-    if(req.body.role=="STAFF"){
-    const{data:n_data,error:n_error}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).eq("ticket_state",req?.body?.type).like("staff_id",req?.body?.user_id)
-    console.log(n_data);
-    console.log(n_error);
-    return res.status(201).json({message:"Tickets fetched",data:n_data});
-    }
-    else{
+    // if(req.body.role=="STAFF"){
+    // const{data:n_data,error:n_error}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).eq("ticket_state",req?.body?.type).like("staff_id",req?.body?.user_id)
+    // console.log(n_data);
+    // console.log(n_error);
+    // return res.status(201).json({message:"Tickets fetched",data:n_data});
+    // }
+   
     const{data:n_data,error:n_error}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).eq("ticket_state",req?.body?.type).like("user_id",req?.body?.user_id)
     console.log(n_data);
     console.log(n_error);
     return res.status(201).json({message:"Tickets fetched",data:n_data});
-    }
+    
     
 }
 

@@ -126,7 +126,7 @@ export default function Login_form(){
                     {/* <Head_Text>Welcome to KEMFRI Login</Head_Text> */}
                     <Text weight={"medium"} style={{width:"100%",fontSize:"16px",color:"blue"}}>Staff Portal</Text>
                     <Heading style={{width:"100%",fontSize:"28px",fontWeight:"Bold",fontFamily:"sans-serif", color:"black"}}>Login</Heading>
-                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To Kmfri ICT Ticketing System</Text>
+                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To KMFRI ICT Ticketing System</Text>
                     {/* <Main_Text>Login To Continue</Main_Text> */}
                 </div>
                 <Separator size={"4"} orientation={"horizontal"}/>

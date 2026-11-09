@@ -13,7 +13,7 @@ describe.only("ticket creation",()=>{
 let res=null;
 beforeEach(()=>{
     jest.clearAllMocks();
-    Auth.mockResolvedValue(true);
+    Auth.mockResolvedValue({data:"Found",state:true});
     res={
         status:jest.fn().mockReturnThis(),
         json:jest.fn().mockReturnThis()
@@ -32,6 +32,6 @@ expect(res.status).toHaveBeenCalledWith(200);
 })
 test.only("lacking input",async()=>{
     await Create_Ticket({body:{}},res)
-    expect(res.status).toHaveBeenCalledWith(409)
+    expect(res.status).toHaveBeenCalledWith(403)
 })
 })

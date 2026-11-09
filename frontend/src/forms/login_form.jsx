@@ -126,7 +126,7 @@ export default function Login_form(){
                     {/* <Head_Text>Welcome to KEMFRI Login</Head_Text> */}
                     <Text weight={"medium"} style={{width:"100%",fontSize:"16px",color:"blue"}}>Staff Portal</Text>
                     <Heading style={{width:"100%",fontSize:"28px",fontWeight:"Bold",fontFamily:"sans-serif", color:"black"}}>Login</Heading>
-                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To Kemfri Ticketing System</Text>
+                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To KMFRI ICT Ticketing System</Text>
                     {/* <Main_Text>Login To Continue</Main_Text> */}
                 </div>
                 <Separator size={"4"} orientation={"horizontal"}/>
@@ -163,7 +163,12 @@ export default function Login_form(){
                     <Button radius="medium" size={"3"} variant="classic" type={"button"} onClick={login} color="blue" style={{cursor:"pointer",width:"100%",justifyContent:"center"}}><Text weight={"medium"} color="white" size={"5"}>Log In</Text></Button>
                     {/* <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button> */}
                 </div>
+
 }
+
+<div style={{width:"100%",display:"flex"}}>
+    <Button style={{width:"fit-content",color:"black",cursor:"pointer"}} variant="outline" color="black" onClick={()=>nav('/register')}>Register User</Button>
+</div>
             </Card>
         </div>
     {/* </div> */}

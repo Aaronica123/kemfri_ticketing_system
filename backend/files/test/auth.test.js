@@ -16,11 +16,11 @@ describe.only('auth tests',()=>{
     test.only('success auth test',async()=>{
         client.auth.getUser.mockResolvedValue({data:{user:"found"}})
         const data=await Auth({headers:{authorization:"token"}})
-        expect(data).toBe(true)
+        expect(data.state).toBe(true)
     })
     test.only('failed auth test',async()=>{
         client.auth.getUser.mockResolvedValue({data:{user:null}})
         const data=await Auth({headers:{authorization:"token"}})
-        expect(data).toBe(false)
+        expect(data.state).toBe(false)
     })
 })

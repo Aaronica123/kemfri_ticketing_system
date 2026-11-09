@@ -6,23 +6,59 @@ import Auth from "../auth.js";
 import { randomUUID } from "crypto";
 import * as Minio from 'minio'
 import fs from "fs"
+
 configDotenv();
     let ticketid='';
     let userid='';
     let dateid='';
 
 async function Ticket_Message(data){
-    const connect=await amqp.connect(process.env.rabbitmq);
-    const mes=await connect.createChannel();
-    await mes.assertExchange("ai_message",'direct');
-    await mes.assertQueue("ai_queue",{durable:true,autoDelete:false});
-    await mes.bindQueue('ai_queue','ai_message','ai_describe');
-    mes.publish('ai_message','ai_describe',Buffer.from(JSON.stringify(data)));
-    await mes.close();
-    await connect.close();
+    try {
+        
+    console.log(data)
+    console.log("received");
+    const da=await fetch("http://localhost:5000/predict",{
+        method:"POST",
+        headers:{
+            "Content-type":"application/json"
+        },
+        credentials:"include",
+        body:JSON.stringify({text:data.description})
+    })
+    const g=JSON.parse(await da.text())
+    console.log(g.priority);
+    
+            const{data:dai,error}=await client.schema("usecase_kemfri").from("tickets").update({urgency:String(g.priority).toLowerCase()}).eq('ticket_id',data.ticket_id);
+            console.log(dai);
+            console.log(error);
+            
+            const st=`branch_${data.branch}`
+            console.log(st)
+            const{data:new_data,error:new_error}=await client.schema("usecase_kemfri").from(`branch_${data.branch}`).select("staff_id").eq('staff_category',data.category).eq('state',false).limit(1);
+            console.log(new_data)
+            console.log(new_data[0]?.staff_id);
+            if(new_data[0]?.staff_id){
+                await client.schema("usecase_kemfri").from("tickets").update({staff_id:new_data[0]?.staff_id,ticket_state:"assigned"}).eq("ticket_id",data.ticket_id);
+                await client.schema("usecase_kemfri").from("staff").update({state:true}).eq("staff_id",new_data[0].staff_id);
+            }else{
+                console.log("All staff are occupied");
+            }
+    // const connect=await amqp.connect(process.env.rabbitmq);
+    // const mes=await connect.createChannel();
+    // await mes.assertExchange("ai_message",'direct');
+    // await mes.assertQueue("ai_queue",{durable:true,autoDelete:false});
+    // await mes.bindQueue('ai_queue','ai_message','ai_describe');
+    // mes.publish('ai_message','ai_describe',Buffer.from(JSON.stringify(data)));
+    // await mes.close();
+    // await connect.close();
+    } catch (error) {
+     console.log(error);   
+    }
 }
 
 export async function Ticket_Recieve(){
+    try{
+    console.log("processing message")
     const mes=await amqp.connect(process.env.rabbitmq);
     const rec=await mes.createChannel();
     await rec.assertQueue('ai_queue',{durable:true})
@@ -35,6 +71,7 @@ export async function Ticket_Recieve(){
             console.log(da);
             console.log(error);
             const{data:new_data,error:new_error}=await client.schema("usecase_kemfri").from(`branch_${JSON.parse(data.content)?.branch}`).select("staff_id").eq('staff_category',JSON.parse(data.content)?.category).eq('state',false).limit(1);
+            console.log(new_data)
             console.log(new_data[0]?.staff_id);
             if(new_data[0]?.staff_id){
                 await client.schema("usecase_kemfri").from("tickets").update({staff_id:new_data[0]?.staff_id,ticket_state:"assigned"}).eq("ticket_id",JSON.parse(data.content)?.ticket_id);
@@ -51,9 +88,13 @@ export async function Ticket_Recieve(){
             
         }
     },{noAck:false})
+    }
+    catch(error){
+        console.log(error)
+    }
 }
 export default async function Create_Ticket(req,res){
-if(await Auth(req)){
+// if(await Auth(req)){
 try{
     const{ticket_type,description,branch,user_id}=req?.body;
     if(!ticket_type||!description||!branch||!user_id){
@@ -94,10 +135,10 @@ try{
     console.log(error);
     return res.status(500).json({message:"Server error"})
 }}
-else{
-    return res.status(409).json({message:"Unauthenticated"})
-}
-}
+// else{
+//     return res.status(409).json({message:"Unauthenticated"})
+// }
+// }
 
 export async function Upload_files(req,res){
     try {
@@ -147,7 +188,7 @@ export async function Upload_files(req,res){
             console.log(dateid);
             console.log(ticketid);
             console.log(userid);
-            await client.putObject('kemfriimages',`${ticketid}${userid}${dateid}${da.filename}`,stream,da.size).then((data)=>{console.log("Uploaded")});
+            await client.putObject('kemfriimages',`${ticketid}${userid}${dateid}`,stream,da.size).then((data)=>{console.log("Uploaded")});
             console.log("Uploaded")
             fs.unlink(da.path,()=>{});
            }

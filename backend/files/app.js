@@ -12,12 +12,13 @@ import { classifyTicket } from "./tickets/ai.js";
 import Register from "./actions/create.js";
 import Create_Ticket, { Upload_files } from "./tickets/create_ticket.js";
 import Fetch_tickets from "./tickets/fetch_ticket.js";
+import { Update_Ticket } from "./tickets/category_tickets/assigned_ticket.js";
 import multer from "multer";
 
 configDotenv();
 const app=express();
 
-app.use(cors({methods:["GET","POST","DELETE"],origin:`https://${process.env.frontendurl}/`
+app.use(cors({methods:["GET","POST","DELETE"],origin:[`http://localhost:5173`,`https://${process.env.frontendurl}/`]
     ,allowedHeaders:["Content-Type","Authorization"]
     ,credentials:true}))
 
@@ -36,5 +37,6 @@ app.post('/api/register',Register);
 app.post('/api/create_ticket',Create_Ticket);
 app.post('/api/fetch_ticket',Fetch_tickets);
 app.post('/api/upload_file',upload.array('kemfri_images',3),Upload_files);
+app.post('/api/update_ticket',Update_Ticket);
 
 export default app;

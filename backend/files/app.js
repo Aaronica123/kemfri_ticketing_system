@@ -13,6 +13,8 @@ import Register from "./actions/create.js";
 import Create_Ticket, { Upload_files } from "./tickets/create_ticket.js";
 import Fetch_tickets from "./tickets/fetch_ticket.js";
 import { Update_Ticket } from "./tickets/category_tickets/assigned_ticket.js";
+import Assigned_ticket from "./tickets/category_tickets/assigned_ticket.js";
+import { Image } from "./tickets/category_tickets/assigned_ticket.js";
 import multer from "multer";
 
 configDotenv();
@@ -38,5 +40,6 @@ app.post('/api/create_ticket',Create_Ticket);
 app.post('/api/fetch_ticket',Fetch_tickets);
 app.post('/api/upload_file',upload.array('kemfri_images',3),Upload_files);
 app.post('/api/update_ticket',Update_Ticket);
-
+app.get('/api/assigned_tickets',Assigned_ticket);
+app.get('/api/image_download',Image);
 export default app;

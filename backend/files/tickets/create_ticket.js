@@ -101,6 +101,7 @@ try{
         return res.status(403).json({message:"Check user input"});
     }
     const created=new Date().toLocaleString()
+    const cr=new Date().toLocaleDateString();
 
     const ticket_id=randomUUID().replace(/-/g,'').slice(0,6).toUpperCase();
     const{data,error}=await client.schema("usecase_kemfri").from("tickets").insert({
@@ -112,7 +113,7 @@ try{
         team:ticket_type,
         user_id:user_id,
         branch:branch,
-        created:created
+        created:cr
     })
     if(data){
         console.log(data)
@@ -128,7 +129,7 @@ try{
     await Ticket_Message({ticket_id:ticket_id,description:description,branch:branch,category:ticket_type});
     ticketid=ticket_id;
     userid=user_id;
-    dateid=created;
+    dateid=cr;
     return res.status(200).json({message:"Ticket created"})
     }
 }catch(error){
@@ -182,15 +183,21 @@ export async function Upload_files(req,res){
                 console.log("Created")
                 await client.makeBucket("kemfriimages");
             }
-            
+           for (const y of valid){
+            const s=fs.createReadStream(y.path);
+
+           } 
+           console.log(`${ticketid}${userid}${dateid}`)
            for (const da of valid){
             const stream= fs.createReadStream(da.path);
             console.log(dateid);
             console.log(ticketid);
             console.log(userid);
+
             await client.putObject('kemfriimages',`${ticketid}${userid}${dateid}`,stream,da.size).then((data)=>{console.log("Uploaded")});
             console.log("Uploaded")
             fs.unlink(da.path,()=>{});
+            
            }
            return res.status(200).json({message:"Image uplaod success"})
         }

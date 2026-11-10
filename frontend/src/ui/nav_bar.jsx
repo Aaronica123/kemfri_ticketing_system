@@ -270,6 +270,13 @@ return(<>
      <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
     </Button>
 }
+ <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row"
+    }} onClick={()=>{nav("/assigned_tickets")}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Assigned Tickets</Text>
+    </Button>
     {user.group=='STAFF'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>

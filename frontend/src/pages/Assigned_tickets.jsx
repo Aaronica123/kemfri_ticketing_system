@@ -35,7 +35,7 @@ export default function Assigned_tickets(){
         console.log(fetched)
         setdata(fetched)
         if(dat.status==200){
-           const img=await connect.get("/image_download",{
+           const img=await connect.get("/image_download?type=assigned",{
             responseType:"blob"
         });
            const objectUrl = URL.createObjectURL(img.data);

@@ -34,7 +34,7 @@ console.log(user);
 const [track,settrack]=useState(true);
 const [lg,setlg]=useState(false);
 const [count,setcount]=useState(0);
-const [btn,trackbtn]=useState({btn1:false,btn2:true,btn3:false,btn4:false})
+const [btn,trackbtn]=useState({btn1:false,btn2:true,btn3:false,btn4:false,btn5:false,btn6:false})
 const update=()=>{
     settrack(!track);
 }
@@ -97,20 +97,20 @@ async function logout(){
 }
 
 const tickets=()=>{nav('/my_tickets');
-    trackbtn(()=>({btn1:false,btn2:false,btn3:true,btn4:false}))
+    trackbtn(()=>({btn1:false,btn2:false,btn3:true,btn4:false,btn5:false,btn6:false}))
 }
 const notify=()=>{nav('/notifications');
-    trackbtn(()=>({btn1:false,btn2:false,btn:false,btn4:true}))
+    trackbtn(()=>({btn1:false,btn2:false,btn:false,btn4:true,btn5:false,btn6:false}))
 
 };
 const dir=(value)=>{
     if(value==1){
         nav('/dashboard');
-        trackbtn(()=>({btn1:true,btn2:false,btn3:false,btn4:false}))
+        trackbtn(()=>({btn1:true,btn2:false,btn3:false,btn4:false,btn5:false,btn6:false}))
     }
     else{
         nav('/submit');
-        trackbtn(()=>({btn1:false,btn2:true,btn3:false,btn4:false}))
+        trackbtn(()=>({btn1:false,btn2:true,btn3:false,btn4:false,btn5:false,btn6:false}))
         
        
     }
@@ -270,24 +270,45 @@ return(<>
      <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
     </Button>
 }
- <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+ {/* <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",flexDirection:"row"
     }} onClick={()=>{nav("/assigned_tickets")}} >
         <div style={{display:"flex",width:"fit-content"}}>
             <Bell size={"25"} color="whitesmoke"></Bell></div>
      <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Assigned Tickets</Text>
     </Button>
-    {user.group=='STAFF'?
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row"
+    }} onClick={()=>{nav("/underway_tickets")}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Underway Tickets</Text>
+    </Button> */}
+    {user.role=='STAFF'?
     <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
     <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
      <Text weight={"medium"} style={{color:"#BEBEBE",fontFamily:"sans-serif",fontSize:"16px"}}>Staff</Text>
     <Separator size={"4"} orientation={"horizontal"} ></Separator>
     </div>
-     <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
+     {/* <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
         justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
     }}
     onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
      <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
+    </Button> */}
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row"
+    }} onClick={()=>{nav("/assigned_tickets")}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Assigned Tickets</Text>
+    </Button>
+    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
+        justifyContent:"left",gap:"12px",flexDirection:"row"
+    }} onClick={()=>{nav("/underway_tickets")}} >
+        <div style={{display:"flex",width:"fit-content"}}>
+            <Bell size={"25"} color="whitesmoke"></Bell></div>
+     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Underway Tickets</Text>
     </Button>
     </div>
     :""}

@@ -59,10 +59,12 @@ export default function Dashboard(){
         <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
                 display:"flex",gap:"5px",alignItems:"start"
             }}>
-                <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">Dashboard</Heading>
+                <Text size={"7"} style={{color:"#172C50",fontFamily:"Inter" }} weight={"medium"}>Dashboard</Text>
+                                 <Child_text1>View Tickets Summary using the card below</Child_text1>
+                {/* <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">Dashboard</Heading>
                 <Text weight={"light"} style={{fontSize:"18px",fontFamily:"sans-serif",color:"#6B7280"}}>
                     Welcome Back  {localStorage.getItem('firstname')}
-                </Text>
+                </Text> */}
                 {/* <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess> */}
                 {/* <Text weight={"light"} style={{fontSize:"15px",color:"black"}}>
                    Dashboard Tickets

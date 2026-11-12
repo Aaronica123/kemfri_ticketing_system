@@ -15,6 +15,7 @@ import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 import { useMediaQuery } from "react-responsive";
 import { Check_auth } from "../auth/new_auth";
+import Header_txt from "../../reusable/text";
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -153,7 +154,7 @@ export default function MyTickets(){
             }}>
                 <div style={{display:"flex",width:min?"100%":"50%",flex:1,height:"fit-content",gap:"5px"}}>
                     {/* <TextField.Root></TextField.Root> */}
-
+                    <button type="button" style={{border:"dashed 1px black"}}> james</button>
                     <TextField.Root
                     size={"3"}
                     style={{width:"100%",color:"black"}}
@@ -176,7 +177,62 @@ export default function MyTickets(){
                 </div>
             </div>
             <div style={{display:"flex",flexDirection:"column",width:"100%",height:"100%"}}>
-                <Table.Root size={"3"} variant="surface" style={{height:"100%",overflow:"scroll"}}>
+                <Table.Root style={{position:"relative",height:"100%",display:"flex",width:"100%",background:"#FFFFFF",border:"1px solid #D9E5F3",borderRadius:"10px"}}>
+                    
+                        <Table.Row style={{width:"100%",background:"#F5F8FC"}}>
+                            <Table.Cell >
+                                <Text weight={"medium"} style={{fontFamily:"Inter",color:"#62758D"}}>Ticket ID</Text>
+                                </Table.Cell>
+
+                             <Table.Cell>
+                                <Text weight={"medium"} style={{color:"#62758D",fontFamily:"Inter"}}>Category</Text>
+                            </Table.Cell>
+                                
+                             {/* <Table.Cell >
+                                <Text weight={"medium"} style={{color:"#0e4282"}}>ID</Text>
+                            </Table.Cell>   */}
+                             <Table.Cell >
+                                <Text weight={"medium"} style={{color:"#62758D",fontFamily:"Inter"}}>Status</Text>
+                            </Table.Cell>   
+                            <Table.Cell >
+                                <Text weight={"medium"} style={{color:"#62758D",fontFamily:"Inter"}}>Team</Text>
+                            </Table.Cell> 
+                            <Table.Cell >
+                                <Text weight={"medium"} style={{color:"#62758D",fontFamily:"Inter"}}>Date Created</Text>
+                            </Table.Cell> 
+                        </Table.Row>
+                  
+                    <Table.Body >
+                        {myfetch.map((item,index)=>(
+                            
+                            
+                            <Table.Row  key={index} className="row">
+                            {item.map((value,ind)=>(
+                                ind!=2?
+                                <Table.Cell  key={ind}>
+                                    {ind==3?<Badge color={value=="assigned"?"yellow":value=="pending"?"red":"green"}>{value}</Badge>:ind==5?<Text weight={"medium"} size={"2"} style={{color:"#152C4A",fontFamily:"Inter"}}>{new Date(value).toLocaleDateString('en-US',{day:"numeric",month:"short",year:"numeric"})}</Text>
+                                    :
+                                    ind==0?
+                                    <Text weight={"medium"} size={"2"} style={{color:"#62758D",fontFamily:"Inter"}}>
+                                    {value}
+                                    </Text>:
+                                    <Text weight={"medium"} size={"2"} style={{color:"#152C4A",fontFamily:"Inter"}}>
+                                    {value}
+                                    </Text>
+                                    }
+                                </Table.Cell>
+                                :""
+                                
+                            ))}
+                             </Table.Row>
+                             ))}
+                        <Table.Row style={{position:"absolute"}}></Table.Row>
+                        
+                        </Table.Body>
+                    
+
+                </Table.Root>
+                {/* <Table.Root size={"3"} variant="surface" style={{height:"100%",overflow:"scroll"}}>
                     <Table.Header>
                         
                         
@@ -359,8 +415,8 @@ export default function MyTickets(){
                     </Table.Body>
 }
 
-                </Table.Root>
-                {myfetch.length>0?
+                </Table.Root> */}
+                {/* {myfetch.length>0?
                     <div style={{position:"",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",width:"fit-content",height:"15%",padding:"5px"}}>
                          
                         <div style={{width:"fit-content",justifyContent:"center",alignItems:'center'}}>
@@ -383,7 +439,7 @@ export default function MyTickets(){
                        <div style={{position:"fixed",bottom:"1px",left:"5px",display:"flex",flexDirection:"row",height:"fit-content",gap:"5px",padding:"5px"}}>
                         <Badge size={"3"} color={"teal"}>{index}</Badge>
                        </div>
-                       }
+                       } */}
             </div>
         </div>
         </>

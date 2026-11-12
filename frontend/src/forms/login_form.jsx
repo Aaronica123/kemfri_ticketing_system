@@ -15,6 +15,10 @@ import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
 import {useMediaQuery} from "react-responsive";
 import { supabase } from "../auth/supabase";
+import Header_txt, { Child_text1, Child_text3, Label_txt } from "../../reusable/text";
+import {toast} from "sonner"
+import { Bell } from "lucide-react";
+import { ExclamationMark,SquareExclamationPoint } from "lucide-react";
 // import { set } from "../auth/hold.js";
 // import UserManager from "../auth/hold.js";
 // import { Load_button } from "../ui/buttons";
@@ -51,12 +55,31 @@ export default function Login_form(){
             setload(false)
             localStorage.setItem('firstname',data.user.user_metadata.first_name);
             alert("Log In Successful")
+            toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
+  <Bell color="#2362DF"></Bell>       
+  <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+  Success Login
+  <Child_text1>User Authenticated</Child_text1>
+  </div>
+  </div>,{position:"top-right",action:{label:"Close",onClick:()=>{}},actionButtonStyle:{background:"#FFFFFF",color:"#2362DF",},
+  style:{background:"#EDF4FF",border:"1px solid #C7DBFF"}});
             nav('/submit')
             return;
         }
         else{
             setload(false);
-            alert("An error occured");
+            
+            toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
+  <SquareExclamationPoint color="#2362DF"></SquareExclamationPoint>       
+  <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+  <Text weight={"bold"} style={{fontFamily:"Inter"}}>Failed to Login</Text>
+  <Child_text1></Child_text1>
+  <Child_text3>Check Login Details</Child_text3>
+  </div>
+  </div>,{position:"top-right",action:{label:"Close",onClick:()=>{}},actionButtonStyle:{background:"#FFFFFF",color:"#2362DF",},
+  style:{background:"#EDF4FF",border:"1px solid #C7DBFF"}});
             console.log(error);
             return;
         }
@@ -108,68 +131,76 @@ export default function Login_form(){
     return(
     <>
     <div style={{width:"100vw",height:"100vh",boxSizing:"border-box",display:"flex",
-        flexDirection:"row",justifyContent:"center",alignItems:"center",background:"whitesmoke 80%"}}>
+        flexDirection:"row",justifyContent:"center",alignItems:"center",background:"#F7FBFE"}}>
         {/* <div style={{width:"fit-content",height:"fit-content", justifyContent:"center",
             alignItems:"center"
         }}> */}
-            <Card size={"1"} variant="ghost" style={{width:min?"100%":"50%", height:"fit-content",
-                display:"flex",flexDirection:"column",alignItems:"center",justifyContent:'center',
-                gap:"15px"
-            }}>
-                {/* <div style={{width:"100%",height:"fit-content",display:"flex", alignItems:"center",
-                    justifyContent:"center"}}>
-                    <Avatar size={"5"} src="" fallback="KM" variant="solid" radius={"large"}>
-                    </Avatar>
-                </div> */}
-                <div style={{width:"100%",height:"fit-content",display:"flex",
-                    alignItems:"center", flexDirection:"column",flexWrap:"wrap",gap:"8px",marginBottom:"5px"}}>
-                    {/* <Head_Text>Welcome to KEMFRI Login</Head_Text> */}
-                    <Text weight={"medium"} style={{width:"100%",fontSize:"16px",color:"blue"}}>Staff Portal</Text>
-                    <Heading style={{width:"100%",fontSize:"28px",fontWeight:"Bold",fontFamily:"sans-serif", color:"black"}}>Login</Heading>
-                    <Text weight={"light"} style={{width:"100%",fontSize:"14px",color:"#6B7280"}}>Welcome To KMFRI ICT Ticketing System</Text>
-                    {/* <Main_Text>Login To Continue</Main_Text> */}
-                </div>
-                <Separator size={"4"} orientation={"horizontal"}/>
-                <div style={{ width:"100%",height:"fit-content",flexDirection:"column",display:"flex",
-                justifyContent:"left",gap:"25px"
-                }}>
-                    <div style={{width:"100%",height:"fit-content",flexDirection:"column",display:'flex',
-                        justifyContent:"left",gap:"8px"
-                    }}>
-                        <Text weight={"medium"} style={{width:"100%",fontSize:"14px"}}>Email</Text>
-                        <TextField.Root type="email" required size={"3"} placeholder="Enter email" 
-                        value={form_.email} name="email" onChange={check}
-                        style={{width:"100%",fontSize:"16px",color:"black",background:"#e6e6e6e4 70%"}}>
-                        </TextField.Root>
-                        {/* <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field> */}
+        <div style={{padding:"10px",width:'100%',height:"100%",display:"flex",position:"relative" }}>
+            <img src="im2.png" style={{width:"100%",height:"100%",borderRadius:"10px"}}/>
+            {/* <div
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      pointerEvents: "none",
+      borderRadius:"10px",
+      background:
+        "radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(54, 70, 238, 0.9) 100%)",
+    }}
+  ></div> */}
+        </div>
+        <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}>
+            {/* <div style={{padding:"10px",width:"100%",height:"fit-content",display:"flex",justifyContent:"center",alignItems:"center"}}>
+                <Text weight={"regular"}size={"4"} style={{fontFamily:"Inter", color:"#102E49"}}>Aqua System</Text>
+            </div> */}
+            <div style={{width:"100%",height:'100%',display:"flex",justifyContent:"center",alignItems:"center"}}>
+                <Card variant="ghost" style={{width:"448px",height:"400px",display:'flex',flexDirection:"column",gap:"15px"}}>
+                     <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column"}}>
+                        <Text weight={"bold"} size={"2"} style={{fontFamily:"Inter",color:"#0865C4"}}>
+                            {String("Kenya Marine And Fisheries Research Institute").toUpperCase()}
+                        </Text>
+                     </div>
+                    <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column"}}>
+                        <Header_txt>Welcome back</Header_txt>
+                        <Child_text1>The following login to create data</Child_text1>
                     </div>
-                     <div style={{width:"100%",height:"fit-content",flexDirection:"column",display:'flex',
-                        justifyContent:"left",gap:"8px"
-                    }}>
-                        <Text weight={"medium"} style={{width:"100%",fontSize:"14px"}}>Password</Text>
-                        <TextField.Root type="password" required size={"3"} placeholder="Enter password"
-                        value={form_.password} name="password" onChange={check} style={{width:"100%",fontSize:"16px",color:"black",background:"#e6e6e6e4 70%"}}>
-                        </TextField.Root>
-                        {/* <Input_Field placeholder={"ENTER STAFF"} type={"text"} max={50} value={form_.email} name="email" change={check}></Input_Field> */}
+                    <div style={{marginTop:"20px",width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"15px"}}>
+                    <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"5px"}}>
+                        <Label_txt>Email</Label_txt>
+                        <TextField.Root size={"2"} name="email" onChange={check} value={form_.email} color="blue" style={{width:'100%',border:"1px #CBDCE8 solid",padding:"8px"}} type="email"></TextField.Root>
                     </div>
-                </div>
-                {loading? 
-                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
-                    
-                    <Button radius="medium" size={"3"} variant="outline" color="blue"   style={{width:"100%",justifyContent:"center",cursor:"none"}}><Spinner></Spinner><Text weight={"medium"} color="white" size={"5"}>Logging In</Text></Button>
-                </div>
-                :
-                <div style={{width:"100%", height:"fit-content",display:"flex",alignItems:"center",marginTop:"15px"}}>
-                    <Button radius="medium" size={"3"} variant="classic" type={"button"} onClick={login} color="blue" style={{cursor:"pointer",width:"100%",justifyContent:"center"}}><Text weight={"medium"} color="white" size={"5"}>Log In</Text></Button>
-                    {/* <Execute_Button color="teal" variant={"classic"} type={"button"} onClick={connect}>Login</Execute_Button> */}
-                </div>
-
+                    <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"5px"}}>
+                        <Label_txt>Password</Label_txt>
+                        <TextField.Root size={"2"}  color="blue" onChange={check} name="password" value={form_.password} required style={{width:'100%',border:"1px #CBDCE8 solid",padding:"8px"}} type="password"></TextField.Root>
+                    </div>
+                    </div>
+                    <div style={{marginTop:"20px",width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"10px"}}>
+                        <button onClick={login} type="button" style={{width:"100%",backgroundColor:"#0865C4",padding:"8px",borderRadius:"8px",justifyContent:"center",alignItems:"center"}}>
+                            {loading?<Text weight={"regular"} size={"4"} style={{fontFamily:"Inter",color:"#FFFFFF",display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",gap:"5px"}}>
+                                
+                               <Spinner></Spinner> 
+                                Logging In</Text>:
+                            <Text weight={"regular"} size={"4"} style={{fontFamily:"Inter",color:"#FFFFFF"}}>
+                                Login</Text>
 }
-
-<div style={{width:"100%",display:"flex"}}>
-    <Button style={{width:"fit-content",color:"black",cursor:"pointer"}} variant="outline" color="black" onClick={()=>nav('/register')}>Register User</Button>
-</div>
-            </Card>
+                            </button>
+                    
+                    <div
+                    style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"5px", justifyContent:"center",alignItems:"flex-end"}}
+                    >
+<Text size={"3"} style={{fontFamily:"Inter",color:"#0865C4",fontWeight:"bold"}}>
+                           Create an account
+                        
+                        </Text>
+                    </div>
+                    </div>
+                </Card>
+            </div>
+            
+        </div>
+           
         </div>
     {/* </div> */}
     </>)

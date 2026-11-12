@@ -54,7 +54,7 @@ export default function Login_form(){
         if(data?.user){
             setload(false)
             localStorage.setItem('firstname',data.user.user_metadata.first_name);
-            alert("Log In Successful")
+        
             toast(
   <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
   <Bell color="#2362DF"></Bell>       

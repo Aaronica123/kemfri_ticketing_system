@@ -16,12 +16,15 @@ import Register from "./pages/Register";
 import Auth from "./auth/new_auth";
 import Assigned_tickets from "./pages/Assigned_tickets";
 import Underway_tickets from "./pages/Underway";
+import { Toaster } from "sonner"
 function App() {
 
 
   return (
     <>
+    <Toaster/>
     <Theme>
+     
       <Router>
         <Toast_Provider>
           <Routes>

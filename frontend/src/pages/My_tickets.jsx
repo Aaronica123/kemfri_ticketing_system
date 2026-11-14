@@ -16,6 +16,9 @@ import { Text } from "@radix-ui/themes/dist/cjs/index.js";
 import { useMediaQuery } from "react-responsive";
 import { Check_auth } from "../auth/new_auth";
 import Header_txt from "../../reusable/text";
+import { Child_text3 } from "../../reusable/text";
+import { SquareExclamationPoint,Bell } from "lucide-react";
+import {toast} from "sonner"
 export default function MyTickets(){
     
     const [final,setfinal]=useState([]);
@@ -28,6 +31,26 @@ export default function MyTickets(){
     const[type,settype]=useState(null);
     const{user}=Check_auth();
     const[myfetch,setfetch]=useState([])
+    
+    const[fil,setfilter]=useState({assigned:null,pending:null,underway:null,resolved:null})
+    
+    const monitor=(value)=>{
+
+        if( !fil[value]){
+            setfilter((data)=>({
+                ...data,
+                [value]:value
+            }
+            ))
+        }
+        else{
+            setfilter((data)=>({
+                ...data,
+                [value]:null
+            }))
+        }
+        console.log(fil)
+    }
     const change=(e)=>{
         const {name,value}=e.target;
         setinput((data)=>({
@@ -35,6 +58,7 @@ export default function MyTickets(){
             [name]:value
         }))
     }
+    
     const next=async()=>{
         if(index<total){
             setindex(index+1)
@@ -52,27 +76,88 @@ export default function MyTickets(){
     const fetch_tickets=async(type)=>{
         settrack(false)
         settype(type)
-        const data=await connect.post('/fetch_ticket',{
+        let data;
+        if(fil.assigned&&fil.pending&&fil.resolved&&fil.underway){
+            toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
+  <SquareExclamationPoint color="#2362DF"></SquareExclamationPoint>       
+  <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+  <Text weight={"bold"} style={{fontFamily:"Inter"}}>Filter Failed</Text>
+ 
+  <Child_text3>You cannot select all filters</Child_text3>
+  </div>
+  </div>,{position:"top-right",action:{label:"Close",onClick:()=>{}},actionButtonStyle:{background:"#FFFFFF",color:"#2362DF",},
+  style:{background:"#EDF4FF",border:"1px solid #C7DBFF"}});
+        }
+         const loadingToastId=toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px"}}>
+    <Spinner color="#2362DF" /> {/* or your loading icon */}
+    <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+      <Text weight={"bold"} style={{fontFamily:"Inter"}}>Fetching...</Text>
+      <Child_text3>Please wait while we fetch the ticket</Child_text3>
+    </div>
+  </div>,
+  {
+    position: "top-right",
+    style: {background:"#EDF4FF", border:"1px solid #C7DBFF"},
+  }
+);
+        if(fil.assigned||fil.pending||fil.resolved||fil.underway){
+
+        data=await connect.post('/fetch_ticket',{
             index:index,
-            type:type,
-            user_id:user.user_id,
-            role:user.role
+            all:false,
+            filter:fil
         })
-        
-        console.log(data.data.data)
+        toast.dismiss(loadingToastId); 
+        }
+        else{
+        data=await connect.post('/fetch_ticket',{
+            index:index,
+            all:true,
+            filter:null
+        })
+        toast.dismiss(loadingToastId);
+    }
+
+    console.log(data.data.data)
         if(data.data?.data){
+        toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
+  <Bell color="#2362DF"></Bell>       
+  <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+  Fetched data
+  <Child_text3>Your table data has been fetched</Child_text3>
+  </div>
+  </div>,{position:"top-right",action:{label:"Close",onClick:()=>{}},actionButtonStyle:{background:"#FFFFFF",color:"#2362DF",},
+  style:{background:"#EDF4FF",border:"1px solid #C7DBFF"}});    
         const fetched=data.data.data.map((val)=>Object.values(val))
          setfetch(fetched)
          settrack(true)
          setload(false)
         }
         else{
+             toast(
+  <div style={{display:"flex",flexDirection:"row",alignItems:"center", gap:"10px",}}>
+  <Bell color="#2362DF"></Bell>       
+  <div style={{width:"fit-content",display:"flex",flexDirection:"column"}}>
+  No data
+  <Child_text3>Sorry the filter data doesnt exist</Child_text3>
+  </div>
+  </div>,{position:"top-right",action:{label:"Close",onClick:()=>{}},actionButtonStyle:{background:"#FFFFFF",color:"#2362DF",},
+  style:{background:"#EDF4FF",border:"1px solid #C7DBFF"}});  
+            setfetch([]);
             setfinal([]);
             settrack(true)
             setload(true)
         }
+        
+        
        
     }
+    useEffect(()=>{
+        fetch_tickets(null)
+    },[])
 
     const fetch=async()=>{
         settrack(false);
@@ -148,13 +233,14 @@ export default function MyTickets(){
             }}>
                 <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">My Tickets</Heading>
                 <Text weight={"light"} style={{fontSize:"18px",fontFamily:"sans-serif",color:"#6B7280"}}>Track status</Text>
+           
             </div>
             <div style={{display:"flex",flexDirection:"column",flexWrap:"nowrap",
                 width:"100%",height:"fit-content",gap:"15px"
             }}>
                 <div style={{display:"flex",width:min?"100%":"50%",flex:1,height:"fit-content",gap:"5px"}}>
                     {/* <TextField.Root></TextField.Root> */}
-                    <button type="button" style={{border:"dashed 1px black"}}> james</button>
+                   
                     <TextField.Root
                     size={"3"}
                     style={{width:"100%",color:"black"}}
@@ -164,14 +250,20 @@ export default function MyTickets(){
                 </div>
                 <div style={{display:"flex",flexDirection:"row",width:"100%",height:"fit-content",gap:"10px"}}>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                    <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{settype(null);fetch_tickets(null)}}>All</Button>
+                    <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{fetch_tickets(null)}}>Fetch</Button>
                 </div>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                     <Button type="button" size={"2"} variant="classic" highContrast onClick={()=>{settype("pending");fetch_tickets("pending")}}>Pending</Button>
+                     <Badge type="button" style={{color:fil.pending?"#FFFFFF":"#62758D",borderRadius:"5px",cursor:"pointer",width:"100px",justifyContent:"center",border:"dashed 1px black",padding:"3px",background:fil.pending?"#2362DF":"none"}} onClick={()=>{monitor("pending")}}>Pending</Badge>
                     
                 </div>
                 <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
-                     <Button type="button" size={"2"} variant="classic" highContrast style={{width:"100%"}} onClick={()=>{settype("assigned");fetch_tickets("assigned")}}>Assigned</Button>
+                     <Badge type="Badge"  style={{color:fil.assigned?"#FFFFFF":"#62758D",borderRadius:"5px",cursor:"pointer",width:"100px",justifyContent:"center",border:"dashed 1px black",padding:"3px",background:fil.assigned?"#2362DF":"none"}} onClick={()=>{monitor("assigned")}}>Assigned</Badge>
+                </div>
+                <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
+                     <Badge type="Badge" style={{color:fil.underway?"#FFFFFF":"#62758D",borderRadius:"5px",cursor:"pointer",width:"100px",justifyContent:"center",border:"dashed 1px black",padding:"3px",background:fil.underway?"#2362DF":"none"}} onClick={()=>{monitor("underway")}}>Underway</Badge>
+                </div>
+                <div style={{display:"flex",width:"fit-content",height:"fit-content"}}>
+                     <Badge type="Badge"  style={{color:fil.resolved?"#FFFFFF":"#62758D",borderRadius:"5px",cursor:"pointer",width:"100px",justifyContent:"center",border:"dashed 1px black",padding:"3px",background:fil.resolved?"#2362DF":"none"}} onClick={()=>{monitor("resolved")}}>Resolved</Badge>
                 </div>
                 
                 </div>

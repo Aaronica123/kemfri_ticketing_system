@@ -24,22 +24,24 @@ describe('fetch ticket files unit tests',()=>{
             status: jest.fn().mockReturnThis(),
             json:jest.fn().mockReturnThis()
         }
-        Auth.mockResolvedValue(true);
+        Auth.mockResolvedValue({data:{user_metadata:{staff_id:123,role:"STAFF"}},state:true});
     })
     test.only('No user id test',async()=>{
+         Auth.mockResolvedValue({data:{user_metadata:{staff_id:null,role:null}},state:true});
         await Fetch_tickets({body:{}},res)
+       
         expect(res.status).toHaveBeenCalledWith(403);
 
     })
     test.only('Fetch tickets',async()=>{
         
         client.like.mockResolvedValue({count:5});
-        await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
+        await Fetch_tickets({body:{index:1,all:true}},res)
         expect(res.status).toHaveBeenCalledWith(201);
     })
     test.only('no tickets',async()=>{
         client.like.mockResolvedValue(0);
-        await Fetch_tickets({body:{index:1,type:null,user_id:123,role:"STAFF"}},res)
+        await Fetch_tickets({body:{index:1,all:true}},res)
         expect(res.status).toHaveBeenCalledWith(200);
     })
 })

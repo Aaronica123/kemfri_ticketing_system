@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@radix-ui/themes/dist/cjs/index.js";
 import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { Child_text1 } from "../../reusable/text";
 export default function Dashboard(){
   
     const [count,setcount]=useState({total:0,pending:0,solved:0})

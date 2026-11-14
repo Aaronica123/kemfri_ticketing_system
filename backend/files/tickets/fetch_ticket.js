@@ -1,24 +1,53 @@
 import { client } from "../supabase.js";
 import Auth from "../auth.js";
 export default async function Fetch_tickets(req,res){
-if(await Auth(req)){
+const d=await Auth(req)
+if(d.state){
+
     try {
-if(!req.body?.user_id||!req.body?.role){
+        console.log(d.data.user_metadata)
+if(!d.data.user_metadata?.staff_id||!d.data.user_metadata?.role){
     return res.status(403).json({message:"Missing values"})
 }
 const limit=10;
-console.log(req.body?.user_id)
-console.log(req.body?.role)
-console.log(req.body?.type)
+const filter=[];
+
 let data=null
-if(req.body.role=="STAFF"){
-data=await client.schema("usecase_kemfri").from("tickets").select("*",{ count: "exact", head: true }).like("staff_id",req.body.user_id)
+console.log(req.body);
+if(req.body.all){    
+
+data=await client
+  .schema("usecase_kemfri")
+  .from("tickets")
+  .select("*", { count: "exact", head: true })
+  .like("user_id",d.data.user_metadata.staff_id)
+
+console.log(data)
 }
 else{
-data=await client.schema("usecase_kemfri").from("tickets").select("*",{ count: "exact", head: true }).like("user_id",req.body.user_id)
+const p=Object.values(req.body.filter);    
+
+let v=0;
+while(p.length>v){
+    if(p[v]!=null){
+        filter.push(p[v])
+    }
+    v++;
 }
 
-console.log(data.count)
+console.log(filter)
+data=await client
+  .schema("usecase_kemfri")
+  .from("tickets")
+  .select("*", { count: "exact", head: true })
+  .like("user_id", d.data.user_metadata.staff_id)      
+  .in("ticket_state", filter);
+console.log(data)
+
+
+
+}
+
 if(!data.count||data.count<=0){
     return res.status(200).json({message:"No tickets exist",data:""})
 }
@@ -32,33 +61,18 @@ if(req?.body?.index>=pages){
 }else{
     offset=(req.body.index-1)*limit
 }
-if(!req.body?.type){
-// if(req.body.role=="STAFF"){
-// const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("staff_id",req?.body?.user_id);
-// console.log(da);
-// console.log(er);
-// return res.status(201).json({message:"General tickets fetched",data:da});
-// }else{
-const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("user_id",req?.body?.user_id);
+
+if(req.body.all){
+const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("user_id",d.data.user_metadata.staff_id);
 console.log(da);
 console.log(er);
-return res.status(201).json({message:"General tickets fetched",data:da});
+return res.status(201).json({message:"General tickets fetched",data:da,total:data.count});   
+}else{
 
-}
-else{
-    // if(req.body.role=="STAFF"){
-    // const{data:n_data,error:n_error}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).eq("ticket_state",req?.body?.type).like("staff_id",req?.body?.user_id)
-    // console.log(n_data);
-    // console.log(n_error);
-    // return res.status(201).json({message:"Tickets fetched",data:n_data});
-    // }
-   
-    const{data:n_data,error:n_error}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).eq("ticket_state",req?.body?.type).like("user_id",req?.body?.user_id)
-    console.log(n_data);
-    console.log(n_error);
-    return res.status(201).json({message:"Tickets fetched",data:n_data});
-    
-    
+const{data:da,error:er}=await client.schema("usecase_kemfri").from("tickets").select("ticket_id,ticket_type,description,ticket_state,team,created").range(0,offset).limit(limit).like("user_id",d.data.user_metadata.staff_id).in("ticket_state", filter);
+console.log(da);
+console.log(er);
+return res.status(201).json({message:"General tickets fetched",data:da,total:data.count});
 }
 
 } catch (error) {

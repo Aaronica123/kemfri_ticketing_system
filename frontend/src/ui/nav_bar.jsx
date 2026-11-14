@@ -34,7 +34,7 @@ console.log(user);
 const [track,settrack]=useState(true);
 const [lg,setlg]=useState(false);
 const [count,setcount]=useState(0);
-const [btn,trackbtn]=useState({btn1:false,btn2:true,btn3:false,btn4:false})
+const [btn,trackbtn]=useState({btn1:false,btn2:true,btn3:false,btn4:false,btn5:false,btn6:false})
 const update=()=>{
     settrack(!track);
 }
@@ -97,20 +97,20 @@ async function logout(){
 }
 
 const tickets=()=>{nav('/my_tickets');
-    trackbtn(()=>({btn1:false,btn2:false,btn3:true,btn4:false}))
+    trackbtn(()=>({btn1:false,btn2:false,btn3:true,btn4:false,btn5:false,btn6:false}))
 }
 const notify=()=>{nav('/notifications');
-    trackbtn(()=>({btn1:false,btn2:false,btn:false,btn4:true}))
+    trackbtn(()=>({btn1:false,btn2:false,btn:false,btn4:true,btn5:false,btn6:false}))
 
 };
 const dir=(value)=>{
     if(value==1){
         nav('/dashboard');
-        trackbtn(()=>({btn1:true,btn2:false,btn3:false,btn4:false}))
+        trackbtn(()=>({btn1:true,btn2:false,btn3:false,btn4:false,btn5:false,btn6:false}))
     }
     else{
         nav('/submit');
-        trackbtn(()=>({btn1:false,btn2:true,btn3:false,btn4:false}))
+        trackbtn(()=>({btn1:false,btn2:true,btn3:false,btn4:false,btn5:false,btn6:false}))
         
        
     }
@@ -180,122 +180,90 @@ return(<>
 
        }}className="anim" >
         
-            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px"}}>
+            <div style={{width:"100%",height:"fit-content",display:'flex',justifyContent:"left",padding:"10px",gap:"5px",marginTop:"15px",borderBottom:"solid 1px #BED0EB"}}>
             {/* <Avatar fallback="KM" size={"4"} src="" color="blue" radius="medium"></Avatar>  */}
-            <div style={{width:"fit-content"}}>
-                 <div style={{background:"#0765E0",padding:"10px",borderRadius:"10px"}}>
-                    <Text size={"5"} weight={"bold"} style={{color:"white"}}>KM</Text>
+            <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",gap:"10px"}}>
+                 <div style={{width:"fit-content",height:"fit-content",background:"#152C54",padding:"10px",borderRadius:"10px"}}>
+                    <Text size={"2"} weight={"bold"} style={{color:"white"}}>KM</Text>
                 </div> 
+            
+            <Text weight={"medium"} size={"5"} style={{width:"100%",height:"fit-content",color:"#A8BFDF",fontFamily:"Inter"}}>
+                ICT Help Desk
+            </Text>
             </div>
-            <div style={{width:"100%",justifyContent:"right",alignItems:"center",display:"flex"}}>
+            <div style={{width:"fit-content",justifyContent:"right",alignItems:"center",display:"flex",marginLeft:"15px"}}>
             <Button variant="ghost">
-            <SidebarClose size={"25"} onClick={update} color="#BEBEBE"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarClose>
+            <SidebarClose size={"25"} onClick={update} color="#A8BFDF"style={{width:"fit-content",height:"fit-content",cursor:"pointer"}}></SidebarClose>
             </Button>  
             </div>
             </div> 
             
-            <div style={{width:"100%",height:"fit-content", display:"flex",justifyContent:'left',flexWrap:"wrap",padding:"10px",marginTop:"-5px"}}>
-            <Heading weight={"bold"} style={{color:"#BEBEBE",fontFamily:"sans-serif",fontSize:"20px"}}>ICT Help Desk</Heading> 
-            </div>
-            <div style={{width:"100%",height:"100%",display:"flex",
-                flexDirection:"column",flexWrap:"nowrap",overflow:'auto',gap:"15px",
-                border:"single 2px grey",
-                borderLeft:"0px",borderRight:"0px",borderWidth:"100%",padding:"10px"}}>
-            <ScrollArea type="always" scrollbars="vertical" size={"1"} style={{display:"flex",wdith:"100%",padding:"10px"}}>
-            <div style={{display:"flex",flexDirection:"column",justifyContent:"left",
-                height:"fit-content",width:"100%",gap:"5px"
-            }}>
-                <div style={{display:"flex",padding:"5px"}}>
-                <Text weight={"medium"} style={{color:"#BEBEBE",fontFamily:"sans-serif"}}>Main</Text>
-                </div>
-                <Separator size={"4"} orientation={"horizontal"} ></Separator>
-                <div style={{display:"flex",flexDirection:"column",width:"100%",height:"fit-content",
-                    gap:"20px",
-                    padding:"10px"
-                }}>
-                    {btn.btn1?
-                     <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none",
-        background:"#132CB5 80%"
-    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
-    <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Dashboard</Text>
-    </Button>:
-    <Button className="btn12" variant="ghost"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",outline:"none"
-    }} onClick={()=>{dir(1);update()}}><LayoutDashboard color="white"></LayoutDashboard>
-    <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Dashboard</Text>
-    </Button>
             
-}
-{btn.btn2?
-<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
-    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
-    <Text  weight={"medium"} style={{width:"100%",color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
-    </Button>
-:
-     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"10px",padding:"5px",flexDirection:"row"
-    }} onClick={()=>{dir(2);update();}}><TicketPlus color="whitesmoke"/>
-    <Text  weight={"medium"} style={{width:"100%",color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
-    </Button>
-}
-{btn.btn3?
-<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",background:"#132CB5 80%"
-    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text>
-     </Button>
-:
-     <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }} onClick={()=>{tickets();update()}} ><ListTodo color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>My Tickets</Text>
-     </Button>
-}
-{btn.btn4?
-
-<Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",flexDirection:"row",background:"#132CB5 80%"
-    }} onClick={()=>{notify();update()}} >
-        <div style={{display:"flex",width:"fit-content"}}>
-            <Bell size={"25"} color="whitesmoke"></Bell></div>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
-    </Button>:
-    <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",flexDirection:"row"
-    }} onClick={()=>{notify();update()}} >
-        <div style={{display:"flex",width:"fit-content"}}>
-            <Bell size={"25"} color="whitesmoke"></Bell></div>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Notifications</Text>
-    </Button>
-}
- <Button className="btn12"variant="ghost" color="black"style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",flexDirection:"row"
-    }} onClick={()=>{nav("/assigned_tickets")}} >
-        <div style={{display:"flex",width:"fit-content"}}>
-            <Bell size={"25"} color="whitesmoke"></Bell></div>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Assigned Tickets</Text>
-    </Button>
-    {user.group=='STAFF'?
-    <div style={{display:"flex",width:"100%",flexDirection:"column",gap:"15px"}}>
-    <div style={{display:"flex",flexDirection:"column",width:"100%",gap:"5px"}}>
-     <Text weight={"medium"} style={{color:"#BEBEBE",fontFamily:"sans-serif",fontSize:"16px"}}>Staff</Text>
-    <Separator size={"4"} orientation={"horizontal"} ></Separator>
-    </div>
-     <Button className="btn12"variant="ghost" style={{width:"100%",height:"fit-content",display:"flex",
-        justifyContent:"left",gap:"12px",padding:"5px",flexDirection:"row",color:"rgba(15, 15, 15, 0.733)"
-    }}
-    onClick={()=>{nav('/staff_dashboard'); update()}} ><BookOpenCheck color="whitesmoke"/>
-     <Text weight={"medium"} style={{color:"#E2E2E5",fontFamily:"sans-serif"}}>Submit Ticket</Text>
-    </Button>
-    </div>
-    :""}
+            <div style={{width:"100%",height:"100%",display:"flex",
+                flexDirection:"column",overflowX:"hidden",overflowY:"auto"}}>
+            <div style={{
+                width:"100%",height:"fit-content",display:"flex",
+                flexDirection:"column"
+            }}>
+                <Text size={"2"} style={{padding:"10px",color:"#BED0EB",fontFamily:"inter" }}> Users</Text>
+                <div style={{width:"100%",height:"fit-content",display:"flex",
+                flexDirection:"column",padding:"10px",gap:"12px",marginTop:"-8px"}}>
+                    <button onClick={()=>{trackbtn({btn1:true,btn2:false,btn3:false,btn4:false,btn5:false,btn6:false});nav('/dashboard');settrack(false)}} style={{cursor:"pointer",borderRadius:"5px",background:btn.btn1?"#254B85":"",border:btn.btn1?"none":"none",width:"100%",padding:"5px",display:"flex"
+                        ,flexDirection:"row",gap:"8px"}}>
+                        <LayoutDashboard color={btn.btn1?"#FFFFFF":"#BED0EB"}></LayoutDashboard>
+                        <Text style={{width:"100%",display:"flex",color:btn.btn1?"#FFFFFF":"#BED0EB"}}>
+                        Dashboard
+                        </Text>
+                        </button>
+                    <button
+                    onClick={()=>{trackbtn({btn1:false,btn2:true,btn3:false,btn4:false,btn5:false,btn6:false});nav('/submit');settrack(false)}}
+                    style={{cursor:"pointer",borderRadius:"5px",background:btn.btn2?"#254B85":"",border:btn.btn2?"none":"none",width:"100%",padding:"5px",display:"flex"
+                        ,flexDirection:"row",gap:"8px"}}>
+                        <BookOpenCheck color={btn.btn2?"#FFFFFF":"#BED0EB"}></BookOpenCheck>
+                        <Text style={{width:"100%",display:"flex",color:btn.btn2?"#FFFFFF":"#BED0EB"}}>
+                        Submit Ticket
+                        </Text>
+                    </button>
+                    <button
+                    onClick={()=>{trackbtn({btn1:false,btn2:false,btn3:true,btn4:false,btn5:false,btn6:false});nav('/my_tickets');settrack(false)}}
+                    style={{cursor:"pointer",borderRadius:"5px",background:btn.btn3?"#254B85":"",border:btn.btn3?"none":"none",width:"100%",padding:"5px",display:"flex"
+                        ,flexDirection:"row",gap:"8px"}}>
+                        <ListTodo color={btn.btn3?"#FFFFFF":"#BED0EB"}></ListTodo>
+                        <Text style={{width:"100%",display:"flex",color:btn.btn3?"#FFFFFF":"#BED0EB"}}>
+                        User Tickets
+                        </Text>
+                    </button>
                 </div>
-
-
-            </div>
-            </ScrollArea>
+                </div>        
+            {user.role=="STAFF"?   
+            <div style={{
+                width:"100%",height:"fit-content",display:"flex",
+                flexDirection:"column"
+            }}>
+                <Text size={"2"} style={{padding:"10px",color:"#BED0EB" }}> Staff</Text>
+                <div style={{width:"100%",height:"fit-content",display:"flex",
+                flexDirection:"column",padding:"10px",gap:"12px",marginTop:"-8px"}}>
+                    <button onClick={()=>{trackbtn({btn1:false,btn2:false,btn3:false,btn4:true,btn5:false,btn6:false});nav('/assigned_tickets');settrack(false)}} style={{cursor:"pointer",borderRadius:"5px",background:btn.btn4?"#254B85":"",border:btn.btn4?"none":"solid 1px #BED0EB",width:"100%",padding:"5px",display:"flex"
+                        ,flexDirection:"row",gap:"8px"}}>
+                        <LayoutDashboard color={btn.btn4?"#FFFFFF":"#BED0EB"}></LayoutDashboard>
+                        <Text style={{width:"100%",display:"flex",color:btn.btn4?"#FFFFFF":"#BED0EB"}}>
+                        Assigned Tickets
+                        </Text>
+                        </button>
+                    <button
+                    onClick={()=>{trackbtn({btn1:false,btn2:false,btn3:false,btn4:false,btn5:true,btn6:false});nav('/underway_tickets');settrack(false)}}
+                    style={{cursor:"pointer",borderRadius:"5px",background:btn.btn5?"#254B85":"",border:btn.btn5?"none":"solid 1px #BED0EB",width:"100%",padding:"5px",display:"flex"
+                        ,flexDirection:"row",gap:"8px"}}>
+                        <BookOpenCheck color={btn.btn5?"#FFFFFF":"#BED0EB"}></BookOpenCheck>
+                        <Text style={{width:"100%",display:"flex",color:btn.btn5?"#FFFFFF":"#BED0EB"}}>
+                        Underway Tickets
+                        </Text>
+                    </button>
+                    
+                </div>
+                </div>   
+                :""}       
+            <div style={{width:"100%"}}></div>
             </div> 
             
             <div style={{width:"100%",height:"fit-content",display:"flex",padding:"15px"}}>
@@ -438,26 +406,28 @@ return(<>
             </div> */}
         
             <div style={{width:"100%",height:"fit-content",display:"flex",justifyContent:"right",
-               flexDirection:"row",gap:"10px",padding:'20px'}}>
-                <div style={{cursor:"pointer",width:"fit-content",height:"fit-content",background:"#03103B 90%",color:"whitesmoke",padding:"3px",borderRadius:"5px"}} >
-                    <BarChart onClick={()=>settrack(true)}></BarChart>
+               flexDirection:"row",gap:"10px",padding:'20px',background:"#FFFFFF"}}>
+                <div style={{cursor:"pointer",width:"fit-content",height:"fit-content",color:"whitesmoke",padding:"3px",borderRadius:"5px"}} >
+                    <BarChart color="black" onClick={()=>settrack(true)}></BarChart>
                 </div>
                 <div style={{width:"100%",height:"fit-content",display:"flex", 
                     justifyContent:"right",flexWrap:"wrap"}}>
-                <Heading weight={"bold"} color="black" style={{fontFamily:"sans-serif",fontSize:"22px"}}>Kenya Marine And Research Institute</Heading>
+                <Text weight={"bold"} size={"3"} style={{fontFamily:"Inter",color:"#0865C4"}}>
+                            {String("Kenya Marine And Fisheries Research Institute").toUpperCase()}
+                        </Text>
                 </div>
                 <Separator orientation={"vertical"} size={"2"} style={{fontWeight:"bold"}}/>
                 <div style={{alignItems:"center",justifyContent:"center",display:"flex",width:"fit-content"
                     ,height:"fit-content"
                 }}>
-                <Button variant="ghost" color="black" highContrast onClick={Connection} 
+                {/* <Button variant="ghost" color="black" highContrast onClick={Connection} 
                 style={{width:"fit-content",height:"fit-content", cursor:"pointer",justifyContent:"center",alignItems:"center",display:"flex"}}>
                 <Bell size={"30"} color="black" style={{display:"flex",width:"fit-content"}}></Bell>
                 <Badge variant="soft" radius="full" highContrast color="black" style={{marginTop:"-20px",marginLeft:"-12px"}}>
                     {count}
                 </Badge>
                 
-                </Button>
+                </Button> */}
                 {/* </div> */}
             </div>
             
@@ -465,7 +435,7 @@ return(<>
 
         
        
-        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"#ebebefdc 10%"}}>
+        <div style={{width:"100%", display:"flex",height:"100%",overflow:"auto",padding:"10px",background:"#F5F7FC"}}>
             {children}
         </div>
 

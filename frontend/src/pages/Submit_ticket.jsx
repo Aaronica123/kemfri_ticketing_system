@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Load_button } from "../ui/buttons";
 import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
 import { Check_auth } from "../auth/new_auth";
+import { Child_text1, Child_text2, Label_txt } from "../../reusable/text";
 export default function SubmitForm(){
     const [set,setf]=useState({data_m:"options"})
     const [cat,setcat]=useState({data_m:"options"})
@@ -147,7 +148,7 @@ set_priority_array(data.data.data);
         <>
         <div style={{width:"80%", height:"100%",
             display:"flex", flexDirection:"column", justifyContent:"center",alignItems:"center",
-            gap:"5px",marginLeft:"25px"
+            gap:"15px",marginLeft:"25px"
         }}>
             <div style={{display:"flex",flexDirection:"column",width:"100%",justifyContent:"left"}}>
             <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",
@@ -156,9 +157,11 @@ set_priority_array(data.data.data);
                             {/* <Head_Mess>Welcome Back , {localStorage.getItem('firstname')}</Head_Mess>
                             <Main_Text>System Overview and Admin</Main_Text>*/}
                             <div style={{width:"fit-content",
-                   flexDirection:"row",display:"flex",height:"fit-content"
+                   flexDirection:"column",display:"flex",height:"fit-content",gap:"1px"
                  }}> 
-                 <Heading weight={"bold"} style={{fontSize:"20px",fontFamily:"sans-serif"}} color="black">Submit Ticket</Heading>
+                 <Text size={"7"} style={{color:"#172C50",fontFamily:"Inter" }} weight={"medium"}>Submit Ticket</Text>
+                 <Child_text1>Create a ticket using the form below</Child_text1>
+                 
                 </div>
             {/* <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"row",padding:"5px",gap:"15px"
             }}>
@@ -170,29 +173,20 @@ set_priority_array(data.data.data);
             </div>
             <div style={{display:"flex",width:"100%",height:"100%",justifyContent:"left"}}>
                 <Card style={{display:"flex",flexDirection:"column",
-                    justifyContent:'left',width:"100%",height:"fit-content",padding:"20px",
+                    justifyContent:'left',width:"600px",height:"400px",padding:"20px",
                     gap:"15px"
                 }}> 
-                    
-                    <Text weight={"regular"} style={{fontSize:'17px',fontFamily:"sans-serif",color:"darkgray"}}>Image Upload</Text>
                     <div style={{width:"fit-content",display:"flex",flexDirection:"row",gap:"10px"}}>
-                     <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Upload</Text>
+                     <Label_txt weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Upload</Label_txt>
                     <input type="file"  onChange={file_change} multiple style={{width:"fit-content",flexWrap:"wrap"}}></input>
                     </div>
                    
-                    <Text weight={"regular"} style={{fontSize:'17px',fontFamily:"sans-serif",color:"darkgray"}}>Issue Details</Text>
-                    {/* <div style={{display:"flex",
-                        flexDirection:"column",gap:"10px",width:"100%",
-                        height:"fit-content"
-                    }}>
-                        <Head_Text>Subject </Head_Text>
-                        <Input_Field placeholder={'Subject'}></Input_Field>  
-                    </div> */}
+                   
                     <div style={{display:"flex",flexDirection:"row",
                         width:"fit-content",height:"fit-content",
                         flexWrap:"wrap",gap:"15px"
                     }}>
-                        <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Text>
+                        <Label_txt weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Category</Label_txt>
                         <select onChange={form_change} name="category" required>
                             <option value={""}>Choose A Category</option>
                             <option value={"hardware"}>Hardware</option>
@@ -247,16 +241,20 @@ set_priority_array(data.data.data);
                             </DropdownMenu.Root>
                         </div> */}
                     </div>
-                    <div style={{width:"100%",height:"fit-content",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
-                       <Text weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Text>
+                    <div style={{width:"100%",height:"100%",justifyContent:"left",flexDirection:"column",display:"flex",gap:"10px"}}>
+                       <Label_txt weight={"medium"} style={{fontFamily:"sans-serif",fontSize:"15px",color:"gray"}}>Description</Label_txt>
                        <TextArea required value={form.ticket_issue} variant="surface" size={"3"} color="black" resize={"vertical"} placeholder="Describe Issue" onChange={form_change} name="ticket_issue"  style={{width:"100%",height:"100%",fontSize:"20px",color:"black",fontWeight:"bold"}} >
                        </TextArea>
                     </div>
-                    {track?
-                    <Button size="3" variant="outline" color="blue" style={{width:"fit-content"}}><Spinner></Spinner>Submitting</Button>
-                    :
-                    <Button size={"3"} variant="classic" color="blue" style={{width:"fit-content",cursor:"pointer"}} onClick={create_ticket}>Create</Button>
+                    <button onClick={create_ticket} type="button" style={{width:"30%",backgroundColor:"#0865C4",padding:"8px",borderRadius:"8px",justifyContent:"center",alignItems:"center"}}>
+                            {track?<Text weight={"regular"} size={"4"} style={{fontFamily:"Inter",color:"#FFFFFF",display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",gap:"5px"}}>
+                                
+                               <Spinner></Spinner> 
+                                Creating</Text>:
+                            <Text weight={"regular"} size={"4"} style={{fontFamily:"Inter",color:"#FFFFFF"}}>
+                                Create</Text>
 }
+                            </button>
                 </Card>
 
             </div>

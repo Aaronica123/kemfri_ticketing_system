@@ -1,3 +1,4 @@
+@import "tailwindcss";
 .rt-BaseDialogOverlay {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);

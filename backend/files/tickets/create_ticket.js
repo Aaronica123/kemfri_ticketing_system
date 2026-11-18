@@ -113,7 +113,8 @@ try{
         team:ticket_type,
         user_id:user_id,
         branch:branch,
-        created:cr
+        created:created,
+        created_date:cr
     })
     if(data){
         console.log(data)

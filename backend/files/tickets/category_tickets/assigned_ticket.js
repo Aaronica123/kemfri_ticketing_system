@@ -19,7 +19,7 @@ export async function Underway_ticket(req,res) {
                  port:process.env.port,
                  useSSL:false
          })
-        const dateFromDB = data[0].created;
+        const dateFromDB = data[0].created_date;
 const formatted = new Date(dateFromDB).toLocaleDateString("en-US", {
   month:"numeric",day:"numeric",year:"numeric"
 });
@@ -53,7 +53,7 @@ export default async function Assigned_ticket(req,res) {
                  port:process.env.port,
                  useSSL:false
          })
-        const dateFromDB = data[0].created;
+        const dateFromDB = data[0].created_date;
 const formatted = new Date(dateFromDB).toLocaleDateString("en-US", {
   month:"numeric",day:"numeric",year:"numeric"
 });

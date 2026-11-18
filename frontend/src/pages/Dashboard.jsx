@@ -13,25 +13,9 @@ import { supabase } from "../auth/supabase.js";
 import { Check_auth } from "../auth/new_auth.jsx";
 export default function Dashboard(){
     const{user}=Check_auth();
-    
-    const [count,setcount]=useState({total:0,pending:0,solved:0})
-    const [track,settrack]=useState(false);
-    const[resolve,setresolve]=useState(false);
-    const [pending,setpending]=useState(false);
     const [states,setstates]=useState({total:false,assigned:false,underway:false,pending:false,resolved:false,escalated:false})
     
     const[db,setdb]=useState({total:0,pending:0,assigned:0,underway:0,resolved:0,escalated:0})
-    // const total_fetch=async()=>{
-    //     await con().get('/total_tickets').then((data)=>{
-    //         setcount((data_)=>({...data_,
-    //             total:data.data.count}))
-    //         settrack(true);
-    //     }).catch((error)=>{
-    //         settrack(true)
-    //         console.log(error);
-    //         // alert("an error occured");
-    //     })
-    // }
     const total=async()=>{
         console.log(user)
         setstates((data)=>({
@@ -51,7 +35,7 @@ export default function Dashboard(){
             ...data,
             total:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
     }
     const pending_ticket=async()=>{
         console.log(user)
@@ -72,7 +56,7 @@ export default function Dashboard(){
             ...data,
             pending:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
     }
      const escalated=async()=>{
         console.log(user)
@@ -92,7 +76,7 @@ export default function Dashboard(){
             ...data,
             escalated:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
     }
     const underway=async()=>{
         console.log(user)
@@ -113,7 +97,7 @@ export default function Dashboard(){
             ...data,
             underway:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
     }
     const assigned=async()=>{
         console.log(user)
@@ -133,7 +117,7 @@ export default function Dashboard(){
             ...data,
             assigned:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
     }
     const resolved=async()=>{
         console.log(user)
@@ -154,31 +138,14 @@ export default function Dashboard(){
             ...data,
            resolved:false
         }))
-        console.log(data.count);
+        // console.log(data.count);
+    }
+    const analysis=async()=>{
+        const data=await supabase.schema("usecase_kemfri").from("tickets_analysis").select("*").like("user_id",user.user_id);
+        console.log("Analysis data below")
+        console.log(data) 
     }
 
-    // const pending_fetch=async()=>{
-    //     await con().get('/pending_tickets').then((data)=>{
-    //          setcount((data_)=>({...data_,
-    //             pending:data.data.count}))
-    //         setpending(true);
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //         setpending(true)
-    //         // alert("an error occured");
-    //     })
-    // }
-    // const resolved_fetch=async()=>{
-    //     await con().get('/resolved_tickets').then((data)=>{
-    //         setcount((data_)=>({...data_,
-    //             solved:data.data.count}))
-    //         setresolve(true);
-    //     }).catch((error)=>{
-    //         console.log(error);
-    //         setresolve(true)
-    //         // alert("an error occured");
-    //     })
-    // }
     useEffect(()=>{
         total();
         pending_ticket();
@@ -186,9 +153,7 @@ export default function Dashboard(){
         resolved();
         underway();
         escalated();
-        // total_fetch();
-        // pending_fetch();
-        // resolved_fetch();
+        analysis();
 
     },[])
     return(<>
@@ -208,7 +173,7 @@ export default function Dashboard(){
                    Dashboard Tickets
                 </Text> */}
             </div>
-            <Text weight={"light"} style={{fontSize:"16px",fontFamily:"sans-serif",color:"black"}}>
+            <Text weight={"light"} style={{color:"#172C50",fontFamily:"Inter"}}>
                    Dashboard Tickets
                 </Text>
             <div style={{display:"flex",flexDirection:"row",width:"fit-content",

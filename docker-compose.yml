@@ -5,10 +5,11 @@ services:
       - "9000"
     ports:
       - "9000:9000"
-    environment:
-      - MINIO_ROOT_PASSWORD=""
-      - MINIO_ROOT_USER=""
+    env_file:
+      - .env
     container_name: minio_container
+    networks:
+      - kemfrinetwork
   
   rabbit_container:
     image: aaronica123/rabbit:latest
@@ -17,5 +18,20 @@ services:
     ports:
       - "5672:5672"
     container_name: rabbit_container
+    networks:
+      - kemfrinetwork
+  redis_container:
+    image: aaronica123/redis_stable:latest
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
+    container_name: redis_container
+    networks:
+      - kemfrinetwork
+
+networks:
+  kemfrinetwork:
+    driver: bridge
   
     

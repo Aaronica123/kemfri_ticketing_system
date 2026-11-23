@@ -12,7 +12,7 @@ services:
       - kemfrinetwork
   
   rabbit_container:
-    image: aaronica123/rabbit:latest
+    image: aaronica123/rabbit:2026-08-24_09-49-24
     expose:
       - "5672"
     ports:

@@ -12,7 +12,7 @@ services:
       - kemfrinetwork
   
   rabbit_container:
-    image: aaronica123/rabbit:2026-08-24_09-49-24
+    image: aaronica123/rabbit:latest
     expose:
       - "5672"
     ports:
@@ -21,7 +21,7 @@ services:
     networks:
       - kemfrinetwork
   redis_container:
-    image: aaronica123/redis_stable:latest
+    image: aaronica123/redis_stable:2026-08-24_09-49-24
     expose:
       - "6379"
     ports:

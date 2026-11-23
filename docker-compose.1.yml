@@ -1,0 +1,12 @@
+services:
+  minio_container:
+    image: bitnamicharts/minio:17.0.21
+    expose:
+      - "43857:43857"
+    container_name: minio_container
+  
+  rabbit_container:
+    image: rabbitmq:latest
+    container_name: rabbit_container
+  
+    

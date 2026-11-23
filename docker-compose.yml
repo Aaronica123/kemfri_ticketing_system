@@ -1,14 +1,26 @@
 services:
   minio_container:
-    image: bitnamicharts/minio:17.0.21
-    expose:
-      - "9000"
-    ports:
-      - "9000:9000"
+    image: minio/minio:latest        # or bitnami/minio:latest
     container_name: minio_container
-  
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web console
+    volumes:
+      - minio_data:/data
+
   rabbit_container:
-    image: rabbitmq:latest
+    image: rabbitmq:3-management
     container_name: rabbit_container
-  
-    
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  minio_data:

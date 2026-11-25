@@ -29,7 +29,17 @@ services:
     container_name: redis_container
     networks:
       - kemfrinetwork
-
+  flask_container:
+    build:
+      context: ./flask_app
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    networks:
+      - kemfrinetwork
+    container_name: flask_container
 networks:
   kemfrinetwork:
     driver: bridge

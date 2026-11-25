@@ -1,19 +1,19 @@
 services:
-  frontendcontainer:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        - VITE_API_URL=${VITE_API_URL}
-        - VITE_API_KEY=${VITE_API_KEY}
-        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
-    expose:
-      - "3000"
-    ports:
-      - "3000:3000"
-    container_name: frontendcontainer
-    networks:
-      - kemfrinetwork
+  # frontendcontainer:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       - VITE_API_URL=${VITE_API_URL}
+  #       - VITE_API_KEY=${VITE_API_KEY}
+  #       - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+  #   expose:
+  #     - "3000"
+  #   ports:
+  #     - "3000:3000"
+  #   container_name: frontendcontainer
+  #   networks:
+  #     - kemfrinetwork
       
 
   minio_container:
@@ -59,8 +59,12 @@ services:
     container_name: flask_container
   nginx_container:
     build: 
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_API_KEY=${VITE_API_KEY}
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     ports:
       - "80:80"
     expose:
@@ -68,8 +72,7 @@ services:
     container_name: nginx_container
     networks:
       - kemfrinetwork
-    depends_on:
-      - frontendcontainer
+    
 
 networks:
   kemfrinetwork:

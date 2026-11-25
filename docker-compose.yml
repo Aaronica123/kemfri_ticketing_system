@@ -1,5 +1,5 @@
 services:
-  frontend_container:
+  frontendcontainer:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -8,10 +8,10 @@ services:
         - VITE_API_KEY=${VITE_API_KEY}
         - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     expose:
-      - "5173"
+      - "3000"
     ports:
-      - "5173:5173"
-    container_name: frontend_container
+      - "3000:3000"
+    container_name: frontendcontainer
     networks:
       - kemfrinetwork
       
@@ -68,6 +68,9 @@ services:
     container_name: nginx_container
     networks:
       - kemfrinetwork
+    depends_on:
+      - frontendcontainer
+
 networks:
   kemfrinetwork:
     driver: bridge

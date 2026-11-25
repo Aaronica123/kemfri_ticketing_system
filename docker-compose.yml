@@ -1,5 +1,5 @@
 services:
-  frontend_container:
+  frontendcontainer:
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
       - "3000"
     ports:
       - "3000:3000"
-    container_name: frontend_container
+    container_name: frontendcontainer
     networks:
       - kemfrinetwork
       
@@ -69,8 +69,8 @@ services:
     networks:
       - kemfrinetwork
     depends_on:
-      - frontend_container
-      
+      - frontendcontainer
+
 networks:
   kemfrinetwork:
     driver: bridge

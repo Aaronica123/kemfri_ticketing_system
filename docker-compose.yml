@@ -1,4 +1,21 @@
 services:
+  frontend_container:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_API_KEY=${VITE_API_KEY}
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    expose:
+      - "5173"
+    ports:
+      - "5173:5173"
+    container_name: frontend_container
+    networks:
+      - kemfrinetwork
+      
+
   minio_container:
     image: aaronica123/minio:latest
     expose:
@@ -29,7 +46,28 @@ services:
     container_name: redis_container
     networks:
       - kemfrinetwork
-
+  flask_container:
+    build:
+      context: ./flask_app
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    networks:
+      - kemfrinetwork
+    container_name: flask_container
+  nginx_container:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    expose:
+      - "80"
+    container_name: nginx_container
+    networks:
+      - kemfrinetwork
 networks:
   kemfrinetwork:
     driver: bridge

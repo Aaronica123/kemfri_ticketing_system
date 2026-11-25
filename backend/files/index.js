@@ -2,7 +2,7 @@ import app from "./app.js";
 // import {Client} from "pg";
 import {configDotenv} from "dotenv";
 // import { conn } from "./app.js";
-import { conf } from "./connection/redis.js";
+// import { conf } from "./connection/redis.js";
 import { Ticket_Recieve } from "./tickets/create_ticket.js";
 configDotenv();
 // const con=new Client({
@@ -10,9 +10,9 @@ configDotenv();
 // })
 async function start(){
     try{
-await conf.connect().then(()=>{console.log("connected")})
+// await conf.connect().then(()=>{console.log("connected")})
 app.listen(3001);
-Ticket_Recieve();
+// Ticket_Recieve();
 
 console.log("listening");
     }catch(error){

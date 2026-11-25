@@ -2,7 +2,7 @@
 import axios from "axios";
 import { supabase } from "../auth/supabase.js";
 export const connect=axios.create({
-baseURL:"/api",
+baseURL:`${import.meta.env.VITE_BACKEND_URL}/api`,
 headers:{
     "Content-Type":"application/json"
 },

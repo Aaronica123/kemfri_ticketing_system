@@ -32,7 +32,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     env_file:
-      - .env
+      - .env.minio
     container_name: minio_container
     networks:
       - kemfrinetwork

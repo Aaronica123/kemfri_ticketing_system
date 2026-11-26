@@ -1,19 +1,24 @@
 services:
-  # frontendcontainer:
-  #   build:
-  #     context: ./frontend
-  #     dockerfile: Dockerfile
-  #     args:
-  #       - VITE_API_URL=${VITE_API_URL}
-  #       - VITE_API_KEY=${VITE_API_KEY}
-  #       - VITE_BACKEND_URL=${VITE_BACKEND_URL}
-  #   expose:
-  #     - "3000"
-  #   ports:
-  #     - "3000:3000"
-  #   container_name: frontendcontainer
-  #   networks:
-  #     - kemfrinetwork
+  backend_container:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        endPoint=${endPoint}
+        port=${port}
+        accessKey=${accessKey}
+        secretKey=${secretKey}
+        PATH=${PATH}
+        frontendurl=${frontendurl}
+        api_key=${api_key}
+        url=${url}
+    expose:
+      - "3001"
+    ports:
+      - "3001:3001"
+    container_name: backend_container
+    networks:
+      - kemfrinetwork
       
 
   minio_container:
@@ -72,6 +77,7 @@ services:
     container_name: nginx_container
     depends_on:
       - flask_container
+      - backend_container
     networks:
       - kemfrinetwork
     

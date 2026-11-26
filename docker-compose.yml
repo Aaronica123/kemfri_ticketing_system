@@ -23,6 +23,8 @@ services:
 
   minio_container:
     image: aaronica123/minio:latest
+    command: "server /data --console-address 9001"
+
     expose:
       - "9000"
     ports:

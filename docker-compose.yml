@@ -21,21 +21,21 @@ services:
       - kemfrinetwork
       
 
-  minio_container:
-    build: 
-      context: .
-      dockerfile: Dockerfile
+  # minio_container:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
       
 
-    expose:
-      - "9000"
-    ports:
-      - "9000:9000"
-    env_file:
-      - .env
-    container_name: minio_container
-    networks:
-      - kemfrinetwork
+  #   expose:
+  #     - "9000"
+  #   ports:
+  #     - "9000:9000"
+  #   env_file:
+  #     - .env
+  #   container_name: minio_container
+  #   networks:
+  #     - kemfrinetwork
   
   rabbit_container:
     image: aaronica123/rabbit:latest

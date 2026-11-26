@@ -20,7 +20,7 @@ services:
     networks:
       - kemfrinetwork
     env_file:
-      - -.env
+      - .env
 
   minio-container:
     build: 

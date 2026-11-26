@@ -18,6 +18,7 @@ ARG secretKey
 ENV secretKey=${secretKey}
 ARG frontendurl
 ENV frontendurl=${frontendurl}
-
+ARG path
+ENV path=${path}
 
 CMD ["node","./files/index.js"]

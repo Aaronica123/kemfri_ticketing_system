@@ -1,4 +1,6 @@
 FROM node:22.23-bookworm-slim
+WORKDIR /app
+COPY package*.json ./
 COPY . .
 EXPOSE 3001
 RUN npm install
@@ -16,11 +18,6 @@ ARG secretKey
 ENV secretKey=${secretKey}
 ARG frontendurl
 ENV frontendurl=${frontendurl}
-ARG redisurl
-ENV redisurl=${redisurl}
-ARG rabbitmq
-ENV rabbitmq=${rabbitmq}
 
-RUN echo "$url,${api_key},${endPoint},${port},${accessKey},${secretKey},${frontendurl},${redisurl},${rabbitmq}"
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
 CMD ["node","./files/index.js"]

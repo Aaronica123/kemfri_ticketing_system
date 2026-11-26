@@ -39,7 +39,7 @@ app.post('/api/ai_ticket',classifyTicket);
 app.post('/api/register',Register);
 app.post('/api/create_ticket',Create_Ticket);
 app.post('/api/fetch_ticket',Fetch_tickets);
-// app.post('/api/upload_file',upload.array('kemfri_images',3),Upload_files);
+app.post('/api/upload_file',upload.array('kemfri_images',3),Upload_files);
 app.post('/api/update_ticket',Update_Ticket);
 app.get('/api/assigned_tickets',Assigned_ticket);
 app.get('/api/underway_tickets',Underway_ticket);

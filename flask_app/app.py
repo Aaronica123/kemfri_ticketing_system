@@ -7,7 +7,7 @@ app = Flask(__name__)
 tfidf    = load("tfidf_vectorizer.joblib")
 model_rf = load("my_model.joblib")
 
-@app.route("/predict", methods=["POST"])
+@app.route("/ai/predict", methods=["POST"])
 def predict():
     data = request.get_json(silent=True) or {}
     text = data.get("text", "").strip()

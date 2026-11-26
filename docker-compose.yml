@@ -8,7 +8,7 @@ services:
        - port=${port}
        - accessKey=${accessKey}
        - secretKey=${secretKey}
-       - PATH=${PATH}
+       - path=${path}
        - frontendurl=${frontendurl}
        - api_key=${api_key}
        - url=${url}
@@ -19,7 +19,8 @@ services:
     container_name: backend_container
     networks:
       - kemfrinetwork
-      
+    env_file:
+      - -.env
 
   minio_container:
     build: 

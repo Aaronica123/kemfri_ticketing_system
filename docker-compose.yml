@@ -4,14 +4,14 @@ services:
       context: ./backend
       dockerfile: Dockerfile
       args:
-        endPoint=${endPoint}
-        port=${port}
-        accessKey=${accessKey}
-        secretKey=${secretKey}
-        PATH=${PATH}
-        frontendurl=${frontendurl}
-        api_key=${api_key}
-        url=${url}
+       - endPoint=${endPoint}
+       - port=${port}
+       - accessKey=${accessKey}
+       - secretKey=${secretKey}
+       - PATH=${PATH}
+       - frontendurl=${frontendurl}
+       - api_key=${api_key}
+       - url=${url}
     expose:
       - "3001"
     ports:

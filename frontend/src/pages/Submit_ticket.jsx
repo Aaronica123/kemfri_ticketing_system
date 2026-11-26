@@ -48,11 +48,21 @@ export default function SubmitForm(){
         }
         console.log(hold.get('kemfri_images'))
        
-        await connect.post('/upload_file',hold,{
+        const data=await connect.post('/upload_file',hold,{
             headers:{
                 'Content-Type':'multipart/form-data'
             }
         })
+        if(data.status==200){
+            alert("Image has been uploaded")
+            return;
+        }
+        else{
+            alert("Failed to uplaod image")
+            console.log(data.data)
+            return;
+        }
+        
     }
     const [track,settrack]=useState(false);
     

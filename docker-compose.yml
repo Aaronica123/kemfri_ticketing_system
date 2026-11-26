@@ -22,7 +22,7 @@ services:
     env_file:
       - -.env
 
-  minio_container:
+  minio-container:
     build: 
       context: .
       dockerfile: Dockerfile
@@ -34,7 +34,7 @@ services:
       - "9001:9001"
     env_file:
       - .env.minio
-    container_name: minio_container
+    container_name: minio-container
     networks:
       - kemfrinetwork
   

@@ -22,8 +22,10 @@ services:
       
 
   minio_container:
-    image: aaronica123/minio:latest
-    command: "server /data --console-address 9001"
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      
 
     expose:
       - "9000"

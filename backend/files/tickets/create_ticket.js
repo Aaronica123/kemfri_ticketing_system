@@ -6,7 +6,6 @@ import Auth from "../auth.js";
 import { randomUUID } from "crypto";
 import * as Minio from 'minio'
 import fs from "fs"
-
 configDotenv();
     let ticketid='';
     let userid='';
@@ -17,7 +16,7 @@ async function Ticket_Message(data){
         
     console.log(data)
     console.log("received");
-    const da=await fetch("http://localhost:5000/predict",{
+    const da=await fetch(`${process.env.path}/ai/predict`,{
         method:"POST",
         headers:{
             "Content-type":"application/json"
@@ -147,6 +146,7 @@ export async function Upload_files(req,res){
         
     
     const client=new Minio.Client({
+        
         endPoint:process.env.endPoint,
             secretKey:process.env.secretKey,
             accessKey:process.env.accessKey,

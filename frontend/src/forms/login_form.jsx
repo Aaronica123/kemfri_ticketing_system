@@ -190,7 +190,7 @@ export default function Login_form(){
                     <div
                     style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column",gap:"5px", justifyContent:"center",alignItems:"flex-end"}}
                     >
-<Text size={"3"} style={{fontFamily:"Inter",color:"#0865C4",fontWeight:"bold"}}>
+<Text size={"3"} style={{fontFamily:"Inter",color:"#0865C4",fontWeight:"bold",cursor:"pointer"}} onClick={()=>nav("/register")}>
                            Create an account
                         
                         </Text>

@@ -9,7 +9,6 @@ import SubmitForm from "./pages/Submit_ticket";
 import MyTickets from "./pages/My_tickets";
 import StaffDashboard from "./pages/Staff_Dashboard";
 import './App.css'
-import AuthContext from "./auth/auth_context";
 import Notify from "./pages/Notifications";
 import Input from "./forms/submit";
 import Register from "./pages/Register";

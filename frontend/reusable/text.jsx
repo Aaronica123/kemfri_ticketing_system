@@ -1,4 +1,4 @@
-import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { Text } from "@radix-ui/themes";
 
 export default function Header_txt({children}){
     return(

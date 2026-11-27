@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { connect } from "../axios/axios"
 import { useEffect } from "react"
-import { Card, Text,Badge } from "@radix-ui/themes/dist/cjs/index.js"
+import { Card, Text,Badge } from "@radix-ui/themes"
 import {Plus} from "lucide-react"
 import { Child_text1, Label_txt } from "../../reusable/text"
 

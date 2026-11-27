@@ -1,13 +1,10 @@
 import "@radix-ui/themes/styles.css"
-import { Spinner, Theme } from "@radix-ui/themes/dist/cjs/index.js";
+import { Spinner, Theme } from "@radix-ui/themes";
 import { BrowserRouter as Router,Route,Routes } from "react-router-dom";
-import Toast_Provider from "./ui/toast";
 import Login_form from "./forms/login_form";
-import Nav_bar from "./ui/nav_bar";
+
 
 import './App.css'
-
-import Auth from "./auth/new_auth";
 
 import { Toaster } from "sonner"
 import "./App.css"
@@ -21,6 +18,8 @@ const SubmitForm=lazy(() => import('./pages/Submit_ticket'));
 const Notify=lazy(() => import('./pages/Notifications'));
 const MyTickets=lazy(() => import('./pages/My_tickets'));
 const Assigned_tickets=lazy(() => import('./pages/Assigned_tickets'));
+const Nav_bar=lazy(() => import('./ui/nav_bar'));
+const Auth=lazy(() => import('./auth/new_auth'));
 function App() {
 
 
@@ -31,7 +30,7 @@ function App() {
     <Theme>
      
       <Router>
-        <Toast_Provider>
+        
           <Routes>
             <Route path="/register" element={
               <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
@@ -47,69 +46,80 @@ function App() {
             <Route path="/" element={<Login_form/>}/>
             <Route path="/nav" element={<Nav_bar/>}/>
             <Route path="/dashboard" element={
+               <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
+   
               <Auth>
-              <Nav_bar>
-                <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-                  <Dashboard />
-                </Suspense>
+                          <Nav_bar>
+                      <Dashboard />
+              </Nav_bar>
+              
+              </Auth>
+               </Suspense>
+            }/>
+            <Route path='/submit' element={
+               <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
+         
+             <Auth> 
+               <Nav_bar>
+               
+                <SubmitForm/>
                 
               </Nav_bar>
               </Auth>
-            }/>
-            <Route path='/submit' element={
-             <Auth> 
-               <Nav_bar>
-                <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-         
-                <SubmitForm/>
-                </Suspense>
-              </Nav_bar>
-              </Auth>
+              </Suspense>
             }/>
             <Route path="/my_tickets" element={
+               <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
+         
               <Auth>
               <Nav_bar>
-                <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-         
+               
               <MyTickets/>
-              </Suspense>
+              
               </Nav_bar>
-              </Auth>}/>
+              </Auth>
+              </Suspense>
+              }/>
               
               <Route path="/notifications" element={
+                 <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
+         
                 <Auth>
                   <Nav_bar>
-                    <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-         
+                   
                     <Notify></Notify>
-                    </Suspense>
+                   
                   </Nav_bar>
                 </Auth>
+                 </Suspense>
               }/>
               <Route path="/assigned_tickets" element={
+                <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
                 <Auth>
                   <Nav_bar>
-                    <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-                    <Assigned_tickets/>
-                    </Suspense>
+                         <Assigned_tickets/>
+                    
                     
                   </Nav_bar>
                 </Auth>
+                </Suspense>
               }/>
                <Route path="/underway_tickets" element={
+                 <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
+            
                 <Auth>
                   <Nav_bar>
-                    <Suspense fallback={<div><Spinner size={"3"} style={{fontSize:"500px"}}></Spinner></div>}>
-                    <Underway_tickets/>
-                    </Suspense>
+                           <Underway_tickets/>
+                   
                   </Nav_bar>
                 </Auth>
+                 </Suspense>
               }/>
               
              
           </Routes>
 
-        </Toast_Provider>
+        
       </Router>
       
 

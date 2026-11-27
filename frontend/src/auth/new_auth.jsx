@@ -12,10 +12,10 @@ export default function Auth({children}){
 
     const fetch=useCallback(async()=>{
         setloading(true);
-        const {data}=await supabase.auth.getUser();
-        if(data?.user){
-            setUser({role:data.user.user_metadata.role,user_id:data.user.user_metadata.staff_id,authenticated:true
-                ,branch:data.user.user_metadata.branch
+        const {data}=await supabase.auth.getSession();
+        if(data?.session?.user){
+            setUser({role:data.session.user.user_metadata.role,user_id:data.session.user.user_metadata.staff_id,authenticated:true
+                ,branch:data.session.user.user_metadata.branch
             })
             setError(false);
             setloading(false);
@@ -25,6 +25,9 @@ export default function Auth({children}){
             setloading(false);
             setError(true);
         }
+        
+        
+
     }
 )
     useEffect(()=>{

@@ -19,6 +19,7 @@ import Header_txt, { Child_text1, Child_text3, Label_txt } from "../../reusable/
 import {toast} from "sonner"
 import { Bell } from "lucide-react";
 import { ExclamationMark,SquareExclamationPoint } from "lucide-react";
+import login_image from "./im2.webp"
 // import { set } from "../auth/hold.js";
 // import UserManager from "../auth/hold.js";
 // import { Load_button } from "../ui/buttons";
@@ -136,7 +137,7 @@ export default function Login_form(){
             alignItems:"center"
         }}> */}
         <div style={{padding:"10px",width:'100%',height:"100%",display:"flex",position:"relative" }}>
-            <img src="im2.png" style={{width:"100%",height:"100%",borderRadius:"10px"}}/>
+            <img src={login_image} fetchPriority="high" loading="eager" alt="Image of aqua marine life" style={{width:"100%",height:"100%",borderRadius:"10px"}}/>
             {/* <div
     style={{
       position: "absolute",

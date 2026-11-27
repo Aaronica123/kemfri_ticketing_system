@@ -1,10 +1,10 @@
-import { Card, Spinner } from "@radix-ui/themes/dist/cjs/index.js";
+import { Card, Spinner } from "@radix-ui/themes";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Text } from "@radix-ui/themes/dist/cjs/index.js";
+import { Text } from "@radix-ui/themes";
 
-import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
+import { TextField } from "@radix-ui/themes";
 
 import { supabase } from "../auth/supabase";
 import Header_txt, { Child_text1, Child_text3, Label_txt } from "../../reusable/text";

@@ -1,35 +1,20 @@
-import { Button, Card, Spinner } from "@radix-ui/themes/dist/cjs/index.js";
-import { Load_button } from "../ui/buttons";
-import { Head_Text } from "../ui/text";
-import Main_Text from "../ui/text";
-import { Input_Field } from "../ui/text";
-import Execute_Button from "../ui/buttons";
-import { Avatar } from "@radix-ui/themes/dist/cjs/index.js";
-import { Toast_use } from "../ui/toast";
-import { Separator } from "@radix-ui/themes/dist/cjs/index.js";
-import con from "../axios/axios";
+import { Card, Spinner } from "@radix-ui/themes/dist/cjs/index.js";
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Text } from "@radix-ui/themes/dist/cjs/index.js";
-import { Heading } from "@radix-ui/themes/dist/cjs/index.js";
+
 import { TextField } from "@radix-ui/themes/dist/cjs/index.js";
-import {useMediaQuery} from "react-responsive";
+
 import { supabase } from "../auth/supabase";
 import Header_txt, { Child_text1, Child_text3, Label_txt } from "../../reusable/text";
 import {toast} from "sonner"
 import { Bell } from "lucide-react";
-import { ExclamationMark,SquareExclamationPoint } from "lucide-react";
-import login_image from "./im2.webp"
-// import { set } from "../auth/hold.js";
-// import UserManager from "../auth/hold.js";
-// import { Load_button } from "../ui/buttons";
+import { SquareExclamationPoint } from "lucide-react";
+import login_image from "./logimg.webp"
+
 export default function Login_form(){
-    // const {set_q}=Toast_use();
-    // const x=()=>{
-    //     console.log("Clicked");
-    //     set_q(true,"Logging In");
-    // }
-   // const [track,settrack]=useState({fetched:null,failed:null});
+
    
     const [loading,setload]=useState(false);
     const nav=useNavigate();
@@ -41,7 +26,7 @@ export default function Login_form(){
         [name]:value
        }))
     }
-    const min=useMediaQuery({maxWidth:"768px"})
+    
 
     const login=async(e)=>{
         setload(true)
@@ -84,78 +69,18 @@ export default function Login_form(){
             console.log(error);
             return;
         }
-    }
-    // async function connect(e){
-        
-    //     e.preventDefault();
-    //     setload(true);
-    //     await con().post("/login",{email:form_.email,password:form_.password}).then((data)=>{
-    //         console.log(data.status);
-    //         setload(false);
-    //         alert("successfully received");
-    //         localStorage.setItem('firstname',data.data.data.name)
-    //         // UserManager.set(data.data.data.user_id)
-    //         nav('/submit');
-    //         // settrack(()=>({
-    //         //     failed:false,
-    //         //     fetched:true
-    //         // }))
-        
-
-    //     }).catch((error)=>{
-    //         // settrack(()=>({
-    //         //     failed:true,
-    //         //     fetched:false
-    //         // }))
-    //         console.log(error);
-    //         setload(false);
-    //         if(error.status==405){
-    //             alert("Check input")
-    //         }
-    //         else if(error.status==404){
-    //             alert("User not found")
-    //         }
-    //         else if(error.status==402){
-    //             alert("Enter all fields")
-    //         }
-    //         else {
-    //             alert("Contact admin cannot login")
-    //         }
-            
-            
-            
-    //     })
-    // }
-    
-    
-    
+    }    
     return(
     <>
     <div style={{width:"100vw",height:"100vh",boxSizing:"border-box",display:"flex",
         flexDirection:"row",justifyContent:"center",alignItems:"center",background:"#F7FBFE"}}>
-        {/* <div style={{width:"fit-content",height:"fit-content", justifyContent:"center",
-            alignItems:"center"
-        }}> */}
+
         <div style={{padding:"10px",width:'100%',height:"100%",display:"flex",position:"relative" }}>
             <img src={login_image} fetchPriority="high" loading="eager" alt="Image of aqua marine life" style={{width:"100%",height:"100%",borderRadius:"10px"}}/>
-            {/* <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      pointerEvents: "none",
-      borderRadius:"10px",
-      background:
-        "radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(54, 70, 238, 0.9) 100%)",
-    }}
-  ></div> */}
+           
         </div>
         <div style={{width:"100%",height:"100%",display:"flex",flexDirection:"column"}}>
-            {/* <div style={{padding:"10px",width:"100%",height:"fit-content",display:"flex",justifyContent:"center",alignItems:"center"}}>
-                <Text weight={"regular"}size={"4"} style={{fontFamily:"Inter", color:"#102E49"}}>Aqua System</Text>
-            </div> */}
+           
             <div style={{width:"100%",height:'100%',display:"flex",justifyContent:"center",alignItems:"center"}}>
                 <Card variant="ghost" style={{width:"448px",height:"400px",display:'flex',flexDirection:"column",gap:"15px"}}>
                      <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column"}}>
@@ -203,6 +128,6 @@ export default function Login_form(){
         </div>
            
         </div>
-    {/* </div> */}
+
     </>)
 }

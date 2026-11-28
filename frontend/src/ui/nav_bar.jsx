@@ -172,7 +172,7 @@ return(<>
                     
                     <button 
                     onClick={go("/assigned_tickets")}
-                    style={{cursor:"pointer",borderRadius:"5px",background:isActive("/assigned_tickets")?"#254B85":"",border:isActive("/assigned_tickets")?"none":"solid 1px #BED0EB",width:"100%",padding:"5px",display:"flex"
+                    style={{cursor:"pointer",borderRadius:"5px",background:isActive("/assigned_tickets")?"#254B85":"",border:isActive("/assigned_tickets")?"none":"none",width:"100%",padding:"5px",display:"flex"
                         ,flexDirection:"row",gap:"8px"}}>
                         <LayoutDashboard color={isActive("/assigned_tickets")?"#FFFFFF":"#BED0EB"}></LayoutDashboard>
                         <Text style={{width:"100%",display:"flex",color:isActive("/assigned_tickets")?"#FFFFFF":"#BED0EB"}}>
@@ -182,7 +182,7 @@ return(<>
                     <button
                     onClick={go("/underway_tickets")}
                     
-                    style={{cursor:"pointer",borderRadius:"5px",background:isActive("/underway_tickets")?"#254B85":"",border:isActive("/underway_tickets")?"none":"solid 1px #BED0EB",width:"100%",padding:"5px",display:"flex"
+                    style={{cursor:"pointer",borderRadius:"5px",background:isActive("/underway_tickets")?"#254B85":"",border:isActive("/underway_tickets")?"none":"none",width:"100%",padding:"5px",display:"flex"
                         ,flexDirection:"row",gap:"8px"}}>
                         <BookOpenCheck color={isActive("/underway_tickets")?"#FFFFFF":"#BED0EB"}></BookOpenCheck>
                         <Text style={{width:"100%",display:"flex",color:isActive("/underway_tickets")?"#FFFFFF":"#BED0EB"}}>

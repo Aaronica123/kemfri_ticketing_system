@@ -41,7 +41,7 @@ export default function Assigned_tickets(){
            const img=await connect.get("/image_download?type=assigned",{
             responseType:"blob"
         });
-           const objectUrl = URL.createObjectURL(img.data);
+           const objectUrl = URL.createObjectURL(img?.data);
            console.log("image fetched is ")
            console.log(objectUrl)
            setimage(objectUrl);
@@ -54,8 +54,8 @@ export default function Assigned_tickets(){
         <>
         <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column"}}>
             <div style={{width:"100%",height:"fit-content",display:"flex",flexDirection:"column"}}>
-            <Text size={"7"} style={{color:"#172C50",fontFamily:"Inter" }} weight={"medium"}>Underway Tickets</Text>
-                             <Child_text1>Expand to view your Underway ticket</Child_text1>
+            <Text size={"7"} style={{color:"#172C50",fontFamily:"Inter" }} weight={"medium"}>Assigned Tickets</Text>
+                             <Child_text1>Expand to view your Assigned ticket</Child_text1>
         </div>
         <Card size={"2"} style={{width:"432px", height:"fit-content",display:'flex',flexDirection:"column"}}>
             <div style={{width:'100%',height:"fit-content",display:"flex",flexDirection:"row"}}>
